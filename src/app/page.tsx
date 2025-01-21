@@ -1,10 +1,19 @@
+import About from "@/components/Home/About/About";
+import Banner from "@/components/Home/Banner/Banner";
+import Faq from "@/components/Home/Faq/Faq";
+import LatestProducts from "@/components/Home/LatestProducts/LatestProducts";
+import PopularPoducts from "@/components/Home/PopularPoducts/PopularPoducts";
+import WhyChoose from "@/components/Home/WhyChoose/WhyChoose";
+
 export default function Home() {
   return (
-    <>
-      <h3 className="text-center text-5xl font-bold text-purple-500">
-        {" "}
-        GrassRootz{" "}
-      </h3>
-    </>
+    <div className="container">
+      <Banner />
+      <LatestProducts />
+      <PopularPoducts />
+      <WhyChoose />
+      <About />
+      <Faq />
+    </div>
   );
 }

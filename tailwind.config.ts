@@ -8,9 +8,22 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "2rem",
+        },
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "#DEAD35",
+        },
+        // secondary: {
+        //   DEFAULT: "#EFF5EA",
+        // },
+        // hash: {
+        //   DEFAULT: "#93BB72",
+        // },
       },
     },
   },
