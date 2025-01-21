@@ -7,7 +7,7 @@ import WhyChoose from "@/components/Home/WhyChoose/WhyChoose";
 
 export default function Home() {
   return (
-    <div className="container">
+    <div className="container min-h-screen">
       <Banner />
       <LatestProducts />
       <PopularPoducts />
