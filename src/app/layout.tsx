@@ -1,5 +1,7 @@
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
+import ThemeProvider from "@/lib/ThemeProvider";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -31,7 +33,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
         <Navbar />
-        {children}
+
+        <AntdRegistry>
+          <ThemeProvider>
+            {/* <div className="py-20">{children}</div> */}
+            {children}
+          </ThemeProvider>
+        </AntdRegistry>
+
         <Footer />
       </body>
     </html>
