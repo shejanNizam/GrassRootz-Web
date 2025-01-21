@@ -10,7 +10,13 @@ const Signup = () => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onFinish = async (values) => {
+  const onFinish = async (values: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) => {
+    console.log(values);
     setIsSubmitting(true);
     try {
       // Handle form submission logic here
@@ -27,6 +33,7 @@ const Signup = () => {
       message.success("Signup successful! Redirecting to login...");
       router.push("/auth/login");
     } catch (error) {
+      console.log(error);
       message.error("Signup failed. Please try again.");
     } finally {
       setIsSubmitting(false);

@@ -10,7 +10,8 @@ const Login = () => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onFinish = async (values) => {
+  const onFinish = async (values: { email: string; password: string }) => {
+    console.log(values);
     setIsSubmitting(true);
     try {
       // Handle form submission logic here

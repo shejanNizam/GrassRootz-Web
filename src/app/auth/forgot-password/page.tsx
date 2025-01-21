@@ -13,7 +13,8 @@ const ForgotPassword = () => {
   const [form] = Form.useForm(); // Initialize Ant Design form instance
   const [isSubmitting, setIsSubmitting] = useState(false); // Loading state for form submission
 
-  const onFinish = async (values) => {
+  const onFinish = async (values: { email: string }) => {
+    console.log(values); // Use the 'values' parameter
     setIsSubmitting(true);
     try {
       // Handle form submission logic here

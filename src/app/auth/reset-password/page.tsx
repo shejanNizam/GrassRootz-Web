@@ -14,7 +14,10 @@ const ResetPassword = () => {
   const [form] = Form.useForm(); // Initialize Ant Design form instance
 
   // Handle form submission
-  const onFinish = async (values) => {
+  const onFinish = async (values: {
+    password: string;
+    confirmPassword: string;
+  }) => {
     const { password, confirmPassword } = values;
 
     // Validate if passwords match

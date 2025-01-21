@@ -13,10 +13,10 @@ const VerifyEmail = () => {
   const [otp, setOtp] = useState(["", "", "", ""]); // State to hold each OTP digit
 
   // Refs for each input to manage focus
-  const inputRefs = useRef([]);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   // Handle OTP input changes
-  const onChangeOtp = (index, value) => {
+  const onChangeOtp = (index: number, value: string) => {
     if (/^\d*$/.test(value)) {
       // Ensure only digits are entered
       const newOtp = [...otp];
@@ -24,16 +24,19 @@ const VerifyEmail = () => {
       setOtp(newOtp);
       // Move focus to next input if value is entered
       if (value && index < 3) {
-        inputRefs.current[index + 1].focus();
+        inputRefs.current[index + 1]?.focus();
       }
     }
   };
 
   // Handle key down events for navigation (e.g., Backspace)
-  const onKeyDownOtp = (index, event) => {
+  const onKeyDownOtp = (
+    index: number,
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (event.key === "Backspace" && !otp[index] && index > 0) {
       // Move focus to previous input if Backspace is pressed on empty field
-      inputRefs.current[index - 1].focus();
+      inputRefs.current[index - 1]?.focus();
     }
   };
 
@@ -86,7 +89,7 @@ const VerifyEmail = () => {
       await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
       message.success("OTP has been resent to your email!");
       setOtp(["", "", "", ""]); // Reset OTP fields
-      inputRefs.current[0].focus(); // Focus on the first input
+      inputRefs.current[0]?.focus(); // Focus on the first input
     } catch (error) {
       console.error("Resend OTP error:", error);
       message.error("Failed to resend OTP. Please try again.");
@@ -136,7 +139,9 @@ const VerifyEmail = () => {
                   value={digit}
                   onChange={(e) => onChangeOtp(index, e.target.value)}
                   onKeyDown={(e) => onKeyDownOtp(index, e)}
-                  ref={(el) => (inputRefs.current[index] = el)}
+                  ref={(el) => {
+                    inputRefs.current[index] = el as HTMLInputElement | null;
+                  }}
                   className="text-center w-16 h-16 text-2xl border-primary rounded-xl"
                   aria-label={`OTP Digit ${index + 1}`}
                 />
