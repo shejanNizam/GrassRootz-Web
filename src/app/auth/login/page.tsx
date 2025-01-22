@@ -26,7 +26,8 @@ const Login = () => {
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
       message.success("Login successful! Redirecting...");
-      router.push("/profile/my-profile");
+      // router.push("/profile/my-profile");
+      router.push("/");
     } catch (error) {
       console.error("Login error:", error);
       message.error(

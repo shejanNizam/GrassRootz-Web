@@ -35,10 +35,7 @@ export default function RootLayout({
         <Navbar />
 
         <AntdRegistry>
-          <ThemeProvider>
-            {/* <div className="py-20">{children}</div> */}
-            {children}
-          </ThemeProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </AntdRegistry>
 
         <Footer />
