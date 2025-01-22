@@ -9,3 +9,13 @@ export function SuccessSwal({ title, text }: { title: string; text: string }) {
     confirmButtonText: "OK",
   });
 }
+
+export function ErrorSwal({ title, text }: { title: string; text: string }) {
+  return Swal.fire({
+    title: title,
+    text: text,
+    icon: "error",
+    confirmButtonColor: "#d33",
+    confirmButtonText: "OK",
+  });
+}

@@ -38,7 +38,7 @@ export const mainTheme = {
       // Add other Form tokens as needed
     },
     Input: {
-      colorBorder: "#ffffff",
+      colorBorder: "#DEAD35",
       colorTextPlaceholder: "#666666",
       borderRadius: 4,
       height: 40,
