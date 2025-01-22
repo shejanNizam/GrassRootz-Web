@@ -2,6 +2,7 @@
 
 "use client"; // Enables client-side rendering for hooks and interactivity
 
+import { SuccessSwal } from "@/components/utils/allSwalFire";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation"; // For Next.js App Router
 import { useRef, useState } from "react";
@@ -61,9 +62,13 @@ const VerifyEmail = () => {
       // });
 
       // Mock response for demonstration
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
-      message.success("Email verified successfully!");
-      router.push("/auth/reset-password"); // Navigate to Reset Password page after successful verification
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      SuccessSwal({
+        title: "Email verified successfully!",
+        text: "",
+      });
+
+      router.push("/auth/reset-password");
     } catch (error) {
       console.error("Verify Email error:", error);
       message.error("Invalid OTP. Please try again.");
@@ -86,10 +91,14 @@ const VerifyEmail = () => {
       // });
 
       // Mock response for demonstration
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
-      message.success("OTP has been resent to your email!");
-      setOtp(["", "", "", ""]); // Reset OTP fields
-      inputRefs.current[0]?.focus(); // Focus on the first input
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      SuccessSwal({
+        title: "OTP has been resent to your email!",
+        text: "",
+      });
+
+      setOtp(["", "", "", ""]);
+      inputRefs.current[0]?.focus();
     } catch (error) {
       console.error("Resend OTP error:", error);
       message.error("Failed to resend OTP. Please try again.");

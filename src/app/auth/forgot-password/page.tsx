@@ -2,6 +2,7 @@
 
 "use client"; // Enables client-side rendering for hooks and interactivity
 
+import { SuccessSwal } from "@/components/utils/allSwalFire";
 import { Button, Form, Input, message } from "antd";
 import Link from "next/link"; // Next.js Link component
 import { useRouter } from "next/navigation"; // For Next.js App Router
@@ -28,9 +29,13 @@ const ForgotPassword = () => {
       // });
 
       // Mock response for demonstration
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
-      message.success("OTP has been sent to your email!");
-      router.push("/auth/verify-email"); // Navigate to verify email page after successful submission
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      SuccessSwal({
+        title: "OTP has been sent to your email!",
+        text: "",
+      });
+      router.push("/auth/verify-email");
     } catch (error) {
       console.error("Forgot Password error:", error);
       message.error("Failed to send OTP. Please try again.");
