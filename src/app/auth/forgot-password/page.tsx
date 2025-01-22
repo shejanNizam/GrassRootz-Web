@@ -47,11 +47,11 @@ const ForgotPassword = () => {
   return (
     <div className="min-h-screen w-full flex flex-col justify-center items-center p-4 ">
       {/* Forgot Password Container */}
-      <div className="bg-white shadow-lg rounded-lg w-full max-w-md p-6 relative">
+      <div className="bg-gray-950 border border-primary shadow-lg rounded-lg w-full max-w-md p-6 relative">
         {/* Back Button */}
         <button
           onClick={handleBack}
-          className="absolute top-4 left-4 text-gray-500 hover:text-gray-800 focus:outline-none"
+          className="absolute top-4 left-4 text-gray-500 hover:text-gray-300 focus:outline-none"
           aria-label="Go Back"
         >
           <FaArrowLeft size={24} />
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
           <h2 className="text-primary text-2xl font-semibold mt-4 border-b-2 border-b-gray-100">
             Forgot Password
           </h2>
-          <p className="text-center text-gray-600 mt-2">
+          <p className="text-center text-white mt-2">
             Enter your email address below and well send you an OTP to reset
             your password.
           </p>
@@ -77,7 +77,7 @@ const ForgotPassword = () => {
         >
           {/* Email Field */}
           <Form.Item
-            label={<span className="text-black font-semibold"> Email </span>}
+            label={<span className="font-semibold"> Email </span>}
             name="email"
             rules={[
               { type: "email", message: "Please enter a valid email address!" },
@@ -106,8 +106,8 @@ const ForgotPassword = () => {
 
           {/* Navigation Link to Login Page */}
           <p className="text-center">
-            Remembered your password?{" "}
-            <Link href="/auth/login" className="text-blue-500 underline">
+            <span className="text-white">Remembered your password? </span>
+            <Link href="/auth/login" className="text-primary">
               Log In
             </Link>
           </p>

@@ -1,5 +1,6 @@
 "use client";
 
+import { SuccessSwal } from "@/components/utils/allSwalFire";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -30,7 +31,10 @@ const Signup = () => {
       // });
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      message.success("Signup successful! Redirecting to login...");
+      SuccessSwal({
+        title: "Creat account successfully!",
+        text: "You create your account successfully, Please Login ",
+      });
       router.push("/auth/login");
     } catch (error) {
       console.log(error);
@@ -42,7 +46,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary">
-      <div className="bg-white shadow-2xl rounded-2xl rounded-tl-[8rem] md:rounded-tl-[10rem] rounded-br-[8rem] md:rounded-br-[10rem] w-full max-w-xl p-8 md:p-16 mt-[-100px]">
+      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl rounded-tl-[8rem] md:rounded-tl-[10rem] rounded-br-[8rem] md:rounded-br-[10rem] w-full max-w-xl p-8 md:p-16 mt-[-60px]">
         <div className="flex flex-col items-center">
           <h2 className=" text-primary text-2xl md:text-4xl font-semibold mb-8 border-b-2 border-b-gray-100">
             Create Your Account
@@ -60,7 +64,7 @@ const Signup = () => {
           <div className="grid grid-cols-1">
             {/* Name */}
             <Form.Item
-              label={<span className="text-black font-semibold"> Name </span>}
+              label={<span className="font-semibold"> Name </span>}
               name="name"
               rules={[
                 { required: true, message: "Please enter your name" },
@@ -72,7 +76,7 @@ const Signup = () => {
 
             {/* Email */}
             <Form.Item
-              label={<span className="text-black font-semibold"> Email </span>}
+              label={<span className="font-semibold"> Email </span>}
               name="email"
               rules={[
                 {
@@ -87,9 +91,7 @@ const Signup = () => {
 
             {/* Password */}
             <Form.Item
-              label={
-                <span className="text-black font-semibold"> Password </span>
-              }
+              label={<span className="font-semibold"> Password </span>}
               name="password"
               rules={[
                 { required: true, message: "Please enter your password" },
@@ -102,12 +104,7 @@ const Signup = () => {
 
             {/* Confirm Password */}
             <Form.Item
-              label={
-                <span className="text-black font-semibold">
-                  {" "}
-                  Confirm Password{" "}
-                </span>
-              }
+              label={<span className="font-semibold"> Confirm Password </span>}
               name="confirmPassword"
               dependencies={["password"]}
               hasFeedback
@@ -130,104 +127,6 @@ const Signup = () => {
             </Form.Item>
           </div>
 
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
-          </div> */}
-
-          {/* Address Fields */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Form.Item
-              label="Street Address"
-              name="streetAddress"
-              rules={[
-                { required: true, message: "Please enter your street address" },
-              ]}
-            >
-              <Input placeholder="Enter your street address" size="large" />
-            </Form.Item>
-
-            <Form.Item
-              label="City"
-              name="city"
-              rules={[{ required: true, message: "Please enter your city" }]}
-            >
-              <Input placeholder="Enter your city" size="large" />
-            </Form.Item>
-
-            <Form.Item
-              label="Postal Code"
-              name="postalCode"
-              rules={[
-                { required: true, message: "Please enter your postal code" },
-                {
-                  pattern: /^\d{5}(-\d{4})?$/,
-                  message: "Please enter a valid postal code",
-                },
-              ]}
-            >
-              <Input placeholder="Enter your postal code" size="large" />
-            </Form.Item>
-          </div> */}
-
-          {/* Add Card Heading */}
-          {/* <h2 className="text-xl font-semibold mt-6 mb-4">Add Card</h2> */}
-
-          {/* Payment Information Fields */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Form.Item
-              label="Card Name"
-              name="cardName"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter the cardholder's name",
-                },
-                { min: 2, message: "Name must be at least 2 characters" },
-              ]}
-            >
-              <Input placeholder="Enter cardholder's name" size="large" />
-            </Form.Item>
-
-            <Form.Item
-              label="Card Number"
-              name="cardNumber"
-              rules={[
-                { required: true, message: "Please enter your card number" },
-                {
-                  pattern: /^\d{16}$/,
-                  message: "Card number must be 16 digits",
-                },
-              ]}
-            >
-              <Input placeholder="Enter your card number" size="large" />
-            </Form.Item>
-          </div> */}
-
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Form.Item
-              label="Expiry Date"
-              name="expiryDate"
-              rules={[
-                { required: true, message: "Please select the expiry date" },
-              ]}
-            >
-              <Input type="month" />
-            </Form.Item>
-            <Form.Item
-              label="CCV"
-              name="ccv"
-              rules={[
-                { required: true, message: "Please enter your CCV" },
-                {
-                  pattern: /^\d{3,4}$/,
-                  message: "CCV must be 3 or 4 digits",
-                },
-              ]}
-            >
-              <Input placeholder="Enter CCV" size="large" />
-            </Form.Item>
-          </div> */}
-
           {/* I Agree Checkbox */}
           <Form.Item
             name="agree"
@@ -242,11 +141,13 @@ const Signup = () => {
             ]}
           >
             <Checkbox>
-              I have read & agreed to Peared{" "}
+              <span className="text-white">
+                I have read & agreed to Peared{" "}
+              </span>
               <Link href="/terms-of-use">
                 <span className="text-primary">Terms of Use</span>
               </Link>{" "}
-              and{" "}
+              <span className="text-white">and </span>
               <Link href="/privacy-policy">
                 <span className="text-primary">Privacy Policy</span>
               </Link>
@@ -267,7 +168,7 @@ const Signup = () => {
           </Form.Item>
 
           <p className="text-center">
-            Already have an account?{" "}
+            <span className="text-white">Already have an account? </span>
             <Link href="/auth/login" className="text-primary">
               Log In
             </Link>

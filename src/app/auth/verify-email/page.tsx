@@ -106,11 +106,11 @@ const VerifyEmail = () => {
   return (
     <div className="min-h-screen w-full flex flex-col justify-center items-center p-4 ">
       {/* Verify Email Container */}
-      <div className="bg-white shadow-lg rounded-lg w-full max-w-md p-6 relative">
+      <div className="bg-gray-950 border border-primary shadow-lg rounded-lg w-full max-w-md p-6 relative">
         {/* Back Button */}
         <button
           onClick={handleBack}
-          className="absolute top-4 left-4 text-gray-600 hover:text-gray-800 focus:outline-none z-50"
+          className="absolute top-4 left-4 text-gray-500 hover:text-gray-300 focus:outline-none z-50"
           aria-label="Go Back"
         >
           <FaArrowLeft size={24} />
@@ -120,7 +120,7 @@ const VerifyEmail = () => {
           <h2 className="text-primary text-2xl font-semibold mt-4 border-b-2 border-b-gray-100">
             Verify Your Email
           </h2>
-          <p className="text-center text-gray-600 mt-2">
+          <p className="text-center text-white mt-2">
             Please enter the 4-digit OTP sent to your email address to verify
             your account.
           </p>
@@ -142,7 +142,7 @@ const VerifyEmail = () => {
                   ref={(el) => {
                     inputRefs.current[index] = el as HTMLInputElement | null;
                   }}
-                  className="text-center w-16 h-16 text-2xl border-primary rounded-xl"
+                  className="text-center w-16 h-16 text-2xl border-2 border-primary rounded-2xl"
                   aria-label={`OTP Digit ${index + 1}`}
                 />
               </Form.Item>
@@ -151,7 +151,7 @@ const VerifyEmail = () => {
 
           {/* Didn't Receive Code & Resend Button */}
           <div className="flex justify-between items-center">
-            <span className="text-gray-600">Didnt receive the code?</span>
+            <span className="text-white">Didnt receive the code?</span>
             <Button
               type="link"
               onClick={handleResend}

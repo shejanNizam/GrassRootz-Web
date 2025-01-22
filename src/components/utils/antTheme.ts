@@ -34,11 +34,11 @@ export const mainTheme = {
       // Add other Button tokens as needed
     },
     Form: {
-      labelColor: "#000000",
+      labelColor: "#ffffff",
       // Add other Form tokens as needed
     },
     Input: {
-      colorBorder: "#DEAD35",
+      colorBorder: "#ffffff",
       colorTextPlaceholder: "#666666",
       borderRadius: 4,
       height: 40,

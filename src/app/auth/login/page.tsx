@@ -1,5 +1,6 @@
 "use client";
 
+import { SuccessSwal } from "@/components/utils/allSwalFire";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,7 +26,10 @@ const Login = () => {
       // });
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      message.success("Login successful! Redirecting...");
+      SuccessSwal({
+        title: "Login successfully!",
+        text: " Welcome to GrassRootz ",
+      });
       // router.push("/profile/my-profile");
       router.push("/");
     } catch (error) {
@@ -40,7 +44,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary">
-      <div className="bg-white shadow-2xl rounded-2xl rounded-tl-[8rem] md:rounded-tl-[10rem] rounded-br-[8rem] md:rounded-br-[10rem] w-full max-w-xl p-8 md:p-16 mt-[-200px]">
+      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl rounded-tl-[8rem] md:rounded-tl-[10rem] rounded-br-[8rem] md:rounded-br-[10rem] w-full max-w-xl p-8 md:p-16 mt-[-200px]">
         <div className="flex flex-col items-center">
           <h2 className="text-primary text-2xl md:text-4xl font-semibold mb-8 border-b-2 border-b-gray-100">
             Login
@@ -57,7 +61,7 @@ const Login = () => {
           <div className="grid grid-cols-1">
             {/* Email Field */}
             <Form.Item
-              label={<span className="text-black font-semibold"> Email </span>}
+              label={<span className="font-semibold"> Email </span>}
               name="email"
               rules={[
                 {
@@ -72,9 +76,7 @@ const Login = () => {
 
             {/* Password Field */}
             <Form.Item
-              label={
-                <span className="text-black font-semibold"> Password </span>
-              }
+              label={<span className="font-semibold"> Password </span>}
               name="password"
               rules={[
                 { required: true, message: "Please enter your password" },
@@ -88,7 +90,9 @@ const Login = () => {
           {/* Remember Me and Forgot Password */}
           <div className="flex justify-between items-center">
             <Form.Item name="remember" valuePropName="checked" className="mb-0">
-              <Checkbox className="text-green-500">Remember me</Checkbox>
+              <Checkbox>
+                <span className="text-white">Remember me</span>
+              </Checkbox>
             </Form.Item>
             <Link href="/auth/forgot-password" className="text-primary">
               Forgot password?
@@ -110,7 +114,7 @@ const Login = () => {
 
           {/* Navigation Link to Signup Page */}
           <p className="text-center">
-            {"Don't have an account?"}
+            <span className="text-white"> {"Don't have an account?"} </span>
             <Link href="/auth/signup" className="text-primary">
               {" "}
               Create Account

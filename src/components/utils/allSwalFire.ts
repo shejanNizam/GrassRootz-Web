@@ -5,7 +5,7 @@ export function SuccessSwal({ title, text }: { title: string; text: string }) {
     title: title,
     text: text,
     icon: "success",
-    confirmButtonColor: "#3085d6",
+    confirmButtonColor: "#DEAD35",
     confirmButtonText: "OK",
   });
 }

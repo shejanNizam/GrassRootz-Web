@@ -2,6 +2,7 @@
 
 "use client"; // Enables client-side rendering for hooks and interactivity
 
+import { SuccessSwal } from "@/components/utils/allSwalFire";
 import { Button, Form, Input, message } from "antd";
 import Link from "next/link"; // Next.js Link component
 import { useRouter } from "next/navigation"; // For Next.js App Router
@@ -39,9 +40,13 @@ const ResetPassword = () => {
       // });
 
       // Mock response for demonstration
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
-      message.success("Password reset successfully!");
-      router.push("/auth/login"); // Navigate to Login page after successful reset
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      SuccessSwal({
+        title: "Password reset successful!",
+        text: "Your password has been successfully updated.You can now log in with your new password.",
+      });
+
+      router.push("/auth/login");
     } catch (error) {
       console.error("Reset Password error:", error);
       message.error("Failed to reset password. Please try again.");
@@ -60,10 +65,10 @@ const ResetPassword = () => {
       {/* Back Button */}
 
       {/* Reset Password Container */}
-      <div className="bg-white border border-primary shadow-lg rounded-lg w-full max-w-md p-6 relative">
+      <div className="bg-gray-950 border border-primary shadow-lg rounded-lg w-full max-w-md p-6 relative">
         <button
           onClick={handleBack}
-          className="absolute top-4 left-4 text-gray-500 hover:text-gray-800 focus:outline-none"
+          className="absolute top-4 left-4 text-gray-500 hover:text-gray-300 focus:outline-none"
           aria-label="Go Back"
         >
           <FaArrowLeft size={24} />
@@ -73,7 +78,7 @@ const ResetPassword = () => {
           <h2 className=" text-primary text-2xl font-semibold mt-4 border-b-2 border-b-gray-100">
             Reset Your Password
           </h2>
-          <p className="text-center text-gray-600 mt-2">
+          <p className="text-center text-white mt-2">
             Please enter your new password below.
           </p>
         </div>
@@ -87,9 +92,7 @@ const ResetPassword = () => {
         >
           {/* New Password Field */}
           <Form.Item
-            label={
-              <span className="text-black font-semibold"> New Password </span>
-            }
+            label={<span className="font-semibold"> New Password </span>}
             name="password"
             rules={[
               { required: true, message: "Please enter your new password." },
@@ -107,10 +110,7 @@ const ResetPassword = () => {
           {/* Confirm Password Field */}
           <Form.Item
             label={
-              <span className="text-black font-semibold">
-                {" "}
-                Confirm New Password{" "}
-              </span>
+              <span className="font-semibold"> Confirm New Password </span>
             }
             name="confirmPassword"
             dependencies={["password"]}
@@ -141,7 +141,7 @@ const ResetPassword = () => {
               htmlType="submit"
               size="large"
               loading={isSubmitting}
-              className="w-full bg-green-500 hover:bg-green-600 transition-colors"
+              className="w-full"
             >
               Reset Password
             </Button>
@@ -149,8 +149,8 @@ const ResetPassword = () => {
 
           {/* Navigation Link to Login Page */}
           <p className="text-center">
-            Remembered your password?{" "}
-            <Link href="/auth/login" className="text-blue-500 underline">
+            <span className="text-white">Remembered your password? </span>
+            <Link href="/auth/login" className="text-primary">
               Log In
             </Link>
           </p>
