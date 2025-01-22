@@ -44,6 +44,9 @@ export const mainTheme = {
       height: 40,
       // Add other Input tokens as needed
     },
+    Collapse: {
+      colorText: "#ffffff",
+    },
     DatePicker: {
       colorBorder: "#DEAD35",
       colorTextPlaceholder: "black",
