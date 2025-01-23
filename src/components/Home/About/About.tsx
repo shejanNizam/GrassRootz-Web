@@ -7,10 +7,10 @@ export default function About() {
   return (
     <div className="container grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center px-12">
       <div className=" space-y-12 lg:pl-4">
-        <h3 className="text-3xl md:text-4xl lg:text-5xl text-primary font-bold">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl text-primary font-bold">
           {" "}
           About Us{" "}
-        </h3>
+        </h1>
         <p>
           Discover the convenience of shopping with [Your Super Shop Name]! We
           offer a wide variety of high-quality products, from fresh groceries to

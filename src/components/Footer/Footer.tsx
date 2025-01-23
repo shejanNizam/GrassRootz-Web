@@ -36,9 +36,9 @@ const Footer = () => {
           {/* Navigation Links */}
           <div className="flex flex-col sm:flex-row">
             <div className="mr-20">
-              <h3 className="font-semibold text-primary text-xl mb-2">
+              <h1 className="font-semibold text-primary text-xl mb-2">
                 Explore
-              </h3>
+              </h1>
               <ul>
                 <li className="mb-1">
                   <Link
@@ -68,9 +68,9 @@ const Footer = () => {
             </div>
 
             <div className="mr-20">
-              <h3 className="font-semibold text-primary text-xl mb-2">
+              <h1 className="font-semibold text-primary text-xl mb-2">
                 Utility Pages
-              </h3>
+              </h1>
               <ul>
                 <li className="mb-1">
                   <Link
@@ -92,9 +92,9 @@ const Footer = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold text-primary text-xl mb-2">
+              <h1 className="font-semibold text-primary text-xl mb-2">
                 Get In Touch
-              </h3>
+              </h1>
               <ul>
                 <li className="mb-1">
                   <Link
