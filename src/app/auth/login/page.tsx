@@ -4,7 +4,6 @@ import { ErrorSwal, SuccessSwal } from "@/components/utils/allSwalFire";
 import { Button, Checkbox, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../../redux/api/authApi";
 import { setCredentials } from "../../../redux/slices/authSlice";
@@ -13,23 +12,22 @@ export default function Login() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const onFinish = async (values: { email: string; password: string }) => {
-    setIsSubmitting(true);
     try {
       const response = await login({
         email: values.email,
         password: values.password,
       }).unwrap();
 
-      const { user, token } = response;
-
-      dispatch(setCredentials({ user, token }));
-
-      // SetCookie(token);
+      dispatch(
+        setCredentials({
+          user: response?.data?.user,
+          token: response?.data?.token,
+        })
+      );
 
       SuccessSwal({
         title: "Login successful!",
@@ -42,8 +40,6 @@ export default function Login() {
         title: "Login failed!",
         text: `${(error as { data: { message: string } }).data.message}`,
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -110,7 +106,7 @@ export default function Login() {
               type="primary"
               htmlType="submit"
               size="large"
-              loading={isSubmitting}
+              loading={isLoading}
               className="w-full hover:bg-primary transition-colors"
             >
               Login

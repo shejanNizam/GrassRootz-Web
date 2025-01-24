@@ -1,5 +1,7 @@
 "use client";
 
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout } from "@/redux/slices/authSlice";
 import { Dropdown, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,9 +31,9 @@ const ProfileMenu = ({ handleLogout }: { handleLogout: () => void }) => (
 );
 
 export default function Navbar() {
-  // come from database
-  // const user = true;
-  const user = false;
+  const dispatch = useAppDispatch();
+
+  const { user, token } = useAppSelector((state) => state.auth);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -75,6 +77,7 @@ export default function Navbar() {
           title: "Logged out",
           text: "You have successfully logged out.",
         }).then(() => {
+          dispatch(logout());
           router.push("/auth/login");
         });
       }
@@ -123,7 +126,7 @@ export default function Navbar() {
               </div>
 
               {/* Action Buttons */}
-              {user ? (
+              {user?.email ? (
                 <>
                   <Dropdown
                     overlay={<ProfileMenu handleLogout={handleLogout} />}
@@ -247,7 +250,7 @@ export default function Navbar() {
               <hr className="my-4 border-white" />
 
               {/* Action Links */}
-              {user ? (
+              {user?.email ? (
                 <>
                   <Dropdown
                     overlay={<ProfileMenu handleLogout={handleLogout} />}
