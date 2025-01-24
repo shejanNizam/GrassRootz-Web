@@ -1,13 +1,17 @@
-import React from "react";
+"use client";
+
+import { useReducer } from "react";
+import { FaEye, FaHeart, FaShoppingCart } from "react-icons/fa"; // Importing React Icons
+import { intialState, reducer } from "./states";
 
 const mockData = [
   {
     id: 1,
-    name: "Green Apple",
-    price: "$14.99",
+    name: "Fresh Indian Malta",
+    price: "$20.00",
     image: "https://via.placeholder.com/150",
-    rating: 4.5,
-    status: "Out of Stock",
+    rating: 4.0,
+    status: "In Stock",
   },
   {
     id: 2,
@@ -84,6 +88,8 @@ const mockData = [
 ];
 
 export default function LatestProducts() {
+  const [todos, dispatch] = useReducer(reducer, intialState);
+
   return (
     <div>
       <h3 style={{ textAlign: "center", margin: "20px 0" }}>Latest Products</h3>
@@ -105,8 +111,44 @@ export default function LatestProducts() {
               backgroundColor: "#fff",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
               transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              position: "relative",
             }}
           >
+            {/* Icon buttons on the top-right */}
+            <div
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                display: "flex",
+                gap: "10px",
+                zIndex: 10,
+              }}
+            >
+              <button
+                onClick={() => dispatch({ type: "HeartClick" })}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: todos?.isHeartClick ? "#ff4d4d" : "#b0b0b0", // Change color on click
+                }}
+              >
+                <FaHeart size={20} />
+              </button>
+              <button
+                onClick={() => dispatch({ type: "eyeClicked" })}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: todos?.isEyeClick ? "#4d4dff" : "#b0b0b0", // Change color on click
+                }}
+              >
+                <FaEye size={20} />
+              </button>
+            </div>
+
             <img
               src={product.image}
               alt={product.name}
@@ -119,16 +161,44 @@ export default function LatestProducts() {
               }}
             />
             <div style={{ padding: "15px" }}>
-              <h4
+              <div
                 style={{
-                  fontSize: "18px",
-                  fontWeight: "600",
-                  marginBottom: "10px",
-                  color: "#333",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                {product.name}
-              </h4>
+                <h4
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "600",
+                    marginBottom: "10px",
+                    color: "#333",
+                    flexGrow: 1,
+                  }}
+                >
+                  {product.name}
+                </h4>
+                <button
+                  className="rounded-full"
+                  onClick={() => dispatch({ type: "cartClick" })}
+                  style={{
+                    backgroundColor: todos?.isCartClick ? "#ff9800" : "#b0b0b0", // Change color on click
+                    border: "none",
+                    padding: "8px 12px",
+                    borderRadius: "full",
+                    color: "#fff",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    display:
+                      product.status === "Out of Stock"
+                        ? "none"
+                        : "inline-block",
+                  }}
+                >
+                  <FaShoppingCart size={16} />
+                </button>
+              </div>
               <p
                 style={{
                   fontSize: "16px",
