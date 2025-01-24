@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Banner />
-      <div className="container min-h-screen">
+      <div className="container">
         <LatestProducts />
         <PopularPoducts />
         <WhyChoose />

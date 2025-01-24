@@ -1,42 +1,47 @@
 "use client";
 
-import { SuccessSwal } from "@/components/utils/allSwalFire";
-import { Button, Checkbox, Form, Input, message } from "antd";
+import { ErrorSwal, SuccessSwal } from "@/components/utils/allSwalFire";
+import { Button, Checkbox, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useLoginMutation } from "../../../redux/api/authApi";
+import { setCredentials } from "../../../redux/slices/authSlice";
 
-const Login = () => {
+export default function Login() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [login] = useLoginMutation();
+
   const onFinish = async (values: { email: string; password: string }) => {
-    console.log(values);
     setIsSubmitting(true);
     try {
-      // Handle form submission logic here
-      // Example: Send data to your API endpoint
-      // const response = await fetch('/api/login', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(values),
-      // });
+      const response = await login({
+        email: values.email,
+        password: values.password,
+      }).unwrap();
 
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const { user, token } = response;
+
+      dispatch(setCredentials({ user, token }));
+
+      // SetCookie(token);
+
       SuccessSwal({
-        title: "Login successfully!",
-        text: " Welcome to GrassRootz ",
+        title: "Login successful!",
+        text: "Welcome to GrassRootz!",
       });
-      // router.push("/profile/my-profile");
+
       router.push("/");
     } catch (error) {
-      console.error("Login error:", error);
-      message.error(
-        "Login failed. Please check your credentials and try again."
-      );
+      ErrorSwal({
+        title: "Login failed!",
+        text: `${(error as { data: { message: string } }).data.message}`,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -44,7 +49,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary">
-      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl rounded-tl-[8rem] md:rounded-tl-[10rem] rounded-br-[8rem] md:rounded-br-[10rem] w-full max-w-xl p-8 md:p-16 mt-[-200px]">
+      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl rounded-tl-[8rem] md:rounded-tl-[10rem] rounded-br-[8rem] md:rounded-br-[10rem] w-full max-w-xl p-8 md:p-16">
         <div className="flex flex-col items-center">
           <h2 className="text-primary text-2xl md:text-4xl font-semibold mb-8 border-b-2 border-b-gray-100">
             Login
@@ -124,6 +129,4 @@ const Login = () => {
       </div>
     </div>
   );
-};
-
-export default Login;
+}

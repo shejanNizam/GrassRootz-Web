@@ -38,7 +38,7 @@ export default function Contact() {
   const [form] = Form.useForm();
 
   return (
-    <section className="py-12">
+    <section className="py-24">
       <div className="container mx-auto md:px-4">
         <div className="text-center">
           <CustomHeading> Contact Us </CustomHeading>

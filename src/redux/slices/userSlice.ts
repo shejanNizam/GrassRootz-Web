@@ -1,36 +1,48 @@
+// src/redux/slices/userSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
-  user: { id: string; name: string; email: string } | null;
+  email: string | null;
+  token: string | null;
+  user: Record<string, unknown> | null;
+  isAuthenticated: boolean;
 }
 
 const initialState: UserState = {
+  email: null,
+  token: null,
   user: null,
+  isAuthenticated: false,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // Action to set user data
-    setUser: (state, action: PayloadAction<UserState["user"]>) => {
-      state.user = action.payload;
+    // Set user data after login or fetching user data
+    setUserData: (
+      state,
+      action: PayloadAction<{
+        email: string;
+        token: string;
+        user: Record<string, unknown>;
+      }>
+    ) => {
+      state.email = action.payload.email;
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+      state.isAuthenticated = true;
     },
 
-    // Action to update user data
-    updateUser: (state, action: PayloadAction<Partial<UserState["user"]>>) => {
-      if (state.user) {
-        state.user = { ...state.user, ...action.payload };
-      }
-    },
-
-    // Action to reset user data (e.g., on logout)
-    resetUser: (state) => {
+    // Logout user and clear all stored data
+    logout: (state) => {
+      state.email = null;
+      state.token = null;
       state.user = null;
+      state.isAuthenticated = false;
     },
   },
 });
 
-export const { setUser, updateUser, resetUser } = userSlice.actions;
-
+export const { setUserData, logout } = userSlice.actions;
 export default userSlice.reducer;

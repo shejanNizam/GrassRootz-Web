@@ -59,24 +59,6 @@ export default function Navbar() {
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
 
-  // const handleLogout = () => {
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "Do you want to logout?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, logout!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       // Implement actual logout logic here
-  //       message.success("Logged out successfully!");
-  //       router.push("/auth/login");
-  //     }
-  //   });
-  // };
-
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
