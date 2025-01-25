@@ -1,16 +1,16 @@
 export const intialState: {
   isHeartClick: boolean;
-  isEyeClick: boolean;
+  isProductClick: boolean;
   isCartClick: boolean;
 } = {
   isHeartClick: false,
-  isEyeClick: false,
+  isProductClick: false,
   isCartClick: false,
 };
 export const reducer = (
   state: {
     isHeartClick: boolean;
-    isEyeClick: boolean;
+    isProductClick: boolean;
     isCartClick: boolean;
   },
   action: {
@@ -23,10 +23,10 @@ export const reducer = (
         ...state,
         isHeartClick: !state.isHeartClick,
       };
-    case "eyeClicked":
+    case "productClicked":
       return {
         ...state,
-        isEyeClick: !state.isEyeClick,
+        isProductClick: !state.isProductClick,
       };
     case "cartClick":
       return {

@@ -175,17 +175,18 @@ export default function WhyChoose() {
                     aria-labelledby={`tab-${option._id}`}
                     className="flex flex-col items-start"
                   >
-                    <div className="relative w-full lg:w-[668px] h-64 md:h-80 lg:h-96 mb-6">
+                    <div className="relative w-full">
                       <Image
                         src={option.image}
                         alt={option.title}
-                        layout="fill"
                         objectFit="cover"
                         className="rounded-lg shadow-lg"
                         priority
                       />
                     </div>
-                    <p className="text-primary text-lg">{option.description}</p>
+                    <p className="text-primary text-lg mt-4">
+                      {option.description}
+                    </p>
                   </div>
                 )
             )}
