@@ -7,10 +7,6 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     credentials: "include",
-    // prepareHeaders: (headers) => {
-    //   headers.set("X-Custom-Header", "foobar");
-    //   return headers;
-    // },
   }),
 
   endpoints: () => ({}),

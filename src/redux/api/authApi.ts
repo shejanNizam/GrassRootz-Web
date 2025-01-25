@@ -20,10 +20,10 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     forgotPassword: builder.mutation({
-      query: (email) => ({
-        url: "/auth/forgot-password",
+      query: (body) => ({
+        url: "/user/forget-password",
         method: "POST",
-        body: { email },
+        body: body,
       }),
     }),
 

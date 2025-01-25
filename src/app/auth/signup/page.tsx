@@ -32,16 +32,19 @@ export default function Signup() {
         confirmPassword: values.confirmPassword,
       }).unwrap();
 
-      const { user, token } = response;
-
-      dispatch(setCredentials({ user, token }));
+      dispatch(
+        setCredentials({
+          user: response?.data?.user,
+          token: response?.data?.token,
+        })
+      );
 
       SuccessSwal({
         title: "Account created successfully!",
         text: "You have successfully created your account. Please log in.",
       });
 
-      router.push("/");
+      router.push("/auth/login");
     } catch (error) {
       if (error) {
         ErrorSwal({
