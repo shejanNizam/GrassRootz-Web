@@ -17,11 +17,9 @@ const ForgotPassword = () => {
   const onFinish = async (values: { email: string }) => {
     try {
       // Call the forgot password API using the hook
-      const response = await forgotPassword({
+      await forgotPassword({
         email: values.email,
       }).unwrap();
-
-      console.log(response);
 
       SuccessSwal({
         title: "OTP has been sent to your email!",

@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import { useReducer } from "react";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { intialState, reducer } from "../Home/LatestProducts/states";
@@ -35,11 +36,13 @@ export default function ProductCard({ product }: { product: Product }) {
           </button>
         </div>
 
-        <Image
-          src={product.image}
-          alt={product.name}
-          className="w-full h-48 object-cover rounded-t-lg"
-        />
+        <Link href={`/shop/${1}`}>
+          <Image
+            src={product.image}
+            alt={product.name}
+            className="w-full h-48 object-cover rounded-t-lg"
+          />
+        </Link>
         <div className="p-4">
           <div className="flex justify-between items-center">
             <h4 className="text-lg font-semibold">{product.name}</h4>

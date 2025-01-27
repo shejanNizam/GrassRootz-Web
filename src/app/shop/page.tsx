@@ -174,7 +174,7 @@ export default function Shop() {
   };
 
   return (
-    <div>
+    <div className="mb-20">
       <div className="text-center pt-32">
         <CustomHeading> Shop now </CustomHeading>
         <h4> Searchbar & Button here </h4>

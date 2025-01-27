@@ -3,6 +3,7 @@
 "use client"; // Enables client-side rendering for hooks and interactivity
 
 import { SuccessSwal } from "@/components/utils/allSwalFire";
+import { useVerifyEmailMutation } from "@/redux/api/authApi";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation"; // For Next.js App Router
 import { useRef, useState } from "react";
@@ -10,8 +11,9 @@ import { FaArrowLeft } from "react-icons/fa"; // Importing the back arrow icon
 
 const VerifyEmail = () => {
   const router = useRouter(); // Initialize Next.js router
-  const [isSubmitting, setIsSubmitting] = useState(false); // Loading state for form submission
   const [otp, setOtp] = useState(["", "", "", ""]); // State to hold each OTP digit
+
+  const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
 
   // Refs for each input to manage focus
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -49,7 +51,6 @@ const VerifyEmail = () => {
       return;
     }
 
-    setIsSubmitting(true);
     try {
       // TODO: Replace the mock submission with actual API call
       // Example:
@@ -72,14 +73,11 @@ const VerifyEmail = () => {
     } catch (error) {
       console.error("Verify Email error:", error);
       message.error("Invalid OTP. Please try again.");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   // Handle Resend OTP functionality
   const handleResend = async () => {
-    setIsSubmitting(true);
     try {
       // TODO: Replace the mock resend with actual API call
       // Example:
@@ -102,8 +100,6 @@ const VerifyEmail = () => {
     } catch (error) {
       console.error("Resend OTP error:", error);
       message.error("Failed to resend OTP. Please try again.");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -164,7 +160,7 @@ const VerifyEmail = () => {
             <Button
               type="link"
               onClick={handleResend}
-              disabled={isSubmitting}
+              disabled={isLoading}
               className="text-green-500 hover:text-green-600"
             >
               Resend
@@ -177,7 +173,7 @@ const VerifyEmail = () => {
               type="primary"
               htmlType="submit"
               size="large"
-              loading={isSubmitting}
+              loading={isLoading}
               className="w-full bg-green-500 hover:bg-green-600 transition-colors"
             >
               Verify
