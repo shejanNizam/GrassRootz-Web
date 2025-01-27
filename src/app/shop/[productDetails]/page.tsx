@@ -148,21 +148,16 @@ export default function ProductDetails() {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               {/* Order Now Button */}
-              <Button
-                type="primary"
-                className="bg-primary border-0 text-black font-semibold hover:bg-yellow-500"
-              >
+              <Button type="primary" className="bg-primary ">
                 Order Now
               </Button>
 
               {/* Add to Cart Button */}
-              <Button className="bg-gray-700 border-0 text-white hover:bg-gray-600">
-                Add to Cart
-              </Button>
+              <Button className="">Add to Cart</Button>
 
               {/* Wish Button */}
               <Button
-                className="bg-transparent border border-gray-500 text-gray-400 hover:bg-red-600 hover:text-white"
+                className="bg-transparent"
                 icon={<HeartOutlined />}
               ></Button>
             </div>
