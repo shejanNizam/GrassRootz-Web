@@ -32,70 +32,70 @@ export default function WishList() {
       image: img,
     },
     {
-      key: "2",
+      key: "4",
       product: "Chinese Cabbage",
       price: "$45.00",
       stockStatus: "In Stock",
       image: img,
     },
     {
-      key: "3",
+      key: "5",
       product: "Fresh Sujapuri Mango",
       price: "$09.00",
       stockStatus: "Out of Stock",
       image: img,
     },
     {
-      key: "2",
+      key: "6",
       product: "Chinese Cabbage",
       price: "$45.00",
       stockStatus: "In Stock",
       image: img,
     },
     {
-      key: "3",
+      key: "7",
       product: "Fresh Sujapuri Mango",
       price: "$09.00",
       stockStatus: "Out of Stock",
       image: img,
     },
     {
-      key: "2",
+      key: "8",
       product: "Chinese Cabbage",
       price: "$45.00",
       stockStatus: "In Stock",
       image: img,
     },
     {
-      key: "3",
+      key: "9",
       product: "Fresh Sujapuri Mango",
       price: "$09.00",
       stockStatus: "Out of Stock",
       image: img,
     },
     {
-      key: "2",
+      key: "10",
       product: "Chinese Cabbage",
       price: "$45.00",
       stockStatus: "In Stock",
       image: img,
     },
     {
-      key: "3",
+      key: "11",
       product: "Fresh Sujapuri Mango",
       price: "$09.00",
       stockStatus: "Out of Stock",
       image: img,
     },
     {
-      key: "2",
+      key: "12",
       product: "Chinese Cabbage",
       price: "$45.00",
       stockStatus: "In Stock",
       image: img,
     },
     {
-      key: "3",
+      key: "13",
       product: "Fresh Sujapuri Mango",
       price: "$09.00",
       stockStatus: "Out of Stock",
@@ -156,15 +156,7 @@ export default function WishList() {
       key: "action",
       render: (_: unknown, record: { stockStatus: string; key: string }) => (
         <div className="flex items-center space-x-4">
-          <Button
-            type="primary"
-            className={`${
-              record.stockStatus === "In Stock"
-                ? "bg-blue-500 hover:bg-blue-600"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
-            disabled={record.stockStatus !== "In Stock"}
-          >
+          <Button type="primary" disabled={record.stockStatus !== "In Stock"}>
             Add to Cart
           </Button>
           <Button
@@ -180,7 +172,7 @@ export default function WishList() {
 
   return (
     <>
-      <SecondaryBanner heading="WishList" />
+      <SecondaryBanner heading="My Wish List" />
       <div className="flex items-center justify-center min-h-screen ">
         <div className="w-full max-w-4xl p-6">
           <Table

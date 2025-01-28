@@ -25,8 +25,10 @@ export const mainTheme = {
     },
     Button: {
       colorPrimary: "#DEAD35",
+      colorTextDisabled: "#000000",
       colorPrimaryHover: "#966b02",
       colorPrimaryActive: "#DEAD35",
+      colorBgContainerDisabled: "white",
       borderRadius: 4,
       fontSize: 14,
       height: 60,
