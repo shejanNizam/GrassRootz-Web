@@ -12,6 +12,7 @@ const VerifyEmail = () => {
   const [otp, setOtp] = useState(["", "", "", ""]); // State to hold each OTP digit
 
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
+  console.log(verifyEmail);
 
   // Refs for each input to manage focus
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
