@@ -4,6 +4,7 @@ import { ErrorSwal, SuccessSwal } from "@/components/utils/allSwalFire";
 import { Button, Checkbox, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../../redux/api/authApi";
 import { setCredentials } from "../../../redux/slices/authSlice";
@@ -38,14 +39,26 @@ export default function Login() {
     } catch (error) {
       ErrorSwal({
         title: "Login failed!",
-        text: `${(error as { data: { message: string } }).data.message}`,
+        text: `${(error as { data: { message: string } }).data?.message}`,
       });
     }
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary">
-      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl rounded-tl-[8rem] md:rounded-tl-[10rem] rounded-br-[8rem] md:rounded-br-[10rem] w-full max-w-xl p-8 md:p-16">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary  px-4">
+      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl w-full max-w-xl p-8 md:p-16 relative">
+        <button
+          onClick={handleBack}
+          className="absolute top-4 left-4 text-gray-500 hover:text-gray-300 focus:outline-none"
+          aria-label="Go Back"
+        >
+          <FaArrowLeft size={24} />
+        </button>
+
         <div className="flex flex-col items-center">
           <h2 className="text-primary text-2xl md:text-4xl font-semibold mb-8 border-b-2 border-b-gray-100">
             Login

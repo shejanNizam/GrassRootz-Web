@@ -50,7 +50,7 @@ export default function Signup() {
         ErrorSwal({
           title: "Signup failed. Please try again.",
           text: ` Error: ${
-            (error as { data: { message: string } }).data.message
+            (error as { data: { message: string } }).data?.message
           } `,
         });
       } else {
@@ -65,13 +65,11 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary">
-      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl rounded-tl-[8rem] md:rounded-tl-[10rem] rounded-br-[8rem] md:rounded-br-[10rem] w-full max-w-xl p-8 md:p-16">
-        <div className="flex flex-col items-center">
-          <h2 className="text-primary text-2xl md:text-4xl font-semibold mb-8 border-b-2 border-b-gray-100">
-            Create Your Account
-          </h2>
-        </div>
+    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary pt-20 px-4">
+      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl w-full max-w-xl p-8 md:p-16">
+        <h2 className="text-primary text-center text-2xl md:text-4xl font-semibold mb-8 border-b-2 border-b-gray-100">
+          Create Your Account
+        </h2>
 
         {/* Signup Form */}
         <Form

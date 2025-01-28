@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaHeart, FaShoppingCart, FaTimes } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
 import Swal from "sweetalert2";
 import main_logo from "../../assets/main_logo.png";
@@ -18,13 +18,15 @@ import ProfileMenu from "./ProfileMenu";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
-
-  // const { user, token } = useAppSelector((state) => state.auth);
   const { user } = useAppSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
-
   const pathname = usePathname();
   const router = useRouter();
+
+  // Mock data for heart and cart counts
+  const [heartCount, setHeartCount] = useState(3);
+  const [cartCount, setCartCount] = useState(5);
+  console.log(setHeartCount, setCartCount);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -55,7 +57,6 @@ export default function Navbar() {
       confirmButtonText: "Yes, logout!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Implement actual logout logic here
         SuccessSwal({
           title: "Logged out",
           text: "You have successfully logged out.",
@@ -75,14 +76,18 @@ export default function Navbar() {
             {/* Logo Section */}
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" onClick={closeMenu}>
-                <Image width={96} height={80} src={main_logo} alt="main_logo" />
+                <Image width={96} height={80} src={main_logo} alt="Main Logo" />
               </Link>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex md:items-center space-x-8">
               {/* Navigation Links */}
-              <div className={`flex space-x-4 ${user ? " text-center " : ""}`}>
+              <div
+                className={`flex space-x-4 ${
+                  user?.email ? " text-center " : ""
+                }`}
+              >
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
@@ -96,6 +101,32 @@ export default function Navbar() {
                     {item.name}
                   </Link>
                 ))}
+              </div>
+
+              {/* Heart and Cart Icons */}
+              <div className="flex items-center space-x-6">
+                <Link
+                  href="/wish-list"
+                  className="relative text-white hover:text-primary transition duration-200"
+                >
+                  <FaHeart size={20} />
+                  {heartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full px-1.5 py-0.5">
+                      {heartCount}
+                    </span>
+                  )}
+                </Link>
+                <Link
+                  href="/cart-list"
+                  className="relative text-white hover:text-primary transition duration-200"
+                >
+                  <FaShoppingCart size={20} />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full px-1.5 py-0.5">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
               </div>
 
               {/* Action Buttons */}
@@ -112,7 +143,7 @@ export default function Navbar() {
                         height={1000}
                         className="w-12 h-12 rounded-full border-4 border-primary"
                         src={profile_image || "/default-profile.png"}
-                        alt="profile_image"
+                        alt="User Profile"
                       />
                       <TiArrowSortedDown />
                     </div>
@@ -135,8 +166,35 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button and Icons */}
             <div className="flex items-center md:hidden">
+              {/* Heart and Cart Icons for Mobile */}
+              <div className="flex items-center space-x-4 mr-4">
+                <Link
+                  href="/wish-list"
+                  className="relative text-white hover:text-primary transition duration-200"
+                >
+                  <FaHeart size={20} />
+                  {heartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full px-1.5 py-0.5">
+                      {heartCount}
+                    </span>
+                  )}
+                </Link>
+                <Link
+                  href="/cart"
+                  className="relative text-white hover:text-primary transition duration-200"
+                >
+                  <FaShoppingCart size={20} />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full px-1.5 py-0.5">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
+              </div>
+
+              {/* Toggle Button */}
               <button
                 onClick={toggleMenu}
                 type="button"
@@ -146,9 +204,9 @@ export default function Navbar() {
                 aria-label="Toggle navigation menu"
               >
                 {isOpen ? (
-                  <FaTimes className="block h-8 w-8" aria-hidden="true" />
+                  <FaTimes className="block h-5 w-5" aria-hidden="true" />
                 ) : (
-                  <FaBars className="block h-8 w-8" aria-hidden="true" />
+                  <FaBars className="block h-5 w-5" aria-hidden="true" />
                 )}
               </button>
             </div>
@@ -156,7 +214,6 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        {/* Slide-in Sidebar for Mobile */}
         <div
           className={`fixed inset-0 z-40 md:hidden transition-transform duration-300 ease-in-out ${
             isOpen ? "translate-x-0" : "-translate-x-full"
@@ -190,7 +247,7 @@ export default function Navbar() {
                   width={1000}
                   height={1000}
                   src={main_logo}
-                  alt="main_logo"
+                  alt="Main Logo"
                 />
               </Link>
               <button
@@ -198,7 +255,7 @@ export default function Navbar() {
                 className="text-white hover:text-primary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary w-8 h-8"
                 aria-label="Close menu"
               >
-                <FaTimes size={32} />
+                <FaTimes size={20} />
               </button>
             </div>
 
@@ -242,7 +299,7 @@ export default function Navbar() {
                         height={1000}
                         className="w-16 h-16 rounded-full border-4 border-primary"
                         src={profile_image}
-                        alt="profile_image"
+                        alt="User Profile"
                       />
                       <TiArrowSortedDown />
                     </div>

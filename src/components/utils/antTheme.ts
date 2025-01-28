@@ -9,9 +9,9 @@ export const mainTheme = {
   components: {
     Table: {
       colorTextHeading: "#DEAD35",
-      colorBgContainer: "#ffffff",
-      colorText: "#000000",
-      colorBorder: "#DEAD35",
+      colorBgContainer: "#000000",
+      colorText: "#ffffff",
+      colorBorder: "#000000",
       // Add other Table tokens as per documentation
     },
     Menu: {
