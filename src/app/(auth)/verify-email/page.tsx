@@ -1,48 +1,42 @@
-"use client"; // Enables client-side rendering for hooks and interactivity
+"use client";
 
 import { SuccessSwal } from "@/components/utils/allSwalFire";
 import { useVerifyEmailMutation } from "@/redux/api/authApi";
 import { Button, Form, Input, message } from "antd";
-import { useRouter } from "next/navigation"; // For Next.js App Router
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa"; // Importing the back arrow icon
+import { FaArrowLeft } from "react-icons/fa";
 
 const VerifyEmail = () => {
-  const router = useRouter(); // Initialize Next.js router
-  const [otp, setOtp] = useState(["", "", "", ""]); // State to hold each OTP digit
+  const router = useRouter();
+  const [otp, setOtp] = useState(["", "", "", ""]);
 
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
   console.log(verifyEmail);
 
-  // Refs for each input to manage focus
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  // Handle OTP input changes
   const onChangeOtp = (index: number, value: string) => {
     if (/^\d*$/.test(value)) {
-      // Ensure only digits are entered
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
-      // Move focus to next input if value is entered
+
       if (value && index < 3) {
         inputRefs.current[index + 1]?.focus();
       }
     }
   };
 
-  // Handle key down events for navigation (e.g., Backspace)
   const onKeyDownOtp = (
     index: number,
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Backspace" && !otp[index] && index > 0) {
-      // Move focus to previous input if Backspace is pressed on empty field
       inputRefs.current[index - 1]?.focus();
     }
   };
 
-  // Handle form submission
   const onFinish = async () => {
     const enteredOtp = otp.join("");
     if (enteredOtp.length < 4) {
@@ -51,17 +45,6 @@ const VerifyEmail = () => {
     }
 
     try {
-      // TODO: Replace the mock submission with actual API call
-      // Example:
-      // const response = await fetch('/api/verify-email', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ otp: enteredOtp }),
-      // });
-
-      // Mock response for demonstration
       await new Promise((resolve) => setTimeout(resolve, 2000));
       SuccessSwal({
         title: "Email verified successfully!",
@@ -75,19 +58,8 @@ const VerifyEmail = () => {
     }
   };
 
-  // Handle Resend OTP functionality
   const handleResend = async () => {
     try {
-      // TODO: Replace the mock resend with actual API call
-      // Example:
-      // const response = await fetch('/api/resend-otp', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-
-      // Mock response for demonstration
       await new Promise((resolve) => setTimeout(resolve, 2000));
       SuccessSwal({
         title: "OTP has been resent to your email!",
@@ -102,9 +74,8 @@ const VerifyEmail = () => {
     }
   };
 
-  // Handle back button click
   const handleBack = () => {
-    router.back(); // Navigate to the previous page
+    router.back();
   };
 
   return (

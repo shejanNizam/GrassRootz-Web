@@ -56,7 +56,7 @@ export default function ProductDetails() {
                 alt="Main T-Shirt"
                 className="w-full h-full object-cover"
                 style={{
-                  maxHeight: "calc(3 * 6rem + 2 * 1rem)", // Matches the height of 3 thumbnails with gaps
+                  maxHeight: "calc(3 * 6rem + 2 * 1rem)",
                 }}
               />
             </div>

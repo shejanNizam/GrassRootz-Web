@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/slices/authSlice";
-import { Dropdown, Menu } from "antd";
+import { Dropdown } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -14,44 +14,26 @@ import main_logo from "../../assets/main_logo.png";
 import profile_image from "../../assets/profile/profile_img.png";
 import CustomButton from "../utils/CustomButton";
 import { SuccessSwal } from "../utils/allSwalFire";
-
-const ProfileMenu = ({ handleLogout }: { handleLogout: () => void }) => (
-  <Menu>
-    <Menu.Item key="1">
-      <Link className="font-bold text-primary" href="/profile/my-profile">
-        My Profile
-      </Link>
-    </Menu.Item>
-    <Menu.Item key="2">
-      <div className="font-bold text-red-600" onClick={handleLogout}>
-        Logout
-      </div>
-    </Menu.Item>
-  </Menu>
-);
+import ProfileMenu from "./ProfileMenu";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
 
   // const { user, token } = useAppSelector((state) => state.auth);
   const { user } = useAppSelector((state) => state.auth);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
 
-  // Toggle mobile menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Close mobile menu
   const closeMenu = () => {
     setIsOpen(false);
   };
 
-  // Navigation links data
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Shop", href: "/shop" },
@@ -87,28 +69,18 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-black shadow-md fixed w-full p-2 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
+      <nav className="bg-black shadow-2xl fixed w-full p-4 z-50">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="flex justify-between">
             {/* Logo Section */}
             <div className="flex-shrink-0 flex items-center">
-              <Link
-                href="/"
-                className="text-xl font-bold text-white pl-16 md:pl-0"
-                onClick={closeMenu}
-              >
-                <Image
-                  className="w-20 h-16"
-                  width={1000}
-                  height={1000}
-                  src={main_logo}
-                  alt="main_logo"
-                />
+              <Link href="/" onClick={closeMenu}>
+                <Image width={96} height={80} src={main_logo} alt="main_logo" />
               </Link>
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex md:items-center space-x-4">
+            <div className="hidden md:flex md:items-center space-x-8">
               {/* Navigation Links */}
               <div className={`flex space-x-4 ${user ? " text-center " : ""}`}>
                 {navigation.map((item) => (
