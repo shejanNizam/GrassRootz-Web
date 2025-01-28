@@ -24,7 +24,7 @@ export default function About() {
           </Link>
         </p>
         <div>
-          <Link href={`/auth/join-contractor`}>
+          <Link href={`/about-us`}>
             <CustomButton> About </CustomButton>
           </Link>
         </div>

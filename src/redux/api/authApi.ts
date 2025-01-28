@@ -29,7 +29,7 @@ export const authApi = baseApi.injectEndpoints({
 
     resetPassword: builder.mutation({
       query: ({ token, newPassword }) => ({
-        url: `/auth/reset-password/${token}`,
+        url: `/reset-password/${token}`,
         method: "PATCH",
         body: { password: newPassword },
       }),
@@ -37,14 +37,14 @@ export const authApi = baseApi.injectEndpoints({
 
     verifyEmail: builder.mutation({
       query: (token) => ({
-        url: `/auth/verify-email/${token}`,
+        url: `/verify-email/${token}`,
         method: "POST",
       }),
     }),
 
     logout: builder.mutation({
       query: () => ({
-        url: "/auth/logout",
+        url: "/logout",
         method: "POST",
       }),
     }),

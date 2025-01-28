@@ -1,5 +1,3 @@
-// app/auth/verify-email/page.jsx
-
 "use client"; // Enables client-side rendering for hooks and interactivity
 
 import { SuccessSwal } from "@/components/utils/allSwalFire";
@@ -69,7 +67,7 @@ const VerifyEmail = () => {
         text: "",
       });
 
-      router.push("/auth/reset-password");
+      router.push("/reset-password");
     } catch (error) {
       console.error("Verify Email error:", error);
       message.error("Invalid OTP. Please try again.");

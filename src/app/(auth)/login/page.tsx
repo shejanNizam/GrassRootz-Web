@@ -95,7 +95,7 @@ export default function Login() {
                 <span className="text-white">Remember me</span>
               </Checkbox>
             </Form.Item>
-            <Link href="/auth/forgot-password" className="text-primary">
+            <Link href="/forgot-password" className="text-primary">
               Forgot password?
             </Link>
           </div>
@@ -116,7 +116,7 @@ export default function Login() {
           {/* Navigation Link to Signup Page */}
           <p className="text-center">
             <span className="text-white"> {"Don't have an account?"} </span>
-            <Link href="/auth/signup" className="text-primary">
+            <Link href="/signup" className="text-primary">
               {" "}
               Create Account
             </Link>

@@ -44,7 +44,7 @@ export default function Signup() {
         text: "You have successfully created your account. Please log in.",
       });
 
-      router.push("/auth/login");
+      router.push("/login");
     } catch (error) {
       if (error) {
         ErrorSwal({
@@ -189,7 +189,7 @@ export default function Signup() {
 
           <p className="text-center">
             <span className="text-white">Already have an account? </span>
-            <Link href="/auth/login" className="text-primary">
+            <Link href="/login" className="text-primary">
               Log In
             </Link>
           </p>

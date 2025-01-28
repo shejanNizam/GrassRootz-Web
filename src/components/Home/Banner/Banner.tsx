@@ -3,7 +3,7 @@ import bannerImage from "../../../assets/home/banner/banner_bg_img.png";
 
 export default function Banner() {
   return (
-    <div className="relative bg-cover bg-center h-[80vh] flex justify-center items-center z-30">
+    <div className="relative bg-cover bg-center h-[60vh] flex justify-center items-center z-30">
       <div className="absolute inset-0">
         <Image
           src={bannerImage}
@@ -14,13 +14,13 @@ export default function Banner() {
           priority
         />
       </div>
-      <div className="text-center text-white p-4 z-10">
+      <div className="text-center text-white p-4 mt-20 z-10">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold">
           Your Daily Essentials,
         </h1>
-        <h2 className="text-2xl sm:text-3xl md:text-4xl mt-2 font-light">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold">
           Just a Click Away!
-        </h2>
+        </h1>
       </div>
     </div>
   );

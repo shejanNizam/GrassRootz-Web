@@ -9,14 +9,14 @@ const middleware = (req: NextRequest) => {
 
   const url = req.nextUrl;
 
-  // If the user has a valid JWT and is trying to access `/auth/login`, redirect to `/`
-  if (jwt && url.pathname === "/auth/login") {
+  // If the user has a valid JWT and is trying to access `/login`, redirect to `/`
+  if (jwt && url.pathname === "/login") {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  // If the user does not have a JWT and is trying to access `/`, redirect to `/auth/login`
+  // If the user does not have a JWT and is trying to access `/`, redirect to `/login`
   if (!jwt && url.pathname === "/") {
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   // Allow all other routes to proceed
@@ -24,7 +24,7 @@ const middleware = (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/", "/auth/login"], // Match `/` and `/auth/login`
+  matcher: ["/", "/login"], // Match `/` and `/login`
 };
 
 export default middleware;

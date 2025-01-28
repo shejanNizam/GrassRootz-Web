@@ -1,5 +1,3 @@
-// app/auth/reset-password/page.jsx
-
 "use client"; // Enables client-side rendering for hooks and interactivity
 
 import { SuccessSwal } from "@/components/utils/allSwalFire";
@@ -46,7 +44,7 @@ const ResetPassword = () => {
         text: "Your password has been successfully updated.You can now log in with your new password.",
       });
 
-      router.push("/auth/login");
+      router.push("/login");
     } catch (error) {
       console.error("Reset Password error:", error);
       message.error("Failed to reset password. Please try again.");
@@ -150,7 +148,7 @@ const ResetPassword = () => {
           {/* Navigation Link to Login Page */}
           <p className="text-center">
             <span className="text-white">Remembered your password? </span>
-            <Link href="/auth/login" className="text-primary">
+            <Link href="/login" className="text-primary">
               Log In
             </Link>
           </p>

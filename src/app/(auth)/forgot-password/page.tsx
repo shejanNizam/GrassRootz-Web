@@ -25,7 +25,7 @@ const ForgotPassword = () => {
         title: "OTP has been sent to your email!",
         text: "",
       });
-      router.push("/auth/verify-email");
+      router.push("/verify-email");
     } catch (error) {
       console.error("Forgot Password error:", error);
       ErrorSwal({
@@ -96,7 +96,7 @@ const ForgotPassword = () => {
 
           <p className="text-center">
             <span className="text-white">Remembered your password? </span>
-            <Link href="/auth/login" className="text-primary">
+            <Link href="/login" className="text-primary">
               Log In
             </Link>
           </p>
