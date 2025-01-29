@@ -203,7 +203,7 @@ export default function CartList() {
               <span className="font-bold text-xl">${cartTotal.toFixed(2)}</span>
             </div>
             <br /> <br />
-            <Link href={`/`}>
+            <Link href={`/checkout`}>
               <span className="w-full flex justify-center bg-white hover:bg-primary text-black font-semibold px-6 py-4 mt-4 rounded-full">
                 Proceed to Checkout
               </span>
