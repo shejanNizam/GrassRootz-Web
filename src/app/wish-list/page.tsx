@@ -173,12 +173,12 @@ export default function WishList() {
   return (
     <>
       <SecondaryBanner heading="My Wish List" />
-      <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center">
         <div className="w-full max-w-4xl p-6">
           <Table
             columns={columns}
             dataSource={wishlistItems}
-            pagination={{ pageSize: 10 }}
+            pagination={{ pageSize: 5 }}
             className="bg-gray-900 rounded-lg"
           />
         </div>

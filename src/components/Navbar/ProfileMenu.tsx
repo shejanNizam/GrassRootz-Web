@@ -10,7 +10,7 @@ export default function ProfileMenu({
     <>
       <Menu>
         <Menu.Item key="1">
-          <Link className="font-bold text-primary" href="/profile/my-profile">
+          <Link className="font-bold text-primary" href="/dashboard">
             My Profile
           </Link>
         </Menu.Item>

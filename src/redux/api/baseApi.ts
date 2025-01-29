@@ -6,7 +6,12 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    credentials: "include",
+    // credentials: "include",
+    // prepareHeaders: (headers) => {
+    //   // Add any custom headers here
+    //   headers.set("Content-Type", "application/json");
+    //   return headers;
+    // },
   }),
 
   endpoints: () => ({}),
