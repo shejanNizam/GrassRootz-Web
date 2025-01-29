@@ -113,7 +113,7 @@ export default function WhyChoose() {
         </div>
 
         {/* Tablist */}
-        <div className="grid grid-cols-1 md:grid-cols-2 justify-around items-center gap-8 md:gap-0 md:px-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 justify-around items-center gap-8 md:gap-0 lg:px-32">
           {/* Left Sidebar */}
           <div className="">
             <div className="flex flex-col items-start">

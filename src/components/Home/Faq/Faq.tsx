@@ -40,7 +40,7 @@ export default function Faq() {
   ];
 
   return (
-    <div className="bg-black text-white p-8 rounded-lg max-w-auto px-12 mx-auto">
+    <div className="bg-black text-white md:p-8 rounded-lg max-w-auto md:px-12 mx-auto">
       <h3 className="text-center mb-8">
         <CustomHeading> FAQ </CustomHeading>
       </h3>

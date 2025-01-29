@@ -89,7 +89,7 @@ const mockData = [
 
 export default function PopularPoducts() {
   return (
-    <div className="p-4">
+    <div className="md:p-4">
       <CustomHeading> Popular Products </CustomHeading>
       <div className="flex flex-wrap gap-6 justify-center">
         {mockData?.map((product) => (

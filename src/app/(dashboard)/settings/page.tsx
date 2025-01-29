@@ -1,7 +1,9 @@
 export default function Settings() {
   return (
-    <div>
-      <h3>Settings</h3>
+    <div className="min-h-screen">
+      <div>
+        <h3>Settings</h3>
+      </div>
     </div>
   );
 }

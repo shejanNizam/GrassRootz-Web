@@ -8,7 +8,6 @@ import { useState } from "react";
 import img from "../../assets/shop/shop_product_img.png";
 
 export default function WishList() {
-  // Sample data for the wishlist
   const [wishlistItems, setWishlistItems] = useState([
     {
       key: "1",
@@ -31,91 +30,20 @@ export default function WishList() {
       stockStatus: "Out of Stock",
       image: img,
     },
-    {
-      key: "4",
-      product: "Chinese Cabbage",
-      price: "$45.00",
-      stockStatus: "In Stock",
-      image: img,
-    },
-    {
-      key: "5",
-      product: "Fresh Sujapuri Mango",
-      price: "$09.00",
-      stockStatus: "Out of Stock",
-      image: img,
-    },
-    {
-      key: "6",
-      product: "Chinese Cabbage",
-      price: "$45.00",
-      stockStatus: "In Stock",
-      image: img,
-    },
-    {
-      key: "7",
-      product: "Fresh Sujapuri Mango",
-      price: "$09.00",
-      stockStatus: "Out of Stock",
-      image: img,
-    },
-    {
-      key: "8",
-      product: "Chinese Cabbage",
-      price: "$45.00",
-      stockStatus: "In Stock",
-      image: img,
-    },
-    {
-      key: "9",
-      product: "Fresh Sujapuri Mango",
-      price: "$09.00",
-      stockStatus: "Out of Stock",
-      image: img,
-    },
-    {
-      key: "10",
-      product: "Chinese Cabbage",
-      price: "$45.00",
-      stockStatus: "In Stock",
-      image: img,
-    },
-    {
-      key: "11",
-      product: "Fresh Sujapuri Mango",
-      price: "$09.00",
-      stockStatus: "Out of Stock",
-      image: img,
-    },
-    {
-      key: "12",
-      product: "Chinese Cabbage",
-      price: "$45.00",
-      stockStatus: "In Stock",
-      image: img,
-    },
-    {
-      key: "13",
-      product: "Fresh Sujapuri Mango",
-      price: "$09.00",
-      stockStatus: "Out of Stock",
-      image: img,
-    },
   ]);
 
-  // Function to remove a product from the wishlist
   const handleRemoveProduct = (key: string) => {
     setWishlistItems((prevItems) =>
       prevItems.filter((item) => item.key !== key)
     );
   };
 
-  // Columns for the Ant Design table
   const columns = [
     {
       title: "PRODUCT",
       dataIndex: "product",
       key: "product",
+      responsive: ["md" as const], // Hide on small screens
       render: (text: string, record: { image: StaticImageData }) => (
         <div className="flex items-center space-x-4">
           <Image
@@ -155,8 +83,12 @@ export default function WishList() {
       title: "ACTION",
       key: "action",
       render: (_: unknown, record: { stockStatus: string; key: string }) => (
-        <div className="flex items-center space-x-4">
-          <Button type="primary" disabled={record.stockStatus !== "In Stock"}>
+        <div className="flex items-center space-x-2">
+          <Button
+            type="primary"
+            size="small"
+            disabled={record.stockStatus !== "In Stock"}
+          >
             Add to Cart
           </Button>
           <Button
@@ -173,13 +105,14 @@ export default function WishList() {
   return (
     <>
       <SecondaryBanner heading="My Wish List" />
-      <div className="flex items-center justify-center">
-        <div className="w-full max-w-4xl p-6">
+      <div className="flex items-center justify-center p-4">
+        <div className="w-full max-w-4xl mx-auto bg-gray-900 rounded-lg p-4 overflow-x-auto">
           <Table
             columns={columns}
             dataSource={wishlistItems}
             pagination={{ pageSize: 5 }}
-            className="bg-gray-900 rounded-lg"
+            className="bg-gray-900 text-white rounded-lg"
+            scroll={{ x: 600 }} // Ensures scrollability on small screens
           />
         </div>
       </div>

@@ -49,7 +49,7 @@ export default function Sidebar({
         className={`
           min-h-screen fixed top-24 inset-y-0 left-0 z-20 transform translate-x-0
           transition-transform duration-200 ease-in-out 
-          bg-gray-800 text-white 
+          bg-gray-900 text-white 
           ${isCollapsed ? "w-16" : "w-64"}
         `}
       >
