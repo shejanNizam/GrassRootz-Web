@@ -1,7 +1,6 @@
 "use client";
 
-import { HeartOutlined } from "@ant-design/icons";
-import { Button, InputNumber, Rate, Select } from "antd";
+import { InputNumber, Rate, Select } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import img2 from "../../../assets/home/latest_products/latest_product_img.png";
@@ -24,6 +23,7 @@ export default function ProductDetails() {
     { src: img2, alt: "Thumb2" },
     { src: img3, alt: "Thumb3" },
   ];
+
   return (
     <div>
       <div className="bg-black text-white flex items-start justify-center py-20">
@@ -144,18 +144,25 @@ export default function ProductDetails() {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               {/* Order Now Button */}
-              <Button type="primary" className="bg-primary ">
-                Order Now
-              </Button>
 
-              {/* Add to Cart Button */}
-              <Button className="">Add to Cart</Button>
+              <button className="w-[80%] px-4 py-2 bg-primary text-white rounded-full shadow-md hover:bg-red-400 transition-all duration-200">
+                Order Now
+              </button>
+              <button className="w-[80%] px-4 py-2 bg-white text-primary rounded-full shadow-md hover:bg-red-400 transition-all duration-200">
+                Add to Cart
+              </button>
 
               {/* Wish Button */}
-              <Button
+              {/* <Button
                 className="bg-transparent"
                 icon={<HeartOutlined />}
-              ></Button>
+              ></Button> */}
+              {/* <div
+                className=" cursor-pointer hover:text-red-700 px-4 py-2"
+                onClick={handleClickHeart}
+              >
+                <HeartOutlined />
+              </div> */}
             </div>
           </div>
         </div>
