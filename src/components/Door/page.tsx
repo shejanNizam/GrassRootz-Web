@@ -10,14 +10,14 @@ import logo from "../../assets/main_logo.png";
 
 export default function Door() {
   const [isOpen, setIsOpen] = useState(false);
-  const [showDoors, setShowDoors] = useState(true); // New state to remove the overlay
+  const [isHidden, setIsHidden] = useState(false); // Controls visibility
 
   useEffect(() => {
     // Check if the door was opened previously (stored in localStorage)
     const doorState = localStorage.getItem("doorOpened");
     if (doorState === "true") {
       setIsOpen(true);
-      setShowDoors(false); // Remove overlay so links work
+      setTimeout(() => setIsHidden(true), 1000); // Hide after animation
     }
   }, []);
 
@@ -26,7 +26,7 @@ export default function Door() {
     localStorage.setItem("doorOpened", "true"); // Store the state in localStorage
 
     setTimeout(() => {
-      setShowDoors(false); // Completely remove the overlay after animation
+      setIsHidden(true); // Hide the container after animation
     }, 1000);
   };
 
@@ -40,10 +40,13 @@ export default function Door() {
     });
   };
 
-  if (!showDoors) return null; // Completely remove the component after doors open
-
   return (
-    <div className="fixed z-50 w-full h-screen flex justify-center items-center">
+    <div
+      id="door-container"
+      className={`fixed z-50 w-full h-screen flex justify-center items-center transition-opacity duration-1000 ${
+        isHidden ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+    >
       {/* Doors */}
       <div className="relative w-full h-full flex">
         {/* Left Door */}
