@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
+import Door from "@/components/Door/page";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,13 +35,16 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
         <StoreProvider>
-          <Navbar />
+          <div className="relative">
+            <Door />
+            <Navbar />
 
-          <AntdRegistry>
-            <ThemeProvider>{children}</ThemeProvider>
-          </AntdRegistry>
+            <AntdRegistry>
+              <ThemeProvider>{children}</ThemeProvider>
+            </AntdRegistry>
 
-          <Footer />
+            <Footer />
+          </div>
         </StoreProvider>
       </body>
     </html>

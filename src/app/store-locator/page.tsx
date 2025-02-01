@@ -40,33 +40,6 @@ const branches = [
     phone: "(990) 23254567",
     hours: "09:00 AM / 10:00 PM",
   },
-  {
-    id: 3,
-    name: "Branch Name",
-    lat: -37.82,
-    lng: 144.9556,
-    address: "Location Here",
-    phone: "(990) 23254567",
-    hours: "09:00 AM / 10:00 PM",
-  },
-  {
-    id: 4,
-    name: "Branch Name",
-    lat: -37.825,
-    lng: 144.9756,
-    address: "Location Here",
-    phone: "(990) 23254567",
-    hours: "09:00 AM / 10:00 PM",
-  },
-  {
-    id: 5,
-    name: "Branch Name",
-    lat: -37.83,
-    lng: 144.9506,
-    address: "Location Here",
-    phone: "(990) 23254567",
-    hours: "09:00 AM / 10:00 PM",
-  },
 ];
 
 export default function StoreLocator() {
