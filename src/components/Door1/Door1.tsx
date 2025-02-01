@@ -11,6 +11,7 @@ import logo from "../../assets/main_logo.png";
 export default function Door() {
   const [isOpen, setIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false); // Controls visibility
+  const [isInitialized, setIsInitialized] = useState(false); // Tracks if component has initialized
 
   useEffect(() => {
     // Check if the door was opened previously (stored in localStorage)
@@ -19,6 +20,7 @@ export default function Door() {
       setIsOpen(true);
       setTimeout(() => setIsHidden(true), 1000); // Hide after animation
     }
+    setIsInitialized(true); // Mark component as initialized
   }, []);
 
   const handleOpen = () => {
@@ -80,7 +82,7 @@ export default function Door() {
         </motion.div>
 
         {/* Modal */}
-        {!isOpen && (
+        {isInitialized && !isOpen && !isHidden && (
           <div
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
             w-full max-w-lg flex flex-col items-center justify-center bg-black p-8 rounded-lg border border-yellow-400 shadow-xl"

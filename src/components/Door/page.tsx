@@ -6,20 +6,21 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import door_img_left from "../../assets/door/door_img_left.png";
 import door_img_right from "../../assets/door/door_img_right.png";
-import DoorModal from "./DoorModal";
+import logo from "../../assets/main_logo.png";
 
 export default function Door() {
   const [isOpen, setIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false); // Controls visibility
+  const [isInitialized, setIsInitialized] = useState(false); // Tracks if component has initialized
 
-  const doorState = localStorage.getItem("doorOpened");
-  // Check if the door has already been opened on page load
   useEffect(() => {
+    // Check if the door was opened previously (stored in localStorage)
     const doorState = localStorage.getItem("doorOpened");
     if (doorState === "true") {
       setIsOpen(true);
-      setTimeout(() => setIsHidden(true), 1000); // Hide after door animation
+      setTimeout(() => setIsHidden(true), 1000); // Hide after animation (1 second)
     }
+    setIsInitialized(true); // Mark component as initialized
   }, []);
 
   const handleOpen = () => {
@@ -27,7 +28,7 @@ export default function Door() {
     localStorage.setItem("doorOpened", "true"); // Store the state in localStorage
 
     setTimeout(() => {
-      setIsHidden(true); // Hide the door container after animation
+      setIsHidden(true); // Hide the container after animation (1 second)
     }, 1000);
   };
 
@@ -54,7 +55,7 @@ export default function Door() {
         <motion.div
           initial={{ x: 0 }}
           animate={isOpen ? { x: "-100%" } : {}}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1 }} // Animation duration: 1 second
           className="absolute left-0 top-0 h-full w-1/2"
         >
           <Image
@@ -69,7 +70,7 @@ export default function Door() {
         <motion.div
           initial={{ x: 0 }}
           animate={isOpen ? { x: "100%" } : {}}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1 }} // Animation duration: 1 second
           className="absolute right-0 top-0 h-full w-1/2"
         >
           <Image
@@ -81,11 +82,40 @@ export default function Door() {
         </motion.div>
 
         {/* Modal */}
-        {!isOpen && !doorState && (
-          <DoorModal
-            handleOpen={handleOpen}
-            handleUnderageAlert={handleUnderageAlert}
-          />
+        {isInitialized && !isOpen && !isHidden && (
+          <div
+            className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
+            w-full max-w-lg flex flex-col items-center justify-center bg-black p-8 rounded-lg border border-yellow-400 shadow-xl"
+          >
+            <Image
+              src={logo}
+              alt="Logo"
+              width={1000}
+              height={1000}
+              className="w-44 h-32 mb-4"
+            />
+            <h2 className="text-primary text-3xl font-bold text-center">
+              Welcome!
+            </h2>
+            <p className="text-white text-center font-semibold text-xl">
+              You must be <span className="text-primary font-bold">21+</span> to
+              enter this site
+            </p>
+            <div className="flex gap-4 mt-6">
+              <button
+                className="px-6 py-2 bg-red-600 text-white rounded"
+                onClick={handleUnderageAlert}
+              >
+                No
+              </button>
+              <button
+                className="px-6 py-2 bg-green-600 text-white rounded"
+                onClick={handleOpen}
+              >
+                Yes
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>
