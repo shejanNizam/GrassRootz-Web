@@ -15,11 +15,12 @@ export default function Door() {
   const doorState = localStorage.getItem("doorOpened");
   // Check if the door has already been opened on page load
   useEffect(() => {
+    const doorState = localStorage.getItem("doorOpened");
     if (doorState === "true") {
       setIsOpen(true);
       setTimeout(() => setIsHidden(true), 1000); // Hide after door animation
     }
-  }, [doorState]);
+  }, []);
 
   const handleOpen = () => {
     setIsOpen(true);
