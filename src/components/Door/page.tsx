@@ -10,23 +10,23 @@ import logo from "../../assets/main_logo.png";
 
 export default function Door() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showDoors, setShowDoors] = useState(true); // New state to remove the overlay
 
   useEffect(() => {
     // Check if the door was opened previously (stored in localStorage)
     const doorState = localStorage.getItem("doorOpened");
     if (doorState === "true") {
-      setIsOpen(true); // Keep the door open if the flag is true
+      setIsOpen(true);
+      setShowDoors(false); // Remove overlay so links work
     }
   }, []);
 
   const handleOpen = () => {
     setIsOpen(true);
     localStorage.setItem("doorOpened", "true"); // Store the state in localStorage
+
     setTimeout(() => {
-      const doorContainer = document.getElementById("door-container");
-      if (doorContainer) {
-        doorContainer.style.display = "none";
-      }
+      setShowDoors(false); // Completely remove the overlay after animation
     }, 1000);
   };
 
@@ -40,11 +40,10 @@ export default function Door() {
     });
   };
 
+  if (!showDoors) return null; // Completely remove the component after doors open
+
   return (
-    <div
-      id="door-container"
-      className="fixed z-50 w-full h-screen flex justify-center items-center"
-    >
+    <div className="fixed z-50 w-full h-screen flex justify-center items-center">
       {/* Doors */}
       <div className="relative w-full h-full flex">
         {/* Left Door */}
@@ -88,7 +87,7 @@ export default function Door() {
               alt="Logo"
               width={1000}
               height={1000}
-              className=" w-44 h-32 mb-4"
+              className="w-44 h-32 mb-4"
             />
             <h2 className="text-primary text-3xl font-bold text-center">
               Welcome!
