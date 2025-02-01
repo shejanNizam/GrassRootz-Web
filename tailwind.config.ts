@@ -25,6 +25,9 @@ const config: Config = {
         //   DEFAULT: "#93BB72",
         // },
       },
+      screens: {
+        mobile: { max: "767px" }, // Define a custom breakpoint for mobile devices
+      },
     },
   },
   plugins: [],

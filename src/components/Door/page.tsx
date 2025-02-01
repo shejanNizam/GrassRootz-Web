@@ -2,17 +2,26 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import door_img_left from "../../assets/door/door_img_left.png";
 import door_img_right from "../../assets/door/door_img_right.png";
-import logo from "../../assets/main_logo.svg";
+import logo from "../../assets/main_logo.png";
 
 export default function Door() {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    // Check if the door was opened previously (stored in localStorage)
+    const doorState = localStorage.getItem("doorOpened");
+    if (doorState === "true") {
+      setIsOpen(true); // Keep the door open if the flag is true
+    }
+  }, []);
+
   const handleOpen = () => {
     setIsOpen(true);
+    localStorage.setItem("doorOpened", "true"); // Store the state in localStorage
     setTimeout(() => {
       const doorContainer = document.getElementById("door-container");
       if (doorContainer) {
@@ -77,15 +86,16 @@ export default function Door() {
             <Image
               src={logo}
               alt="Logo"
-              width={120}
-              height={120}
-              className="mb-4"
+              width={1000}
+              height={1000}
+              className=" w-44 h-32 mb-4"
             />
-            <h2 className="text-white text-2xl font-bold text-center">
+            <h2 className="text-primary text-3xl font-bold text-center">
               Welcome!
             </h2>
-            <p className="text-white text-center">
-              You must be 21+ to enter this site
+            <p className="text-white text-center font-semibold text-xl">
+              You must be <span className="text-primary font-bold">21+</span> to
+              enter this site
             </p>
             <div className="flex gap-4 mt-6">
               <button
