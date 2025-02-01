@@ -2,7 +2,7 @@
 
 import ProductCard from "@/components/ProductCard/ProductCard";
 import CustomHeading from "@/components/utils/CustomHeading";
-import { Checkbox, Slider } from "antd";
+import { Checkbox, Input, Slider } from "antd"; // Import Input from antd
 import { useState } from "react";
 import shop_product_img from "../../assets/shop/shop_product_img.png";
 
@@ -157,6 +157,7 @@ const mockData = [
 export default function Shop() {
   const [priceRange, setPriceRange] = useState([50, 1500]);
   const [selectedCategories, setSelectedCategories] = useState(["All"]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   // Handle the slider change
   const handlePriceChange = (value: number[]) => {
@@ -173,11 +174,39 @@ export default function Shop() {
     setPriceRange([50, 1500]);
   };
 
+  // Handle search input change
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Filter products based on search query, price range, and category
+  const filteredProducts = mockData.filter((product) => {
+    const matchesSearch = product.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesPrice =
+      parseFloat(product.price.slice(1)) >= priceRange[0] &&
+      parseFloat(product.price.slice(1)) <= priceRange[1];
+    const matchesCategory =
+      selectedCategories.includes("All") ||
+      selectedCategories.includes(product.category);
+
+    return matchesSearch && matchesPrice && matchesCategory;
+  });
+
   return (
     <div className="mb-20">
       <div className="text-center pt-32">
         <CustomHeading> Shop now </CustomHeading>
-        <h4> Searchbar & Button here </h4>
+        {/* Replace static text with Ant Design Input */}
+        <div className="mt-4">
+          <Input
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={handleSearch}
+            style={{ width: 300 }} // Adjust width as needed
+          />
+        </div>
       </div>
 
       <div className="pt-20 bg-black container flex gap-6 z-20">
@@ -270,17 +299,9 @@ export default function Shop() {
 
         {/* Product Grid */}
         <div className="w-3/4 flex flex-wrap gap-6 justify-center">
-          {mockData
-            .filter(
-              (product) =>
-                parseFloat(product.price.slice(1)) >= priceRange[0] &&
-                parseFloat(product.price.slice(1)) <= priceRange[1] &&
-                (selectedCategories.includes("All") ||
-                  selectedCategories.includes(product.category)) // Show all if "All" is selected
-            )
-            .map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </div>
     </div>
