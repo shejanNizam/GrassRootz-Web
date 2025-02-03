@@ -46,6 +46,7 @@ const VerifyEmail = () => {
         email,
         otp: enteredOtp,
       }).unwrap();
+      console.log(response?.data?.accesstoken);
 
       if (response.success) {
         SuccessSwal({
@@ -54,7 +55,9 @@ const VerifyEmail = () => {
         });
 
         // Pass the token to reset-password page
-        router.push(`/reset-password?token=${response.data.accesstoken}`);
+        router.push(`/reset-password`);
+        console.log(response?.data);
+        sessionStorage.setItem("reset_token", response?.data?.accesstoken);
       } else {
         message.error(response.message || "Invalid OTP. Please try again.");
       }

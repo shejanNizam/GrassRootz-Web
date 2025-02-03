@@ -42,11 +42,14 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     resetPassword: builder.mutation({
-      query: ({ password }) => ({
-        url: "/user/reset-password",
-        method: "POST",
-        body: { password },
-      }),
+      query: ({ password, token }) => {
+        return {
+          url: "/user/reset-password",
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: { password },
+        };
+      },
     }),
 
     verifyEmail: builder.mutation({

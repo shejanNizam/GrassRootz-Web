@@ -8,7 +8,6 @@ export const baseApi = createApi({
     baseUrl: BASE_URL,
     // credentials: "include",
     prepareHeaders: (headers) => {
-      // Add any custom headers here
       const token = localStorage.getItem("user_token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

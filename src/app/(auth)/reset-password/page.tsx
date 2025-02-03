@@ -3,13 +3,12 @@
 import { SuccessSwal } from "@/components/utils/allSwalFire";
 import { useResetPasswordMutation } from "@/redux/api/authApi";
 import { Button, Form, Input, message } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const ResetPassword = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  // const searchParams = useSearchParams();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form] = Form.useForm();
@@ -26,6 +25,7 @@ const ResetPassword = () => {
 
     setIsSubmitting(true);
     try {
+      const token = sessionStorage.getItem("reset_token");
       await resetPassword({ token, password: values.password }).unwrap();
 
       SuccessSwal({
