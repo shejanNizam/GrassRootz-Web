@@ -1,17 +1,18 @@
 "use client";
 
 import { ErrorSwal, SuccessSwal } from "@/components/utils/allSwalFire";
+import { useAppDispatch } from "@/redux/hooks";
 import { Button, Checkbox, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
-import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../../redux/api/authApi";
 import { setCredentials } from "../../../redux/slices/authSlice";
 
 export default function Login() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm();
 
   const [login, { isLoading }] = useLoginMutation();

@@ -16,16 +16,15 @@ const ForgotPassword = () => {
 
   const onFinish = async (values: { email: string }) => {
     try {
-      // Call the forgot password API using the hook
       await forgotPassword({
-        email: values.email,
+        email: values?.email,
       }).unwrap();
 
       SuccessSwal({
         title: "OTP has been sent to your email!",
-        text: "",
+        text: `Check your email in ${values?.email}`,
       });
-      router.push("/verify-email");
+      router.push(`/verify-email?email=${values?.email}`);
     } catch (error) {
       console.error("Forgot Password error:", error);
       ErrorSwal({
@@ -36,7 +35,7 @@ const ForgotPassword = () => {
   };
 
   const handleBack = () => {
-    router.back(); // Navigate to the previous page
+    router.back();
   };
 
   return (

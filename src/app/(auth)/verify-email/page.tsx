@@ -1,30 +1,27 @@
 "use client";
 
 import { SuccessSwal } from "@/components/utils/allSwalFire";
-import { useVerifyEmailMutation } from "@/redux/api/authApi";
+import { useVerifyForgetOtpMutation } from "@/redux/api/authApi";
 import { Button, Form, Input, message } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
 
 const VerifyEmail = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+
   const [otp, setOtp] = useState(["", "", "", ""]);
-
-  const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
-  console.log(verifyEmail);
-
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const [verifyForgetOtp, { isLoading }] = useVerifyForgetOtpMutation();
 
   const onChangeOtp = (index: number, value: string) => {
     if (/^\d*$/.test(value)) {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
-
-      if (value && index < 3) {
-        inputRefs.current[index + 1]?.focus();
-      }
+      if (value && index < 3) inputRefs.current[index + 1]?.focus();
     }
   };
 
@@ -45,65 +42,39 @@ const VerifyEmail = () => {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      SuccessSwal({
-        title: "Email verified successfully!",
-        text: "",
-      });
+      const response = await verifyForgetOtp({
+        email,
+        otp: enteredOtp,
+      }).unwrap();
 
-      router.push("/reset-password");
+      if (response.success) {
+        SuccessSwal({
+          title: "OTP Verified!",
+          text: "Redirecting to reset password.",
+        });
+
+        // Pass the token to reset-password page
+        router.push(`/reset-password?token=${response.data.accesstoken}`);
+      } else {
+        message.error(response.message || "Invalid OTP. Please try again.");
+      }
     } catch (error) {
-      console.error("Verify Email error:", error);
-      message.error("Invalid OTP. Please try again.");
+      console.log(error);
+      message.error("Something went wrong. Please try again.");
     }
-  };
-
-  const handleResend = async () => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      SuccessSwal({
-        title: "OTP has been resent to your email!",
-        text: "",
-      });
-
-      setOtp(["", "", "", ""]);
-      inputRefs.current[0]?.focus();
-    } catch (error) {
-      console.error("Resend OTP error:", error);
-      message.error("Failed to resend OTP. Please try again.");
-    }
-  };
-
-  const handleBack = () => {
-    router.back();
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center p-4 ">
-      {/* Verify Email Container */}
+    <div className="min-h-screen w-full flex flex-col justify-center items-center p-4">
       <div className="bg-gray-950 border border-primary shadow-lg rounded-lg w-full max-w-md p-6 relative">
-        {/* Back Button */}
-        <button
-          onClick={handleBack}
-          className="absolute top-4 left-4 text-gray-500 hover:text-gray-300 focus:outline-none z-50"
-          aria-label="Go Back"
-        >
-          <FaArrowLeft size={24} />
-        </button>
-        {/* Logo and Heading */}
-        <div className="flex flex-col items-center mb-6">
-          <h2 className="text-primary text-2xl font-semibold mt-4 border-b-2 border-b-gray-100">
-            Verify Your Email
-          </h2>
-          <p className="text-center text-white mt-2">
-            Please enter the 4-digit OTP sent to your email address to verify
-            your account.
-          </p>
-        </div>
+        <h2 className="text-primary text-2xl font-semibold mt-4 border-b-2 border-b-gray-100">
+          Verify Your Email
+        </h2>
+        <p className="text-center text-white mt-2">
+          Please enter the 4-digit OTP sent to your email.
+        </p>
 
-        {/* OTP Form */}
         <Form layout="vertical" onFinish={onFinish} className="space-y-6">
-          {/* OTP Input Fields */}
           <div className="flex justify-between space-x-4">
             {otp.map((digit, index) => (
               <Form.Item key={index} className="mb-0">
@@ -118,33 +89,18 @@ const VerifyEmail = () => {
                     inputRefs.current[index] = el as HTMLInputElement | null;
                   }}
                   className="text-center w-16 h-16 text-2xl border-2 border-primary rounded-2xl"
-                  aria-label={`OTP Digit ${index + 1}`}
                 />
               </Form.Item>
             ))}
           </div>
 
-          {/* Didn't Receive Code & Resend Button */}
-          <div className="flex justify-between items-center">
-            <span className="text-white">Didnt receive the code?</span>
-            <Button
-              type="link"
-              onClick={handleResend}
-              disabled={isLoading}
-              className="text-green-500 hover:text-green-600"
-            >
-              Resend
-            </Button>
-          </div>
-
-          {/* Submit Button */}
           <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
               size="large"
               loading={isLoading}
-              className="w-full bg-green-500 hover:bg-green-600 transition-colors"
+              className="w-full"
             >
               Verify
             </Button>

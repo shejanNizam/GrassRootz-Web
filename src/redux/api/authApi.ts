@@ -1,6 +1,5 @@
 import { baseApi } from "./baseApi";
 
-// Define authentication-related endpoints
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signup: builder.mutation({
@@ -23,21 +22,32 @@ export const authApi = baseApi.injectEndpoints({
       query: (body) => ({
         url: "/user/forget-password",
         method: "POST",
-        body: body,
+        body,
+      }),
+    }),
+
+    verifyForgetOtp: builder.mutation({
+      query: ({ email, otp }) => ({
+        url: `/user/verify-forget-otp?email=${email}`,
+        method: "POST",
+        body: { otp },
       }),
     }),
 
     resetPassword: builder.mutation({
-      query: ({ token, newPassword }) => ({
-        url: `/reset-password/${token}`,
-        method: "PATCH",
-        body: { password: newPassword },
+      query: ({ token, password }) => ({
+        url: "/user/reset-password",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: { password },
       }),
     }),
 
     verifyEmail: builder.mutation({
-      query: (token) => ({
-        url: `/verify-email/${token}`,
+      query: (email) => ({
+        url: `/user/verify-email?email=${encodeURIComponent(email)}`,
         method: "POST",
       }),
     }),
@@ -55,6 +65,7 @@ export const {
   useSignupMutation,
   useLoginMutation,
   useForgotPasswordMutation,
+  useVerifyForgetOtpMutation,
   useResetPasswordMutation,
   useVerifyEmailMutation,
   useLogoutMutation,
