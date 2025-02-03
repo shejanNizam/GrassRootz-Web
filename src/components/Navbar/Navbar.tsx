@@ -12,13 +12,13 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import Swal from "sweetalert2";
 import main_logo from "../../assets/main_logo.png";
 import profile_image from "../../assets/profile/profile_img.png";
-import CustomButton from "../utils/CustomButton";
 import { SuccessSwal } from "../utils/allSwalFire";
 import ProfileMenu from "./ProfileMenu";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+  // const { auth } = useAppSelector((state) => state?.auth);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -26,7 +26,8 @@ export default function Navbar() {
   // Mock data for heart and cart counts
   const [heartCount, setHeartCount] = useState(3);
   const [cartCount, setCartCount] = useState(5);
-  console.log(setHeartCount, setCartCount);
+
+  console.log(setHeartCount, setCartCount, user);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -62,6 +63,9 @@ export default function Navbar() {
           text: "You have successfully logged out.",
         }).then(() => {
           dispatch(logout());
+          localStorage.removeItem("user_token");
+          localStorage.removeItem("doorOpened");
+          router.refresh();
           router.push("/login");
         });
       }
@@ -158,9 +162,9 @@ export default function Navbar() {
                     >
                       Login
                     </Link>
-                    <Link href="/signup">
+                    {/* <Link href="/signup">
                       <CustomButton>Signup</CustomButton>
-                    </Link>
+                    </Link> */}
                   </div>
                 </>
               )}
@@ -314,13 +318,13 @@ export default function Navbar() {
                   >
                     Login
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/signup"
                     onClick={closeMenu}
                     className="block px-6 py-3 mt-2 bg-primary text-white rounded-md text-sm font-medium hover:bg-white hover:text-primary border border-primary transition duration-200"
                   >
                     Signup
-                  </Link>
+                  </Link> */}
                 </>
               )}
             </nav>

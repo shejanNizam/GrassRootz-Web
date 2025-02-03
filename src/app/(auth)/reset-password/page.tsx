@@ -15,16 +15,24 @@ const ResetPassword = () => {
   const [form] = Form.useForm();
   const [resetPassword] = useResetPasswordMutation();
 
-  const onFinish = async (values: { password: string }) => {
-    setIsSubmitting(true);
+  const onFinish = async (values: {
+    password: string;
+    confirmPassword: string;
+  }) => {
+    if (values.password !== values.confirmPassword) {
+      message.error("Passwords do not match!");
+      return;
+    }
 
+    setIsSubmitting(true);
     try {
-      await resetPassword({ token, password: values?.password }).unwrap();
+      await resetPassword({ token, password: values.password }).unwrap();
 
       SuccessSwal({
         title: "Password Reset Successful!",
         text: "You can now log in.",
       });
+
       router.push("/login");
     } catch (error) {
       console.log(error);
@@ -47,8 +55,38 @@ const ResetPassword = () => {
           onFinish={onFinish}
           className="space-y-6"
         >
-          <Form.Item name="password" label="New Password">
+          {/* New Password Field */}
+          <Form.Item
+            name="password"
+            label="New Password"
+            rules={[
+              { required: true, message: "Please enter a new password." },
+              { min: 6, message: "Password must be at least 6 characters." },
+            ]}
+            hasFeedback
+          >
             <Input.Password placeholder="Enter new password" />
+          </Form.Item>
+
+          {/* Confirm Password Field */}
+          <Form.Item
+            name="confirmPassword"
+            label="Confirm Password"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Please confirm your password." },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error("Passwords do not match!"));
+                },
+              }),
+            ]}
+            hasFeedback
+          >
+            <Input.Password placeholder="Confirm your password" />
           </Form.Item>
 
           <Form.Item>

@@ -2,7 +2,7 @@
 
 import { ErrorSwal, SuccessSwal } from "@/components/utils/allSwalFire";
 import { useAppDispatch } from "@/redux/hooks";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, Spin } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
@@ -11,7 +11,6 @@ import { setCredentials } from "../../../redux/slices/authSlice";
 
 export default function Login() {
   const router = useRouter();
-  // const dispatch = useDispatch();
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
 
@@ -23,11 +22,12 @@ export default function Login() {
         email: values.email,
         password: values.password,
       }).unwrap();
+      localStorage.setItem("user_token", response?.data?.accesstoken);
 
       dispatch(
         setCredentials({
           user: response?.data?.user,
-          token: response?.data?.token,
+          token: response?.data?.accesstoken,
         })
       );
 
@@ -123,7 +123,7 @@ export default function Login() {
               loading={isLoading}
               className="w-full transition-colors"
             >
-              Login
+              Login {isLoading && <Spin className=" ml-3 mb-1" />}
             </Button>
           </Form.Item>
 
