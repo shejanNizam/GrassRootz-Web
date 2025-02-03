@@ -120,7 +120,7 @@ export default function Login() {
               htmlType="submit"
               size="large"
               loading={isLoading}
-              className="w-full hover:bg-primary transition-colors"
+              className="w-full transition-colors"
             >
               Login
             </Button>

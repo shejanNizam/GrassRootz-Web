@@ -1,144 +1,224 @@
 "use client";
 
+import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Settings() {
-  const [user, setUser] = useState({
-    firstName: "Dianne",
-    email: "dianneasuaul@gmail.com",
-    phone: "(633) 869-0323",
-    address: "4400 Hill",
-    country: "United States",
-    state: "Washington DC",
-    zip: "20335",
-  });
-  console.log(setUser);
+  const [form] = Form.useForm();
+  // const [passwordForm] = Form.useForm();
+  const [addressForm] = Form.useForm();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  // const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch logged-in user data
+    const fetchUserData = async () => {
+      const response = await fetch("/api/user"); // Replace with actual API
+      const data = await response.json();
+      // setUser(data);
+      form.setFieldsValue(data);
+      addressForm.setFieldsValue(data);
+      setImageUrl(data.image || "https://via.placeholder.com/100"); // Default user image if none found
+    };
+    fetchUserData();
+  }, [addressForm, form]);
+
+  const showModal = () => setIsModalVisible(true);
+  const handleCancel = () => setIsModalVisible(false);
+
+  const handleUpload = (info) => {
+    if (info.file.status === "done" && info.file.originFileObj) {
+      setImageUrl(URL.createObjectURL(info.file.originFileObj));
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white flex justify-center py-10">
       <div className="w-full max-w-4xl">
         {/* Account Settings */}
-        <div className="bg-gray-900 p-6 rounded-lg shadow-lg mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-semibold">Account Settings</h3>
-            <button className="bg-yellow-500 text-black px-4 py-2 rounded-md">
-              Change Password
-            </button>
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <label className="block text-gray-400">First name</label>
-              <input
-                type="text"
-                value={user.firstName}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">Email</label>
-              <input
-                type="email"
-                value={user.email}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">Phone Number</label>
-              <input
-                type="text"
-                value={user.phone}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center mt-6">
-            <button className="bg-yellow-500 text-black px-4 py-2 rounded-md">
-              Save Changes
-            </button>
-            <div className="flex flex-col items-center">
-              <Image
-                src="/user-profile.jpg"
-                alt="Profile"
-                width={80}
-                height={80}
-                className="rounded-full"
-              />
-              <button className="bg-gray-700 text-white px-4 py-2 rounded-md mt-2">
+        <div className="bg-gray-900 p-6 rounded-lg shadow-lg mb-6 flex justify-between">
+          <div className="w-1/3 flex flex-col items-center">
+            <Image
+              src={imageUrl}
+              alt="Profile Picture"
+              width={100}
+              height={100}
+              className="rounded-full w-32 h-32"
+            />
+            <Upload
+              showUploadList={false}
+              beforeUpload={() => true}
+              onChange={handleUpload}
+            >
+              <Button type="primary" size="middle">
                 Choose Image
-              </button>
+              </Button>
+            </Upload>
+          </div>
+
+          <div className="w-2/3">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Account Settings</h3>
+              <Button type="primary" size="large" onClick={showModal}>
+                Change Password
+              </Button>
             </div>
+            <Form form={form} layout="vertical">
+              <div className="flex gap-6">
+                <Form.Item
+                  label="First Name"
+                  className="w-1/2"
+                  name="firstName"
+                  rules={[
+                    { required: true, message: "First name is required" },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Email"
+                  className="w-1/2"
+                  name="email"
+                  rules={[{ required: true, message: "Email is required" }]}
+                >
+                  <Input />
+                </Form.Item>
+              </div>
+              <Form.Item
+                label="Phone Number"
+                name="phone"
+                rules={[
+                  { required: true, message: "Phone number is required" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                className="w-full"
+              >
+                Save Changes
+              </Button>
+            </Form>
           </div>
         </div>
 
         {/* Address Section */}
         <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
           <h3 className="text-xl font-semibold mb-4">Address</h3>
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <label className="block text-gray-400">Full name</label>
-              <input
-                type="text"
-                value={user.firstName}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
+          <Form layout="vertical" form={addressForm}>
+            <div className="flex gap-6">
+              <Form.Item
+                label="Full Name"
+                className="w-1/2"
+                name="firstName"
+                rules={[{ required: true, message: "Full name is required" }]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Street Address"
+                className="w-1/2"
+                name="address"
+                rules={[
+                  { required: true, message: "Street address is required" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
             </div>
-            <div>
-              <label className="block text-gray-400">Street Address</label>
-              <input
-                type="text"
-                value={user.address}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
+            <div className="flex gap-6">
+              <Form.Item
+                label="Country / Region"
+                className="w-1/3"
+                name="country"
+                rules={[{ required: true, message: "Country is required" }]}
+              >
+                <Select>
+                  <Select.Option value="United States">
+                    United States
+                  </Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label="State"
+                className="w-1/3"
+                name="state"
+                rules={[{ required: true, message: "State is required" }]}
+              >
+                <Select>
+                  <Select.Option value="Washington DC">
+                    Washington DC
+                  </Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label="Zip Code"
+                className="w-1/3"
+                name="zip"
+                rules={[{ required: true, message: "Zip code is required" }]}
+              >
+                <Input />
+              </Form.Item>
             </div>
-            <div>
-              <label className="block text-gray-400">Country / Region</label>
-              <input
-                type="text"
-                value={user.country}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">State</label>
-              <input
-                type="text"
-                value={user.state}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">Zip Code</label>
-              <input
-                type="text"
-                value={user.zip}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">Phone</label>
-              <input
-                type="text"
-                value={user.phone}
-                className="w-full bg-gray-800 p-2 rounded-md"
-                readOnly
-              />
-            </div>
-          </div>
-          <button className="mt-6 bg-yellow-500 text-black px-4 py-2 rounded-md w-full">
-            Save Changes
-          </button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              className="w-full"
+            >
+              Save Changes
+            </Button>
+          </Form>
         </div>
+
+        {/* Change Password Modal */}
+        <Modal
+          title="Change Password"
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+          centered
+        >
+          <Form layout="vertical" className="p-4">
+            <Form.Item
+              name="oldPassword"
+              rules={[
+                { required: true, message: "Please enter your old password" },
+              ]}
+            >
+              <Input.Password placeholder="Current Password" />
+            </Form.Item>
+            <Form.Item
+              name="newPassword"
+              rules={[
+                { required: true, message: "Please enter your new password" },
+              ]}
+            >
+              <Input.Password placeholder="New Password" />
+            </Form.Item>
+            <Form.Item
+              name="confirmPassword"
+              rules={[
+                { required: true, message: "Please confirm your new password" },
+              ]}
+            >
+              <Input.Password placeholder="Confirm Password" />
+            </Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              className="w-full"
+            >
+              Change Password
+            </Button>
+          </Form>
+        </Modal>
       </div>
     </div>
   );
