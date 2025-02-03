@@ -27,7 +27,7 @@ export default function Navbar() {
   const [heartCount, setHeartCount] = useState(3);
   const [cartCount, setCartCount] = useState(5);
 
-  console.log(setHeartCount, setCartCount, user);
+  console.log(setHeartCount, setCartCount);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

@@ -1,7 +1,10 @@
 "use client";
 
 import { SuccessSwal } from "@/components/utils/allSwalFire";
-import { useVerifyForgetOtpMutation } from "@/redux/api/authApi";
+import {
+  useResendOtpMutation,
+  useVerifyForgetOtpMutation,
+} from "@/redux/api/authApi";
 import { Button, Form, Input, message } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
@@ -12,10 +15,14 @@ const VerifyEmail = () => {
   const email = searchParams.get("email");
 
   const [otp, setOtp] = useState(["", "", "", ""]);
+  const [resendDisabled, setResendDisabled] = useState(false);
+  const [resendTimer, setResendTimer] = useState(180);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const [verifyForgetOtp, { isLoading }] = useVerifyForgetOtpMutation();
+  const [resendOtp, { isLoading: resendLoading }] = useResendOtpMutation();
 
+  // Handle OTP Input Change
   const onChangeOtp = (index: number, value: string) => {
     if (/^\d*$/.test(value)) {
       const newOtp = [...otp];
@@ -25,6 +32,7 @@ const VerifyEmail = () => {
     }
   };
 
+  // Handle Backspace for OTP Navigation
   const onKeyDownOtp = (
     index: number,
     event: React.KeyboardEvent<HTMLInputElement>
@@ -34,6 +42,7 @@ const VerifyEmail = () => {
     }
   };
 
+  // Handle OTP Verification
   const onFinish = async () => {
     const enteredOtp = otp.join("");
     if (enteredOtp.length < 4) {
@@ -46,7 +55,6 @@ const VerifyEmail = () => {
         email,
         otp: enteredOtp,
       }).unwrap();
-      console.log(response?.data?.accesstoken);
 
       if (response.success) {
         SuccessSwal({
@@ -54,16 +62,47 @@ const VerifyEmail = () => {
           text: "Redirecting to reset password.",
         });
 
-        // Pass the token to reset-password page
-        router.push(`/reset-password`);
-        console.log(response?.data);
         sessionStorage.setItem("reset_token", response?.data?.accesstoken);
+        router.push(`/reset-password`);
       } else {
         message.error(response.message || "Invalid OTP. Please try again.");
       }
     } catch (error) {
-      console.log(error);
+      console.error("OTP Verification Error:", error);
       message.error("Something went wrong. Please try again.");
+    }
+  };
+
+  // Handle Resend OTP
+  const handleResendOtp = async () => {
+    if (resendDisabled) return;
+
+    try {
+      await resendOtp(email).unwrap();
+      message.success("A new OTP has been sent to your email.");
+
+      setResendDisabled(true);
+      setResendTimer(180);
+
+      const interval = setInterval(() => {
+        setResendTimer((prev) => {
+          if (prev === 1) {
+            clearInterval(interval);
+            setResendDisabled(false);
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } catch (error) {
+      console.error(
+        "Resend OTP Error:",
+        (error as { message: string })?.message
+      );
+
+      message.error(
+        (error as { data: { message: string } })?.data?.message ||
+          "Failed to resend OTP. Please try again."
+      );
     }
   };
 
@@ -95,6 +134,24 @@ const VerifyEmail = () => {
                 />
               </Form.Item>
             ))}
+          </div>
+
+          {/* Resend OTP Section with Flexbox */}
+          <div className="flex justify-between items-center">
+            <p className="text-white text-sm">Didn’t receive the OTP?</p>
+            <Button
+              type="link"
+              onClick={handleResendOtp}
+              disabled={resendDisabled || resendLoading}
+            >
+              {resendDisabled ? (
+                <span className="text-red-700">
+                  Resend OTP in {resendTimer}s{" "}
+                </span>
+              ) : (
+                "Resend OTP"
+              )}
+            </Button>
           </div>
 
           <Form.Item>

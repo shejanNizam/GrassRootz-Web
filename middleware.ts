@@ -5,7 +5,7 @@ const middleware = (req: NextRequest) => {
   const cookieStore = cookies();
   const jwt = cookieStore.get("accesstoken")?.value;
 
-  console.log("JWT Cookie:", jwt);
+  // console.log("JWT Cookie:", jwt);
 
   const url = req.nextUrl;
 

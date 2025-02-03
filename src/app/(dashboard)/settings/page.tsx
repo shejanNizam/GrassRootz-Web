@@ -1,34 +1,50 @@
 "use client";
 
-import { Button, Form, Input, Modal, Select, Upload } from "antd";
+import { Button, Form, Input, Modal, Select, Upload, UploadProps } from "antd";
+import { UploadChangeParam } from "antd/es/upload";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+interface UserData {
+  firstName: string;
+  email: string;
+  phone: string;
+  image?: string;
+  address?: string;
+  country?: string;
+  state?: string;
+  zip?: string;
+}
+
 export default function Settings() {
-  const [form] = Form.useForm();
-  // const [passwordForm] = Form.useForm();
-  const [addressForm] = Form.useForm();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
-  // const [user, setUser] = useState(null);
+  const [form] = Form.useForm<UserData>();
+  const [addressForm] = Form.useForm<UserData>();
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string>(
+    "https://via.placeholder.com/100"
+  );
 
   useEffect(() => {
-    // Fetch logged-in user data
     const fetchUserData = async () => {
-      const response = await fetch("/api/user"); // Replace with actual API
-      const data = await response.json();
-      // setUser(data);
-      form.setFieldsValue(data);
-      addressForm.setFieldsValue(data);
-      setImageUrl(data.image || "https://via.placeholder.com/100"); // Default user image if none found
+      try {
+        const response = await fetch("/api/user"); // Replace with actual API
+        const data: UserData = await response.json();
+
+        form.setFieldsValue(data);
+        addressForm.setFieldsValue(data);
+        setImageUrl(data.image || "https://via.placeholder.com/100");
+      } catch (error) {
+        console.error("Failed to fetch user data", error);
+      }
     };
+
     fetchUserData();
-  }, [addressForm, form]);
+  }, [form, addressForm]);
 
   const showModal = () => setIsModalVisible(true);
   const handleCancel = () => setIsModalVisible(false);
 
-  const handleUpload = (info) => {
+  const handleUpload: UploadProps["onChange"] = (info: UploadChangeParam) => {
     if (info.file.status === "done" && info.file.originFileObj) {
       setImageUrl(URL.createObjectURL(info.file.originFileObj));
     }
@@ -49,7 +65,7 @@ export default function Settings() {
             />
             <Upload
               showUploadList={false}
-              beforeUpload={() => true}
+              beforeUpload={() => false}
               onChange={handleUpload}
             >
               <Button type="primary" size="middle">
@@ -203,8 +219,17 @@ export default function Settings() {
             </Form.Item>
             <Form.Item
               name="confirmPassword"
+              dependencies={["newPassword"]}
               rules={[
                 { required: true, message: "Please confirm your new password" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("newPassword") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error("Passwords do not match!"));
+                  },
+                }),
               ]}
             >
               <Input.Password placeholder="Confirm Password" />
