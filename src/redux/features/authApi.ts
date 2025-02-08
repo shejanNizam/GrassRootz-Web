@@ -1,17 +1,17 @@
-import { baseApi } from "./baseApi";
+import { baseApi } from "../api/baseApi";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     profileData: builder.query({
       query: () => ({
-        url: "user/my-profile", // ok
+        url: "user/my-profile",
         method: "GET",
       }),
     }),
 
     signup: builder.mutation({
       query: (userData) => ({
-        url: "/user/register", // ok
+        url: "/user/register",
         method: "POST",
         body: userData,
       }),
@@ -19,7 +19,7 @@ export const authApi = baseApi.injectEndpoints({
 
     login: builder.mutation({
       query: (credentials) => ({
-        url: "/user/login", // ok
+        url: "/user/login",
         method: "POST",
         body: credentials,
       }),
@@ -27,7 +27,7 @@ export const authApi = baseApi.injectEndpoints({
 
     forgotPassword: builder.mutation({
       query: (body) => ({
-        url: "/user/forget-password", // ok
+        url: "/user/forget-password",
         method: "POST",
         body,
       }),
@@ -35,7 +35,7 @@ export const authApi = baseApi.injectEndpoints({
 
     verifyForgetOtp: builder.mutation({
       query: ({ email, otp }) => ({
-        url: `/user/verify-forget-otp?email=${encodeURIComponent(email)}`, // ok
+        url: `/user/verify-forget-otp?email=${encodeURIComponent(email)}`,
         method: "POST",
         body: { otp },
       }),
@@ -58,6 +58,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
+
     resendOtp: builder.mutation({
       query: (email) => ({
         url: `/user/resend?email=${encodeURIComponent(email)}`,

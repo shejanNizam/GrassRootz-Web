@@ -5,18 +5,15 @@ import { useAppDispatch } from "@/redux/hooks";
 import { Button, Checkbox, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useSignupMutation } from "../../../redux/api/authApi";
+import { useSignupMutation } from "../../../redux/features/authApi";
 import { setCredentials } from "../../../redux/slices/authSlice";
 
 export default function Signup() {
   const router = useRouter();
-  // const dispatch = useDispatch();
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [signup] = useSignupMutation();
+  const [signup, { isLoading }] = useSignupMutation();
 
   const onFinish = async (values: {
     name: string;
@@ -24,7 +21,6 @@ export default function Signup() {
     password: string;
     confirmPassword: string;
   }) => {
-    setIsSubmitting(true);
     try {
       const response = await signup({
         name: values.name,
@@ -50,9 +46,7 @@ export default function Signup() {
       if (error) {
         ErrorSwal({
           title: "Signup failed. Please try again.",
-          text: ` Error: ${
-            (error as { data: { message: string } }).data?.message
-          } `,
+          text: ` ${(error as { data: { message: string } }).data?.message} `,
         });
       } else {
         ErrorSwal({
@@ -60,8 +54,6 @@ export default function Signup() {
           text: ``,
         });
       }
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -179,7 +171,7 @@ export default function Signup() {
               type="primary"
               htmlType="submit"
               size="large"
-              loading={isSubmitting}
+              loading={isLoading}
               className="w-full transition-colors"
             >
               Create Account

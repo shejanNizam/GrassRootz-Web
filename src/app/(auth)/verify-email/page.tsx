@@ -4,7 +4,7 @@ import { SuccessSwal } from "@/components/utils/allSwalFire";
 import {
   useResendOtpMutation,
   useVerifyForgetOtpMutation,
-} from "@/redux/api/authApi";
+} from "@/redux/features/authApi";
 import { Button, Form, Input, message } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
@@ -55,6 +55,7 @@ const VerifyEmail = () => {
         email,
         otp: enteredOtp,
       }).unwrap();
+      console.log(response);
 
       if (response.success) {
         SuccessSwal({

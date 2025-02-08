@@ -1,7 +1,7 @@
 "use client";
 
 import { SuccessSwal } from "@/components/utils/allSwalFire";
-import { useResetPasswordMutation } from "@/redux/api/authApi";
+import { useResetPasswordMutation } from "@/redux/features/authApi";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

@@ -5,7 +5,7 @@ import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useForgotPasswordMutation } from "../../../redux/api/authApi";
+import { useForgotPasswordMutation } from "../../../redux/features/authApi";
 
 const ForgotPassword = () => {
   const router = useRouter();
@@ -28,7 +28,7 @@ const ForgotPassword = () => {
     } catch (error) {
       console.error("Forgot Password error:", error);
       ErrorSwal({
-        title: "An error occurred. Please try again later.",
+        title: "An error occurred.",
         text: "",
       });
     }

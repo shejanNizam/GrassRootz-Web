@@ -41,7 +41,9 @@ export default function Contact() {
     <section className="py-24">
       <div className="container mx-auto md:px-4">
         <div className="text-center">
-          <CustomHeading> Contact Us </CustomHeading>
+          <div className=" pt-12 ">
+            <CustomHeading> Contact Us </CustomHeading>
+          </div>
         </div>
         <div className="grid grid-col-1 md:grid-cols-1 lg:grid-cols-2 gap-4 justify-center items-center md:py-4 md:px-40">
           {/* Left Side - Contact Information */}

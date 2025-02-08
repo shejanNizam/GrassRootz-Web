@@ -6,7 +6,7 @@ import { Button, Checkbox, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
-import { useLoginMutation } from "../../../redux/api/authApi";
+import { useLoginMutation } from "../../../redux/features/authApi";
 import { setCredentials } from "../../../redux/slices/authSlice";
 
 export default function Login() {
