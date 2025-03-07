@@ -18,6 +18,7 @@ import ProfileMenu from "./ProfileMenu";
 export default function Navbar() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+
   // const { auth } = useAppSelector((state) => state?.auth);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();

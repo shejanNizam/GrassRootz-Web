@@ -1,12 +1,10 @@
-// lib/ThemeProvider.jsx
-
 "use client";
 import { mainTheme } from "@/components/utils/antTheme";
 import { useProfileDataQuery } from "@/redux/features/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setCredentials } from "@/redux/slices/authSlice";
 import { ConfigProvider } from "antd";
-import "antd/dist/reset.css"; // Import Ant Design's CSS here
+import "antd/dist/reset.css";
 
 import { ReactNode, useEffect } from "react";
 

@@ -21,15 +21,19 @@ const ForgotPassword = () => {
       }).unwrap();
 
       SuccessSwal({
-        title: "OTP has been sent to your email!",
+        title: ``,
         text: `Check your email in ${values?.email}`,
       });
       router.push(`/verify-email?email=${values?.email}`);
     } catch (error) {
-      console.error("Forgot Password error:", error);
       ErrorSwal({
-        title: "An error occurred.",
-        text: "",
+        title: ``,
+        text:
+          (error as { message?: string; data?: { message?: string } })
+            ?.message ||
+          (error as { message?: string; data?: { message?: string } })?.data
+            ?.message ||
+          `Something went wrong!`,
       });
     }
   };
@@ -54,9 +58,7 @@ const ForgotPassword = () => {
             Forgot Password
           </h2>
           <p className="text-center text-white mt-2">
-            {
-              "Enter your email address below and we'll send you an OTP to reset your password."
-            }
+            {`Enter your account email to get OTP!`}
           </p>
         </div>
 
@@ -95,7 +97,7 @@ const ForgotPassword = () => {
 
           <p className="text-center">
             <span className="text-white">Remembered your password? </span>
-            <Link href="/login" className="text-primary">
+            <Link href="/login" className="text-primary underline">
               Log In
             </Link>
           </p>

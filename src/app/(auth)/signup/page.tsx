@@ -5,6 +5,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { Button, Checkbox, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa";
 import { useSignupMutation } from "../../../redux/features/authApi";
 import { setCredentials } from "../../../redux/slices/authSlice";
 
@@ -57,12 +58,26 @@ export default function Signup() {
     }
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary pt-20 px-4">
-      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl w-full max-w-xl p-8 md:p-16">
-        <h2 className="text-primary text-center text-2xl md:text-4xl font-semibold mb-8 border-b-2 border-b-gray-100">
-          Create Your Account
-        </h2>
+      <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl w-full max-w-xl p-8 md:p-16 relative">
+        <button
+          onClick={handleBack}
+          className="absolute top-4 left-4 text-gray-500 hover:text-gray-300 focus:outline-none"
+          aria-label="Go Back"
+        >
+          <FaArrowLeft size={24} />
+        </button>
+
+        <div className="flex flex-col items-center">
+          <h2 className="text-2xl md:text-4xl font-semibold text-primary mb-8 border-b-2 border-b-secondary">
+            Create Your Account
+          </h2>
+        </div>
 
         {/* Signup Form */}
         <Form
@@ -152,15 +167,13 @@ export default function Signup() {
             ]}
           >
             <Checkbox>
-              <span className="text-white">
-                I have read & agreed to Peared{" "}
-              </span>
+              <span className="text-white">I agreed </span>
               <Link href="/terms-of-use">
-                <span className="text-primary">Terms of Use</span>
+                <span className="text-primary underline">Terms</span>
               </Link>{" "}
               <span className="text-white">and </span>
               <Link href="/privacy-policy">
-                <span className="text-primary">Privacy Policy</span>
+                <span className="text-primary underline">Privacy Policy</span>
               </Link>
             </Checkbox>
           </Form.Item>
@@ -180,7 +193,7 @@ export default function Signup() {
 
           <p className="text-center">
             <span className="text-white">Already have an account? </span>
-            <Link href="/login" className="text-primary">
+            <Link href="/login" className="text-primary underline">
               Log In
             </Link>
           </p>

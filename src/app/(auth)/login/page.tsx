@@ -71,7 +71,7 @@ export default function Login() {
           form={form}
           layout="vertical"
           onFinish={onFinish}
-          className="space-y-2"
+          className="space-y-0"
         >
           <div className="grid grid-cols-1">
             {/* Email Field */}
@@ -104,14 +104,16 @@ export default function Login() {
           </div>
           {/* Remember Me and Forgot Password */}
           <div className="flex justify-between items-center">
-            <Form.Item name="remember" valuePropName="checked" className="mb-0">
+            <Form.Item name="remember" valuePropName="checked">
               <Checkbox>
                 <span className="text-white">Remember me</span>
               </Checkbox>
             </Form.Item>
-            <Link href="/forgot-password" className="text-primary">
-              Forgot password?
-            </Link>
+            <Form.Item>
+              <Link href="/forgot-password" className="text-primary underline">
+                Forget password?
+              </Link>
+            </Form.Item>
           </div>
 
           {/* Submit Button */}
@@ -130,7 +132,7 @@ export default function Login() {
           {/* Navigation Link to Signup Page */}
           <p className="text-center">
             <span className="text-white"> {"Don't have an account?"} </span>
-            <Link href="/signup" className="text-primary">
+            <Link href="/signup" className="text-primary underline">
               {" "}
               Create Account
             </Link>
