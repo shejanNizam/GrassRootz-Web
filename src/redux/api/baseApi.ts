@@ -7,16 +7,24 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     // credentials: "include",
+
+    //   prepareHeaders: (headers) => {
+    //     const token = localStorage.getItem("user_token");
+    //     if (token) {
+    //       headers.set("Authorization", `Bearer ${token}`);
+    //     }
+    //     headers.set("Content-Type", "application/json");
+    //     return headers;
+    //   },
+    // }),
+
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("user_token");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      headers.set("Content-Type", "application/json");
+      headers.set("Authorization", `Bearer ${token}`);
       return headers;
     },
   }),
-
+  tagTypes: ["auth", "user"],
   endpoints: () => ({}),
 });
 

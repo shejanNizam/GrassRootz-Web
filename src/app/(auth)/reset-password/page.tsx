@@ -25,7 +25,7 @@ const ResetPassword = () => {
 
     setIsSubmitting(true);
     try {
-      const token = sessionStorage.getItem("reset_token");
+      const token = localStorage.getItem("user_token");
       await resetPassword({ token, password: values.password }).unwrap();
 
       SuccessSwal({

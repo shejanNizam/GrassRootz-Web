@@ -6,13 +6,13 @@ import {
   useVerifyForgetOtpMutation,
 } from "@/redux/features/authApi";
 import { Button, Form, Input, message } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 const VerifyEmail = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email");
+  // const searchParams = useSearchParams();
+  // const email = searchParams.get("email");
 
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [resendDisabled, setResendDisabled] = useState(false);
@@ -51,8 +51,10 @@ const VerifyEmail = () => {
     }
 
     try {
+      const token = localStorage.getItem("user_token");
+
       const response = await verifyForgetOtp({
-        email,
+        token,
         otp: enteredOtp,
       }).unwrap();
       console.log(response);
@@ -63,7 +65,7 @@ const VerifyEmail = () => {
           text: "Redirecting to reset password.",
         });
 
-        sessionStorage.setItem("reset_token", response?.data?.accesstoken);
+        localStorage.setItem("user_token", response?.data?.token);
         router.push(`/reset-password`);
       } else {
         message.error(response.message || "Invalid OTP. Please try again.");
@@ -79,7 +81,8 @@ const VerifyEmail = () => {
     if (resendDisabled) return;
 
     try {
-      await resendOtp(email).unwrap();
+      const token = localStorage.getItem("user_token");
+      await resendOtp(token).unwrap();
       message.success("A new OTP has been sent to your email.");
 
       setResendDisabled(true);

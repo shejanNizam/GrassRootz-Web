@@ -16,7 +16,7 @@ const ForgotPassword = () => {
 
   const onFinish = async (values: { email: string }) => {
     try {
-      await forgotPassword({
+      const response = await forgotPassword({
         email: values?.email,
       }).unwrap();
 
@@ -24,7 +24,8 @@ const ForgotPassword = () => {
         title: ``,
         text: `Check your email in ${values?.email}`,
       });
-      router.push(`/verify-email?email=${values?.email}`);
+      localStorage.setItem("user_token", response?.data?.token);
+      router.push(`/verify-email`);
     } catch (error) {
       ErrorSwal({
         title: ``,
