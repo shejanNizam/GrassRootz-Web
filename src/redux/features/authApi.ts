@@ -11,7 +11,7 @@ export const authApi = baseApi.injectEndpoints({
 
     signup: builder.mutation({
       query: (userData) => ({
-        url: "/user/register",
+        url: "/auth/register",
         method: "POST",
         body: userData,
       }),
@@ -19,7 +19,7 @@ export const authApi = baseApi.injectEndpoints({
 
     login: builder.mutation({
       query: (credentials) => ({
-        url: "/user/login",
+        url: "/auth/login",
         method: "POST",
         body: credentials,
       }),
@@ -64,13 +64,6 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
-
-    logout: builder.mutation({
-      query: () => ({
-        url: "/logout",
-        method: "POST",
-      }),
-    }),
   }),
 });
 
@@ -83,5 +76,4 @@ export const {
   useResetPasswordMutation,
   useVerifyEmailMutation,
   useResendOtpMutation,
-  useLogoutMutation,
 } = authApi;

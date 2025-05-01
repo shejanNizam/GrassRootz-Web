@@ -24,7 +24,7 @@ const middleware = (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/", "/login"], // Match `/` and `/login`
+  matcher: ["/", "/login"],
 };
 
 export default middleware;

@@ -41,7 +41,7 @@ export default function Navbar() {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Shop", href: "/shop" },
-    { name: "Store locator", href: "/store-locator" },
+    // { name: "Store locator", href: "/store-locator" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -75,7 +75,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-black shadow-2xl fixed w-full p-4 z-40">
+      <nav className="bg-black shadow-2xl fixed w-full py-4 z-50">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="flex justify-between">
             {/* Logo Section */}
@@ -163,9 +163,6 @@ export default function Navbar() {
                     >
                       Login
                     </Link>
-                    {/* <Link href="/signup">
-                      <CustomButton>Signup</CustomButton>
-                    </Link> */}
                   </div>
                 </>
               )}
@@ -227,7 +224,7 @@ export default function Navbar() {
         >
           {/* Overlay */}
           <div
-            className={`fixed inset-0 bg-opacity-50 transition-opacity duration-300 ${
+            className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${
               isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
             onClick={closeMenu}
@@ -319,13 +316,6 @@ export default function Navbar() {
                   >
                     Login
                   </Link>
-                  {/* <Link
-                    href="/signup"
-                    onClick={closeMenu}
-                    className="block px-6 py-3 mt-2 bg-primary text-white rounded-md text-sm font-medium hover:bg-white hover:text-primary border border-primary transition duration-200"
-                  >
-                    Signup
-                  </Link> */}
                 </>
               )}
             </nav>
