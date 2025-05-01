@@ -2,13 +2,6 @@ import { baseApi } from "../api/baseApi";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    profileData: builder.query({
-      query: () => ({
-        url: "user/my-profile",
-        method: "GET",
-      }),
-    }),
-
     signup: builder.mutation({
       query: (userData) => ({
         url: "/auth/register",
@@ -27,7 +20,7 @@ export const authApi = baseApi.injectEndpoints({
 
     forgotPassword: builder.mutation({
       query: (body) => ({
-        url: "/user/forget-password",
+        url: "/auth/forget-password",
         method: "POST",
         body,
       }),
@@ -35,7 +28,7 @@ export const authApi = baseApi.injectEndpoints({
 
     verifyForgetOtp: builder.mutation({
       query: ({ email, otp }) => ({
-        url: `/user/verify-forget-otp?email=${encodeURIComponent(email)}`,
+        url: `/auth/verify-forget-otp?email=${encodeURIComponent(email)}`,
         method: "POST",
         body: { otp },
       }),
@@ -44,7 +37,7 @@ export const authApi = baseApi.injectEndpoints({
     resetPassword: builder.mutation({
       query: ({ password }) => {
         return {
-          url: "/user/reset-password",
+          url: "/auth/reset-password",
           method: "POST",
           body: { password },
         };
@@ -53,14 +46,14 @@ export const authApi = baseApi.injectEndpoints({
 
     verifyEmail: builder.mutation({
       query: (email) => ({
-        url: `/user/verify-email?email=${encodeURIComponent(email)}`,
+        url: `/auth/verify-email?email=${encodeURIComponent(email)}`,
         method: "POST",
       }),
     }),
 
     resendOtp: builder.mutation({
       query: (email) => ({
-        url: `/user/resend?email=${encodeURIComponent(email)}`,
+        url: `/auth/resend?email=${encodeURIComponent(email)}`,
         method: "POST",
       }),
     }),
@@ -68,7 +61,6 @@ export const authApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useProfileDataQuery,
   useSignupMutation,
   useLoginMutation,
   useForgotPasswordMutation,

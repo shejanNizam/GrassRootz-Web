@@ -38,23 +38,21 @@ export default function Signup() {
       );
 
       SuccessSwal({
-        title: "Account created successfully!",
-        text: "You have successfully created your account. Please log in.",
+        title: "",
+        text:
+          response?.message || response?.data?.message || "Signup successful!",
       });
 
       router.push("/login");
     } catch (error) {
-      if (error) {
-        ErrorSwal({
-          title: "Signup failed. Please try again.",
-          text: ` ${(error as { data: { message: string } }).data?.message} `,
-        });
-      } else {
-        ErrorSwal({
-          title: "Signup failed. Please try again.",
-          text: ``,
-        });
-      }
+      ErrorSwal({
+        title: "Error",
+        text:
+          (error as { data?: { message?: string }; error?: string })?.data
+            ?.message ||
+          (error as { data?: { message?: string }; error?: string })?.error ||
+          "Signup failed!",
+      });
     }
   };
 
@@ -171,7 +169,7 @@ export default function Signup() {
               <Link href="/terms-of-use">
                 <span className="text-primary underline">Terms</span>
               </Link>{" "}
-              <span className="text-white">and </span>
+              <span className="text-white">& </span>
               <Link href="/privacy-policy">
                 <span className="text-primary underline">Privacy Policy</span>
               </Link>

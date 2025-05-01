@@ -1,6 +1,6 @@
 "use client";
 import { mainTheme } from "@/components/utils/antTheme";
-import { useProfileDataQuery } from "@/redux/features/authApi";
+import { useGetUserDataQuery } from "@/redux/features/userApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setCredentials } from "@/redux/slices/authSlice";
 import { ConfigProvider } from "antd";
@@ -9,7 +9,7 @@ import "antd/dist/reset.css";
 import { ReactNode, useEffect } from "react";
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const { data, isLoading } = useProfileDataQuery(undefined);
+  const { data, isLoading } = useGetUserDataQuery(undefined);
   const dispatch = useAppDispatch();
 
   console.log(data?.data, isLoading);
