@@ -1,5 +1,3 @@
-// src/redux/api/userApi.ts
-
 import baseApi from "@/redux/api/baseApi";
 
 export const productsApi = baseApi.injectEndpoints({
@@ -52,13 +50,13 @@ export const productsApi = baseApi.injectEndpoints({
     }),
 
     // Example: Update user data
-    updateUserData: builder.mutation({
-      query: (data) => ({
-        url: "/user/update",
-        method: "PATCH",
-        body: data,
-      }),
-    }),
+    // updateUserData: builder.mutation({
+    //   query: (data) => ({
+    //     url: "/user/update",
+    //     method: "PATCH",
+    //     body: data,
+    //   }),
+    // }),
   }),
 });
 

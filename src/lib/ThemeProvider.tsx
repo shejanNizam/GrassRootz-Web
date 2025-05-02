@@ -9,10 +9,8 @@ import "antd/dist/reset.css";
 import { ReactNode, useEffect } from "react";
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const { data, isLoading } = useGetUserDataQuery(undefined);
+  const { data } = useGetUserDataQuery(undefined);
   const dispatch = useAppDispatch();
-
-  console.log(data?.data, isLoading);
 
   useEffect(() => {
     dispatch(

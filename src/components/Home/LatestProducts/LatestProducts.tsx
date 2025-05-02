@@ -3,6 +3,7 @@
 import ProductCard from "@/components/ProductCard/ProductCard";
 import CustomHeading from "@/components/utils/CustomHeading";
 import { useGetAllProductsQuery } from "@/redux/features/products/productsApi";
+import { Spin } from "antd";
 import image_latest_product from "../../../assets/home/latest_products/latest_product_img.png";
 
 const mockData = [
@@ -100,6 +101,7 @@ const mockData = [
 //   latest: true,
 //   popular: false,
 // };
+
 // console.log(
 //   Object.entries(query)
 //     .filter((item) => item[1])
@@ -112,8 +114,8 @@ const mockData = [
 export default function LatestProducts() {
   // const [query, setQuery] = useState({});
 
-  const { data } = useGetAllProductsQuery(
-    [{ name: "page", value: "10" }]
+  const { data, isLoading } = useGetAllProductsQuery(
+    [{ name: "latest", value: "10" }]
     // Object.entries(query)
     //   .filter((item) => item[1])
     //   .map(([key, value]) => ({
@@ -121,15 +123,30 @@ export default function LatestProducts() {
     //     value: value,
     //   }))
   );
-  console.log(data);
+  const latestData = data?.data || [];
+  console.log("------Latest Products----------->>", latestData);
+
+  if (isLoading) {
+    return (
+      <div className="text-center">
+        <Spin size="large" className="mt-20" />
+      </div>
+    );
+  }
 
   return (
     <div className="md:p-4 my-20">
       <CustomHeading>Latest Products</CustomHeading>
       <div className="flex flex-wrap gap-6 justify-center">
-        {mockData?.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {mockData?.length === 0 ? (
+          <>
+            <div>No latest product found!</div>
+          </>
+        ) : (
+          mockData?.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))
+        )}
       </div>
     </div>
   );
