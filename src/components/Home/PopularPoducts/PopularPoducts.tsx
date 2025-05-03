@@ -6,84 +6,134 @@ import popular_latest_product from "../../../assets/home/popular_products/popula
 
 const mockData = [
   {
-    id: "1",
+    _id: "1", // Changed from 'id' to '_id' for consistency with real data
+    images: [
+      {
+        id: "1",
+        publicFileURL: popular_latest_product, // Assuming the image path or reference is correct
+      },
+    ],
     name: "Fresh Indian Malta",
-    price: "$20.00",
-    image: popular_latest_product,
-    rating: 4.0,
-    status: "In Stock",
+    price: "20.00", // Changed price to string for consistency
+    avgRating: 4.0, // Renamed 'rating' to 'avgRating' to match real data
+    stockStatus: "in-stock", // Changed 'status' to 'stockStatus' and lowercase it
   },
   {
-    id: "2",
+    _id: "2",
+    images: [
+      {
+        id: "2",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Fresh Indian Malta",
-    price: "$20.00",
-    image: popular_latest_product,
-    rating: 4.0,
-    status: "Out of Stock",
+    price: "20.00",
+    avgRating: 4.0,
+    stockStatus: "out-of-stock", // Changed to match real data format
   },
   {
-    id: "3",
+    _id: "3",
+    images: [
+      {
+        id: "3",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Chinese Cabbage",
-    price: "$12.00",
-    image: popular_latest_product,
-    rating: 4.7,
-    status: "In Stock",
+    price: "12.00",
+    avgRating: 4.7,
+    stockStatus: "in-stock",
   },
   {
-    id: "4",
+    _id: "4",
+    images: [
+      {
+        id: "4",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Green Lettuce",
-    price: "$9.00",
-    image: popular_latest_product,
-    rating: 4.3,
-    status: "Out of Stock",
+    price: "9.00",
+    avgRating: 4.3,
+    stockStatus: "out-of-stock",
   },
   {
-    id: "5",
+    _id: "5",
+    images: [
+      {
+        id: "5",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Eggplant",
-    price: "$34.00",
-    image: popular_latest_product,
-    rating: 4.2,
-    status: "In Stock",
+    price: "34.00",
+    avgRating: 4.2,
+    stockStatus: "in-stock",
   },
   {
-    id: "6",
+    _id: "6",
+    images: [
+      {
+        id: "6",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Big Potatoes",
-    price: "$20.00",
-    image: popular_latest_product,
-    rating: 4.4,
-    status: "In Stock",
+    price: "20.00",
+    avgRating: 4.4,
+    stockStatus: "in-stock",
   },
   {
-    id: "7",
+    _id: "7",
+    images: [
+      {
+        id: "7",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Corn",
-    price: "$20.00",
-    image: popular_latest_product,
-    rating: 4.1,
-    status: "In Stock",
+    price: "20.00",
+    avgRating: 4.1,
+    stockStatus: "in-stock",
   },
   {
-    id: "8",
+    _id: "8",
+    images: [
+      {
+        id: "8",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Fresh Cauliflower",
-    price: "$12.00",
-    image: popular_latest_product,
-    rating: 4.6,
-    status: "In Stock",
+    price: "12.00",
+    avgRating: 4.6,
+    stockStatus: "in-stock",
   },
   {
-    id: "9",
+    _id: "9",
+    images: [
+      {
+        id: "9",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Green Capsicum",
-    price: "$9.00",
-    image: popular_latest_product,
-    rating: 4.0,
-    status: "In Stock",
+    price: "9.00",
+    avgRating: 4.0,
+    stockStatus: "in-stock",
   },
   {
-    id: "10",
+    _id: "10",
+    images: [
+      {
+        id: "10",
+        publicFileURL: popular_latest_product,
+      },
+    ],
     name: "Green Chili",
-    price: "$34.00",
-    image: popular_latest_product,
-    rating: 3.8,
-    status: "In Stock",
+    price: "34.00",
+    avgRating: 3.8,
+    stockStatus: "in-stock",
   },
 ];
 
@@ -93,7 +143,7 @@ export default function PopularPoducts() {
       <CustomHeading> Popular Products </CustomHeading>
       <div className="flex flex-wrap gap-6 justify-center">
         {mockData?.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>

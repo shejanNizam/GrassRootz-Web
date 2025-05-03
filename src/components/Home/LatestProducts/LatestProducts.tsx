@@ -4,35 +4,6 @@ import ProductCard from "@/components/ProductCard/ProductCard";
 import CustomHeading from "@/components/utils/CustomHeading";
 import { useGetAllProductsQuery } from "@/redux/features/products/productsApi";
 import { Spin } from "antd";
-// import image_latest_product from "../../../assets/home/latest_products/latest_product_img.png";
-
-// const mockData = [
-//   {
-//     id: "1",
-//     name: "Fresh Indian Malta",
-//     price: "$20.00",
-//     image: image_latest_product,
-//     rating: 4.0,
-//     status: "In Stock",
-//   },
-//   {
-//     id: "2",
-//     name: "Fresh Indian Malta",
-//     price: "$20.00",
-//     image: image_latest_product,
-//     rating: 4.0,
-//     status: "Out of Stock",
-//   },
-//   {
-//     id: "3",
-//     name: "Chinese Cabbage",
-//     price: "$12.00",
-//     image: image_latest_product,
-//     rating: 4.7,
-//     status: "In Stock",
-//   },
-
-// ];
 
 type LatestDataType = {
   _id: string;

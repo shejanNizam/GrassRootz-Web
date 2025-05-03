@@ -9,147 +9,227 @@ import shop_product_img from "../../assets/shop/shop_product_img.png";
 // Mock Data with categories attached to products
 const mockData = [
   {
-    id: "1",
+    _id: "1", // Changed from 'id' to '_id'
+    images: [
+      {
+        id: "1",
+        publicFileURL: shop_product_img, // Assuming 'shop_product_img' is the image URL
+      },
+    ],
     name: "Fresh Indian Malta",
-    price: "$200.00",
-    image: shop_product_img,
-    rating: 4.0,
-    status: "Out of Stock",
+    price: "200.00", // Changed to string format
+    avgRating: 4.0, // Changed from 'rating' to 'avgRating'
+    stockStatus: "out-of-stock", // Changed to 'stockStatus' and lowercase
     category: "Fresh Fruit",
   },
   {
-    id: "2",
+    _id: "2",
+    images: [
+      {
+        id: "2",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Fresh Indian Malta",
-    price: "$200.00",
-    image: shop_product_img,
-    rating: 4.0,
-    status: "In Stock",
+    price: "200.00",
+    avgRating: 4.0,
+    stockStatus: "in-stock",
     category: "Fresh Fruit",
   },
   {
-    id: "3",
+    _id: "3",
+    images: [
+      {
+        id: "3",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Chinese Cabbage",
-    price: "$120.00",
-    image: shop_product_img,
-    rating: 4.7,
-    status: "In Stock",
+    price: "120.00",
+    avgRating: 4.7,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "4",
+    _id: "4",
+    images: [
+      {
+        id: "4",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Green Lettuce",
-    price: "$300.00",
-    image: shop_product_img,
-    rating: 4.3,
-    status: "Out of Stock",
+    price: "300.00",
+    avgRating: 4.3,
+    stockStatus: "out-of-stock",
     category: "Vegetables",
   },
   {
-    id: "5",
+    _id: "5",
+    images: [
+      {
+        id: "5",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Eggplant",
-    price: "$304.00",
-    image: shop_product_img,
-    rating: 4.2,
-    status: "In Stock",
+    price: "304.00",
+    avgRating: 4.2,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "6",
+    _id: "6",
+    images: [
+      {
+        id: "6",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Big Potatoes",
-    price: "$500.00",
-    image: shop_product_img,
-    rating: 4.4,
-    status: "In Stock",
+    price: "500.00",
+    avgRating: 4.4,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "7",
+    _id: "7",
+    images: [
+      {
+        id: "7",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Corn",
-    price: "$250.00",
-    image: shop_product_img,
-    rating: 4.1,
-    status: "In Stock",
+    price: "250.00",
+    avgRating: 4.1,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "8",
+    _id: "8",
+    images: [
+      {
+        id: "8",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Fresh Cauliflower",
-    price: "$120.00",
-    image: shop_product_img,
-    rating: 4.6,
-    status: "In Stock",
+    price: "120.00",
+    avgRating: 4.6,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "9",
+    _id: "9",
+    images: [
+      {
+        id: "9",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Green Capsicum",
-    price: "$90.00",
-    image: shop_product_img,
-    rating: 4.0,
-    status: "In Stock",
+    price: "90.00",
+    avgRating: 4.0,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "10",
+    _id: "10",
+    images: [
+      {
+        id: "10",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Green Chili",
-    price: "$340.00",
-    image: shop_product_img,
-    rating: 3.8,
-    status: "In Stock",
+    price: "340.00",
+    avgRating: 3.8,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "11",
+    _id: "11",
+    images: [
+      {
+        id: "11",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Tomato",
-    price: "$800.00",
-    image: shop_product_img,
-    rating: 4.3,
-    status: "In Stock",
+    price: "800.00",
+    avgRating: 4.3,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "12",
+    _id: "12",
+    images: [
+      {
+        id: "12",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Spinach",
-    price: "$250.00",
-    image: shop_product_img,
-    rating: 4.1,
-    status: "In Stock",
+    price: "250.00",
+    avgRating: 4.1,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "13",
+    _id: "13",
+    images: [
+      {
+        id: "13",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Carrot",
-    price: "$150.00",
-    image: shop_product_img,
-    rating: 4.5,
-    status: "In Stock",
+    price: "150.00",
+    avgRating: 4.5,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "14",
+    _id: "14",
+    images: [
+      {
+        id: "14",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Bell Pepper",
-    price: "$600.00",
-    image: shop_product_img,
-    rating: 4.2,
-    status: "In Stock",
+    price: "600.00",
+    avgRating: 4.2,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "15",
+    _id: "15",
+    images: [
+      {
+        id: "15",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Cucumber",
-    price: "$700.00",
-    image: shop_product_img,
-    rating: 4.4,
-    status: "In Stock",
+    price: "700.00",
+    avgRating: 4.4,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
   {
-    id: "16",
+    _id: "16",
+    images: [
+      {
+        id: "16",
+        publicFileURL: shop_product_img,
+      },
+    ],
     name: "Zucchini",
-    price: "$110.00",
-    image: shop_product_img,
-    rating: 4.0,
-    status: "In Stock",
+    price: "110.00",
+    avgRating: 4.0,
+    stockStatus: "in-stock",
     category: "Vegetables",
   },
 ];
@@ -300,7 +380,7 @@ export default function Shop() {
         {/* Product Grid */}
         <div className="w-3/4 flex flex-wrap gap-6 justify-center">
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       </div>
