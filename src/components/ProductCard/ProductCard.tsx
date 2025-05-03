@@ -53,31 +53,34 @@ export default function ProductCard({ product }: { product: Product }) {
         </Link>
         <div className="p-4">
           <div className="flex justify-between items-center">
-            <h4 className="text-lg font-semibold">{product?.name}</h4>
+            <h4 className="text-lg text-white font-semibold">
+              {product?.name}
+            </h4>
             <button
               className={`${
                 todos?.isCartClick ? "bg-primary" : "bg-gray-400"
               } text-white p-2 rounded-full transition-colors duration-200`}
               onClick={() => dispatch({ type: "cartClick" })}
               style={{
-                display: product.avgRating === 0 ? "none" : "inline-block",
+                display:
+                  product.stockStatus === "in-stock" ? "inline-block" : "none",
               }}
             >
               <FaShoppingCart size={16} />
             </button>
           </div>
-          <p className="text-sm my-2">$ {product.price}</p>
+          <p className="text-sm text-white my-2">$ {product.price}</p>
           <div className="flex justify-between items-center">
             <div
               className={`text-sm font-semibold ${
-                product.stockStatus === "in-stock"
+                product?.stockStatus === "in-stock"
                   ? "text-green-500"
                   : "text-red-500"
               }`}
             >
-              {product.stockStatus}
+              {product?.stockStatus}
             </div>
-            <div className="text-sm text-yellow-500">
+            <div className="text-sm text-yellow-200">
               {"★".repeat(Math.floor(product?.avgRating))}
               {"☆".repeat(5 - Math.floor(product?.avgRating))}
             </div>
