@@ -52,7 +52,7 @@ export default function ProductCard({ product }: { product: Product }) {
           />
         </Link>
         <div className="p-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-start">
             <h4 className="text-lg text-white font-semibold">
               {product?.name}
             </h4>
