@@ -18,7 +18,11 @@ export default function LatestProducts() {
   // const [query, setQuery] = useState({});
 
   const { data, isLoading } = useGetAllProductsQuery(
-    [{ name: "latest", value: "10" }]
+    [
+      { name: "latest", value: "10" },
+      { name: "page", value: "1" },
+      { name: "limit", value: "10" },
+    ]
     // Object.entries(query)
     //   .filter((item) => item[1])
     //   .map(([key, value]) => ({
@@ -27,7 +31,7 @@ export default function LatestProducts() {
     //   }))
   );
   const latestData: LatestDataType[] = data?.data || [];
-  console.log("------Latest Products----------->>", latestData);
+  // console.log("------Latest Products----------->>", latestData);
 
   if (isLoading) {
     return (
@@ -49,7 +53,7 @@ export default function LatestProducts() {
           </>
         ) : (
           latestData?.map((product: LatestDataType) => (
-            <ProductCard key={product._id} product={product} />
+            <ProductCard key={product?._id} product={product} />
           ))
         )}
       </div>
