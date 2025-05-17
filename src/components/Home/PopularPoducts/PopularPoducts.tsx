@@ -14,20 +14,9 @@ type PopularDataType = {
   stockStatus: string;
 };
 
-export default function PopularPoducts() {
-  const { data, isLoading } = useGetAllProductsQuery(
-    [
-      { name: "popular", value: "10" },
-      { name: "page", value: "1" },
-      { name: "limit", value: "10" },
-    ]
-    // Object.entries(query)
-    //   .filter((item) => item[1])
-    //   .map(([key, value]) => ({
-    //     name: key,
-    //     value: value,
-    //   }))
-  );
+export default function PopularProducts() {
+  const { data, isLoading } = useGetAllProductsQuery({ popular: 8 });
+
   const popularData: PopularDataType[] = data?.data || [];
 
   if (isLoading) {
@@ -37,19 +26,16 @@ export default function PopularPoducts() {
       </div>
     );
   }
+
   return (
     <div className="md:p-4">
-      <CustomHeading> Popular Products </CustomHeading>
+      <CustomHeading>Popular Products</CustomHeading>
       <div className="flex flex-wrap gap-6 justify-center">
-        {popularData?.length === 0 ? (
-          <>
-            <div className=" text-lg font-semibold  ">
-              No latest products found!
-            </div>
-          </>
+        {popularData.length === 0 ? (
+          <div className="text-lg font-semibold">No popular products found!</div>
         ) : (
-          popularData?.map((product: PopularDataType) => (
-            <ProductCard key={product?._id} product={product} />
+          popularData.map((product: PopularDataType) => (
+            <ProductCard key={product._id} product={product} />
           ))
         )}
       </div>

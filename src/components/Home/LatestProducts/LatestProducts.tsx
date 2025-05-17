@@ -15,23 +15,10 @@ type LatestDataType = {
 };
 
 export default function LatestProducts() {
-  // const [query, setQuery] = useState({});
+  const { data, isLoading } = useGetAllProductsQuery({});
 
-  const { data, isLoading } = useGetAllProductsQuery(
-    [
-      { name: "latest", value: "10" },
-      { name: "page", value: "1" },
-      { name: "limit", value: "10" },
-    ]
-    // Object.entries(query)
-    //   .filter((item) => item[1])
-    //   .map(([key, value]) => ({
-    //     name: key,
-    //     value: value,
-    //   }))
-  );
   const latestData: LatestDataType[] = data?.data || [];
-  // console.log("------Latest Products----------->>", latestData);
+  const limitedLatestData = latestData.slice(0, 8);
 
   if (isLoading) {
     return (
@@ -45,15 +32,11 @@ export default function LatestProducts() {
     <div className="md:p-4 my-20">
       <CustomHeading>Latest Products</CustomHeading>
       <div className="flex flex-wrap gap-6 justify-center">
-        {latestData?.length === 0 ? (
-          <>
-            <div className=" text-lg font-semibold  ">
-              No latest products found!
-            </div>
-          </>
+        {limitedLatestData.length === 0 ? (
+          <div className="text-lg font-semibold">No latest products found!</div>
         ) : (
-          latestData?.map((product: LatestDataType) => (
-            <ProductCard key={product?._id} product={product} />
+          limitedLatestData.map((product: LatestDataType) => (
+            <ProductCard key={product._id} product={product} />
           ))
         )}
       </div>

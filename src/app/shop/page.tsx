@@ -1,354 +1,651 @@
+
+
+
+
+// "use client";
+
+// import ProductCard from "@/components/ProductCard/ProductCard";
+// import CustomHeading from "@/components/utils/CustomHeading";
+// import { useGetAllProductsQuery, useGetCategoriesQuery } from "@/redux/features/products/productsApi";
+// import { Radio, Slider, Spin, Empty, Pagination } from "antd";
+// import { useState, useMemo, useCallback } from "react";
+// import Image from "next/image";
+// import NoProduct from "@/assets/shop/no_product.png";
+
+// function ProductCardWithFallback({ product }: { product: any }) {
+//   const [imgError, setImgError] = useState(false);
+//   const fallbackImageUrl = NoProduct;
+//   const imageUrl =
+//     !imgError && product.images && product.images.length > 0
+//       ? product.images[0].publicFileURL
+//       : "../../assets/shop/no_product.png";
+
+//   const handleImgError = useCallback(() => {
+//     setImgError(true);
+//   }, []);
+
+//   return (
+//     <ProductCard
+//       product={{
+//         ...product,
+//         price: product.price.toString(),
+//         images: [{ publicFileURL: imageUrl }],
+//       }}
+//       key={product._id}
+//       onError={handleImgError}
+//     />
+//   );
+// }
+
+// export default function Shop() {
+//   const [priceRange, setPriceRange] = useState<[number, number]>([50, 2000000]);
+//   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [pageSize] = useState(10); // Matches the API's default limit
+
+//   // Pass filters to the API query including pagination
+//   const { data: productData, error, isLoading } = useGetAllProductsQuery({
+//     search: searchQuery,
+//     categories: selectedCategory === "All" ? [] : [selectedCategory],
+//     page: currentPage,
+//     limit: pageSize,
+//   });
+//   const { data: categoryData, isLoading: categoriesLoading } = useGetCategoriesQuery();
+
+//   // Extract categories from API response or fallback empty array
+//   const categories = categoryData?.data ?? [];
+
+//   // Extract pagination info
+//   const paginationInfo = productData?.pagination || {
+//     totalPage: 1,
+//     currentPage: 1,
+//     totalItem: 0,
+//   };
+
+//   const handlePriceChange = (value: number[]) => {
+//     setPriceRange(value as [number, number]);
+//   };
+
+//   const handleCategoryChange = (e: any) => {
+//     setSelectedCategory(e.target.value);
+//     setCurrentPage(1); // Reset to first page when category changes
+//   };
+
+//   const resetPrice = () => {
+//     setPriceRange([50, 1500]);
+//   };
+
+//   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setSearchQuery(e.target.value);
+//     setCurrentPage(1); // Reset to first page when search changes
+//   };
+
+//   // Client-side filtering for price range only
+//   const filteredProducts = useMemo(() => {
+//     if (!productData?.data) return [];
+
+//     return productData.data.filter((product: any) => {
+//       const price = Number(product.price);
+//       const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+//       return matchesPrice;
+//     });
+//   }, [productData, priceRange]);
+
+//   const handlePageChange = (page: number) => {
+//     setCurrentPage(page);
+//   };
+
+//   return (
+//     <div className="mb-20">
+//       <div className="text-center pt-8 md:pt-32">
+//         <CustomHeading> Shop now </CustomHeading>
+//         <div className="mx-auto max-w-sm md:max-w-xl mt-20">
+//           <div className="relative w-80 md:w-full">
+//             <input
+//               placeholder="Search products"
+//               value={searchQuery}
+//               onChange={handleSearch}
+//               className="w-full px-4 py-2 md:py-3 text-white bg-transparent border-2 border-yellow-400 rounded-2xl focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-gray-300 shadow-md transition-all duration-200 pr-10"
+//             />
+//             {searchQuery && (
+//               <button
+//                 onClick={() => setSearchQuery("")}
+//                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white transition-colors duration-200 font-bold"
+//               >
+//                 ✕
+//               </button>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="pt-10 bg-black flex flex-col md:flex-row gap-6 container mx-auto px-4 md:px-0 z-20">
+//         {/* Category Filter Section */}
+//         <div className="w-full md:w-1/4 p-4 md:p-8 text-white rounded-lg shadow-lg">
+//           <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-yellow-400">
+//             Filters
+//           </h2>
+
+//           {/* Categories Filter */}
+//           <div className="mb-4 md:mb-6">
+//             <h3 className="font-medium text-base md:text-lg mb-2 md:mb-3 text-white">
+//               All Categories
+//             </h3>
+//             {categoriesLoading ? (
+//               <Spin />
+//             ) : (
+//               <Radio.Group value={selectedCategory} onChange={handleCategoryChange}>
+//                 <ul className="space-y-2">
+//                   <li>
+//                     <Radio value="All">
+//                       <span className="text-white"> All </span>
+//                     </Radio>
+//                   </li>
+//                   {categories?.map((cat) => (
+//                     <li key={cat._id}>
+//                       <Radio value={cat.name}>
+//                         <span className="text-white">{cat.name}</span>
+//                       </Radio>
+//                     </li>
+//                   ))}
+//                 </ul>
+//               </Radio.Group>
+//             )}
+//           </div>
+
+//           {/* Price Range Slider */}
+//           <div className="mb-4 md:mb-6">
+//             <h3 className="font-semibold text-base md:text-lg mb-2 md:mb-3 text-yellow-400">
+//               Price
+//             </h3>
+//             <Slider
+//               range
+//               min={50}
+//               max={2000}
+//               step={1}
+//               value={priceRange}
+//               onChange={handlePriceChange}
+//               tipFormatter={(value) => `$${value}`}
+//               trackStyle={[{ backgroundColor: "yellow" }]}
+//               handleStyle={[
+//                 { backgroundColor: "yellow", borderColor: "yellow" },
+//                 { backgroundColor: "yellow", borderColor: "yellow" },
+//               ]}
+//               style={{ marginBottom: 10 }}
+//             />
+//             <div className="flex justify-between mt-1 md:mt-3">
+//               <span className="text-sm md:text-base">
+//                 Price: ${priceRange[0]} — ${priceRange[1]}
+//               </span>
+//             </div>
+//           </div>
+
+//           {/* Reset Price Button */}
+//           <button
+//             onClick={resetPrice}
+//             className="w-full mt-4 md:mt-6 bg-yellow-400 text-black py-2 md:py-3 px-4 md:px-6 rounded-full shadow-md hover:bg-red-400 transition-all duration-200 text-sm md:text-base"
+//           >
+//             Reset Price
+//           </button>
+//         </div>
+
+//         {/* Product Grid */}
+//         <div className="w-full md:w-3/4 flex flex-col">
+//           <div className="flex flex-wrap gap-6 justify-center">
+//             {isLoading ? (
+//               <Spin size="large" />
+//             ) : error ? (
+//               <Empty description="Failed to load products." />
+//             ) : filteredProducts.length === 0 ? (
+//               <div className="flex flex-col items-center justify-center gap-4">
+//                 <Image
+//                   src={NoProduct}
+//                   alt="No Products"
+//                   width={200}
+//                   height={200}
+//                   className="object-contain"
+//                   priority
+//                 />
+//                 <p className="text-white text-lg">No products found.</p>
+//               </div>
+//             ) : (
+//               filteredProducts.map((product: any) => (
+//                 <ProductCardWithFallback key={product._id} product={product} />
+//               ))
+//             )}
+//           </div>
+
+//           {/* Pagination Controls */}
+//           {paginationInfo.totalItem > 0 && (
+//             <div className="flex justify-center mt-8">
+//               <Pagination
+//                 current={currentPage}
+//                 total={paginationInfo.totalItem}
+//                 pageSize={pageSize}
+//                 onChange={handlePageChange}
+//                 showSizeChanger={false}
+//                 className="ant-pagination-custom"
+//               />
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+// Shop.tsx
+// "use client";
+
+// import ProductCard from "@/components/ProductCard/ProductCard";
+// import CustomHeading from "@/components/utils/CustomHeading";
+// import { useGetAllProductsQuery, useGetCategoriesQuery } from "@/redux/features/products/productsApi";
+// import { Radio, Slider, Spin, Empty, Pagination } from "antd";
+// import { useState, useMemo, useCallback } from "react";
+// import Image from "next/image";
+// import NoProduct from "@/assets/shop/no_product.png";
+
+// function ProductCardWithFallback({ product }: { product: any }) {
+//   const [imgError, setImgError] = useState(false);
+//   const fallbackImageUrl = NoProduct;
+//   const imageUrl =
+//     !imgError && product.images && product.images.length > 0
+//       ? product.images[0].publicFileURL
+//       : "../../assets/shop/no_product.png";
+
+//   const handleImgError = useCallback(() => {
+//     setImgError(true);
+//   }, []);
+
+//   return (
+//     <ProductCard
+//       product={{
+//         ...product,
+//         price: product.price.toString(),
+//         images: [{ publicFileURL: imageUrl }],
+//       }}
+//       key={product._id}
+//       onError={handleImgError}
+//     />
+//   );
+// }
+
+// export default function Shop() {
+//   const [priceRange, setPriceRange] = useState<[number, number]>([50, 2000000]);
+//   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [pageSize] = useState(9); // Changed to 9 products per page
+
+//   // Pass filters to the API query including pagination
+//   const { data: productData, error, isLoading } = useGetAllProductsQuery({
+//     search: searchQuery,
+//     categories: selectedCategory === "All" ? [] : [selectedCategory],
+//     page: currentPage,
+//     limit: pageSize,
+//   });
+//   const { data: categoryData, isLoading: categoriesLoading } = useGetCategoriesQuery();
+
+//   // Extract categories from API response or fallback empty array
+//   const categories = categoryData?.data ?? [];
+
+//   // Extract pagination info
+//   const paginationInfo = productData?.pagination || {
+//     totalPage: 1,
+//     currentPage: 1,
+//     totalItem: 0,
+//   };
+
+//   const handlePriceChange = (value: number[]) => {
+//     setPriceRange(value as [number, number]);
+//   };
+
+//   const handleCategoryChange = (e: any) => {
+//     setSelectedCategory(e.target.value);
+//     setCurrentPage(1); // Reset to first page when category changes
+//   };
+
+//   const resetPrice = () => {
+//     setPriceRange([50, 1500]);
+//   };
+
+//   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setSearchQuery(e.target.value);
+//     setCurrentPage(1); // Reset to first page when search changes
+//   };
+
+//   // Client-side filtering for price range only
+//   const filteredProducts = useMemo(() => {
+//     if (!productData?.data) return [];
+
+//     return productData.data.filter((product: any) => {
+//       const price = Number(product.price);
+//       const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+//       return matchesPrice;
+//     });
+//   }, [productData, priceRange]);
+
+//   const handlePageChange = (page: number) => {
+//     setCurrentPage(page);
+//   };
+
+//   return (
+//     <div className="mb-20">
+//       <div className="text-center pt-8 md:pt-32">
+//         <CustomHeading> Shop now </CustomHeading>
+//         <div className="mx-auto max-w-sm md:max-w-xl mt-20">
+//           <div className="relative w-80 md:w-full">
+//             <input
+//               placeholder="Search products"
+//               value={searchQuery}
+//               onChange={handleSearch}
+//               className="w-full px-4 py-2 md:py-3 text-white bg-transparent border-2 border-yellow-400 rounded-2xl focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-gray-300 shadow-md transition-all duration-200 pr-10"
+//             />
+//             {searchQuery && (
+//               <button
+//                 onClick={() => setSearchQuery("")}
+//                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white transition-colors duration-200 font-bold"
+//               >
+//                 ✕
+//               </button>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="pt-10 bg-black flex flex-col md:flex-row gap-6 container mx-auto px-4 md:px-0 z-20">
+//         {/* Category Filter Section */}
+//         <div className="w-full md:w-1/4 p-4 md:p-8 text-white rounded-lg shadow-lg">
+//           <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-yellow-400">
+//             Filters
+//           </h2>
+
+//           {/* Categories Filter */}
+//           <div className="mb-4 md:mb-6">
+//             <h3 className="font-medium text-base md:text-lg mb-2 md:mb-3 text-white">
+//               All Categories
+//             </h3>
+//             {categoriesLoading ? (
+//               <Spin />
+//             ) : (
+//               <Radio.Group value={selectedCategory} onChange={handleCategoryChange}>
+//                 <ul className="space-y-2">
+//                   <li>
+//                     <Radio value="All">
+//                       <span className="text-white"> All </span>
+//                     </Radio>
+//                   </li>
+//                   {categories?.map((cat) => (
+//                     <li key={cat._id}>
+//                       <Radio value={cat.name}>
+//                         <span className="text-white">{cat.name}</span>
+//                       </Radio>
+//                     </li>
+//                   ))}
+//                 </ul>
+//               </Radio.Group>
+//             )}
+//           </div>
+
+//           {/* Price Range Slider */}
+//           <div className="mb-4 md:mb-6">
+//             <h3 className="font-semibold text-base md:text-lg mb-2 md:mb-3 text-yellow-400">
+//               Price
+//             </h3>
+//             <Slider
+//               range
+//               min={50}
+//               max={2000}
+//               step={1}
+//               value={priceRange}
+//               onChange={handlePriceChange}
+//               tipFormatter={(value) => `$${value}`}
+//               trackStyle={[{ backgroundColor: "yellow" }]}
+//               handleStyle={[
+//                 { backgroundColor: "yellow", borderColor: "yellow" },
+//                 { backgroundColor: "yellow", borderColor: "yellow" },
+//               ]}
+//               style={{ marginBottom: 10 }}
+//             />
+//             <div className="flex justify-between mt-1 md:mt-3">
+//               <span className="text-sm md:text-base">
+//                 Price: ${priceRange[0]} — ${priceRange[1]}
+//               </span>
+//             </div>
+//           </div>
+
+//           {/* Reset Price Button */}
+//           <button
+//             onClick={resetPrice}
+//             className="w-full mt-4 md:mt-6 bg-yellow-400 text-black py-2 md:py-3 px-4 md:px-6 rounded-full shadow-md hover:bg-red-400 transition-all duration-200 text-sm md:text-base"
+//           >
+//             Reset Price
+//           </button>
+//         </div>
+
+//         {/* Product Grid */}
+//         <div className="w-full md:w-3/4 flex flex-col">
+//           <div className="flex flex-wrap gap-6 justify-center">
+//             {isLoading ? (
+//               <Spin size="large" />
+//             ) : error ? (
+//               <Empty description="Failed to load products." />
+//             ) : filteredProducts.length === 0 ? (
+//               <div className="flex flex-col items-center justify-center gap-4">
+//                 <Image
+//                   src={NoProduct}
+//                   alt="No Products"
+//                   width={200}
+//                   height={200}
+//                   className="object-contain"
+//                   priority
+//                 />
+//                 <p className="text-white text-lg">No products found.</p>
+//               </div>
+//             ) : (
+//               filteredProducts.map((product: any) => (
+//                 <ProductCardWithFallback key={product._id} product={product} />
+//               ))
+//             )}
+//           </div>
+
+//           {/* Pagination Controls */}
+//           {paginationInfo.totalItem > 0 && (
+//             <div className="flex justify-center mt-8">
+//               <Pagination
+//                 current={currentPage}
+//                 total={paginationInfo.totalItem}
+//                 pageSize={pageSize}
+//                 onChange={handlePageChange}
+//                 showSizeChanger={false}
+//                 className="ant-pagination-custom"
+//               />
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
 "use client";
 
 import ProductCard from "@/components/ProductCard/ProductCard";
 import CustomHeading from "@/components/utils/CustomHeading";
-import { Checkbox, Input, Slider } from "antd"; // Import Input from antd
-import { useState } from "react";
-import shop_product_img from "../../assets/shop/shop_product_img.png";
+import { useGetAllProductsQuery, useGetCategoriesQuery } from "@/redux/features/products/productsApi";
+import { Radio, Slider, Spin, Empty, Pagination } from "antd";
+import { useState, useMemo, useCallback } from "react";
+import Image from "next/image";
+import NoProduct from "@/assets/shop/no_product.png";
 
-// Mock Data with categories attached to products
-const mockData = [
-  {
-    _id: "1", // Changed from 'id' to '_id'
-    images: [
-      {
-        id: "1",
-        publicFileURL: shop_product_img, // Assuming 'shop_product_img' is the image URL
-      },
-    ],
-    name: "Fresh Indian Malta",
-    price: "200.00", // Changed to string format
-    avgRating: 4.0, // Changed from 'rating' to 'avgRating'
-    stockStatus: "out-of-stock", // Changed to 'stockStatus' and lowercase
-    category: "Fresh Fruit",
-  },
-  {
-    _id: "2",
-    images: [
-      {
-        id: "2",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Fresh Indian Malta",
-    price: "200.00",
-    avgRating: 4.0,
-    stockStatus: "in-stock",
-    category: "Fresh Fruit",
-  },
-  {
-    _id: "3",
-    images: [
-      {
-        id: "3",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Chinese Cabbage",
-    price: "120.00",
-    avgRating: 4.7,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "4",
-    images: [
-      {
-        id: "4",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Green Lettuce",
-    price: "300.00",
-    avgRating: 4.3,
-    stockStatus: "out-of-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "5",
-    images: [
-      {
-        id: "5",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Eggplant",
-    price: "304.00",
-    avgRating: 4.2,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "6",
-    images: [
-      {
-        id: "6",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Big Potatoes",
-    price: "500.00",
-    avgRating: 4.4,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "7",
-    images: [
-      {
-        id: "7",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Corn",
-    price: "250.00",
-    avgRating: 4.1,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "8",
-    images: [
-      {
-        id: "8",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Fresh Cauliflower",
-    price: "120.00",
-    avgRating: 4.6,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "9",
-    images: [
-      {
-        id: "9",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Green Capsicum",
-    price: "90.00",
-    avgRating: 4.0,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "10",
-    images: [
-      {
-        id: "10",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Green Chili",
-    price: "340.00",
-    avgRating: 3.8,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "11",
-    images: [
-      {
-        id: "11",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Tomato",
-    price: "800.00",
-    avgRating: 4.3,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "12",
-    images: [
-      {
-        id: "12",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Spinach",
-    price: "250.00",
-    avgRating: 4.1,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "13",
-    images: [
-      {
-        id: "13",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Carrot",
-    price: "150.00",
-    avgRating: 4.5,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "14",
-    images: [
-      {
-        id: "14",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Bell Pepper",
-    price: "600.00",
-    avgRating: 4.2,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "15",
-    images: [
-      {
-        id: "15",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Cucumber",
-    price: "700.00",
-    avgRating: 4.4,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-  {
-    _id: "16",
-    images: [
-      {
-        id: "16",
-        publicFileURL: shop_product_img,
-      },
-    ],
-    name: "Zucchini",
-    price: "110.00",
-    avgRating: 4.0,
-    stockStatus: "in-stock",
-    category: "Vegetables",
-  },
-];
+function ProductCardWithFallback({ product }: { product: any }) {
+  const [imgError, setImgError] = useState(false);
+  const fallbackImageUrl = NoProduct;
+  const imageUrl =
+    !imgError && product.images && product.images.length > 0
+      ? product.images[0].publicFileURL
+      : "../../assets/shop/no_product.png";
+
+  const handleImgError = useCallback(() => {
+    setImgError(true);
+  }, []);
+
+  return (
+    <ProductCard
+      product={{
+        ...product,
+        price: product.price.toString(),
+        images: [{ publicFileURL: imageUrl }],
+      }}
+      key={product._id}
+      onError={handleImgError}
+    />
+  );
+}
 
 export default function Shop() {
-  const [priceRange, setPriceRange] = useState([50, 1500]);
-  const [selectedCategories, setSelectedCategories] = useState(["All"]);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [priceRange, setPriceRange] = useState<[number, number]>([50, 2000000]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(9); // Fixed at 9 products per page
 
-  // Handle the slider change
+  // Pass filters to the API query including pagination
+  const { data: productData, error, isLoading } = useGetAllProductsQuery({
+    search: searchQuery,
+    categories: selectedCategory === "All" ? [] : [selectedCategory],
+    page: currentPage,
+    limit: pageSize,
+  });
+  console.log(productData,"---------><")
+  const { data: categoryData, isLoading: categoriesLoading } = useGetCategoriesQuery();
+
+  // Extract categories from API response or fallback empty array
+  const categories = categoryData?.data ?? [];
+
+  // Extract pagination info
+  const paginationInfo = productData?.pagination || {
+    totalPage: 1,
+    currentPage: 1,
+    totalItem: 0,
+  };
+
   const handlePriceChange = (value: number[]) => {
-    setPriceRange(value);
+    setPriceRange(value as [number, number]);
   };
 
-  // Handle category filter change
-  const handleCategoryChange = (checkedValues: string[]) => {
-    setSelectedCategories(checkedValues);
+  const handleCategoryChange = (e: any) => {
+    setSelectedCategory(e.target.value);
+    setCurrentPage(1); // Reset to first page when category changes
   };
 
-  // Reset price to default value
   const resetPrice = () => {
     setPriceRange([50, 1500]);
   };
 
-  // Handle search input change
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to first page when search changes
   };
 
-  // Filter products based on search query, price range, and category
-  const filteredProducts = mockData.filter((product) => {
-    const matchesSearch = product.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesPrice =
-      parseFloat(product.price.slice(1)) >= priceRange[0] &&
-      parseFloat(product.price.slice(1)) <= priceRange[1];
-    const matchesCategory =
-      selectedCategories.includes("All") ||
-      selectedCategories.includes(product.category);
+  // Client-side filtering for price range with pagination respect
+  const filteredProducts = useMemo(() => {
+    if (!productData?.data) return [];
 
-    return matchesSearch && matchesPrice && matchesCategory;
-  });
+    console.log("Raw API Data:", productData.data); // Debug: Log raw API data
+    console.log("Price Range:", priceRange); // Debug: Log current price range
+
+    // Apply price range filter
+    const priceFiltered = productData.data.filter((product: any) => {
+      const price = Number(product.price);
+      const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+      return matchesPrice;
+    });
+
+   // console.log("Filtered Products Count:", priceFiltered.length); // Debug: Log filtered count
+
+    // Paginate the filtered results to ensure 9 per page
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return priceFiltered.slice(startIndex, endIndex);
+  }, [productData, priceRange, currentPage, pageSize]);
+
+
+console.log(filteredProducts,"filteredProducts")
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="mb-20">
-      <div className="text-center pt-32">
+      <div className="text-center pt-8 md:pt-32">
         <CustomHeading> Shop now </CustomHeading>
-        {/* Replace static text with Ant Design Input */}
-        <div className="mt-4">
-          <Input
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={handleSearch}
-            style={{ width: 300 }} // Adjust width as needed
-          />
+        <div className="mx-auto max-w-sm md:max-w-xl mt-20">
+          <div className="relative w-80 md:w-full">
+            <input
+              placeholder="Search products"
+              value={searchQuery}
+              onChange={handleSearch}
+              className="w-full px-4 py-2 md:py-3 text-white bg-transparent border-2 border-yellow-400 rounded-2xl focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-gray-300 shadow-md transition-all duration-200 pr-10"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white transition-colors duration-200 font-bold"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="pt-20 bg-black container flex gap-6 z-20">
-        {/* Sidebar for Filters */}
-        <div className="w-1/4 p-8 text-white rounded-lg shadow-lg sticky top-20 max-h-screen overflow-y-auto">
-          <h2 className="text-2xl font-semibold mb-6 text-primary">Filters</h2>
+      <div className="pt-10 bg-black flex flex-col md:flex-row gap-6 container mx-auto px-4 md:px-0 z-20">
+        {/* Category Filter Section */}
+        <div className="w-full md:w-1/4 p-4 md:p-8 text-white rounded-lg shadow-lg">
+          <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-yellow-400">
+            Filters
+          </h2>
 
-          {/* Categories Filter using Ant Design Checkbox */}
-          <div className="mb-6">
-            <h3 className="font-medium text-lg mb-3 text-white">
+          {/* Categories Filter */}
+          <div className="mb-4 md:mb-6">
+            <h3 className="font-medium text-base md:text-lg mb-2 md:mb-3 text-white">
               All Categories
             </h3>
-            <Checkbox.Group
-              value={selectedCategories}
-              onChange={handleCategoryChange}
-            >
-              <ul className="space-y-2">
-                <li>
-                  <Checkbox value="Fresh Fruit">
-                    <span className="text-white"> Fresh Fruit (25) </span>
-                  </Checkbox>
-                </li>
-                <li>
-                  <Checkbox value="Vegetables">
-                    <span className="text-white"> Vegetables (150) </span>
-                  </Checkbox>
-                </li>
-                <li>
-                  <Checkbox value="Cooking">
-                    <span className="text-white"> Cooking (54) </span>
-                  </Checkbox>
-                </li>
-                <li>
-                  <Checkbox value="Snacks">
-                    <span className="text-white"> Snacks (47) </span>
-                  </Checkbox>
-                </li>
-                <li>
-                  <Checkbox value="Beverages">
-                    <span className="text-white"> Beverages (43) </span>
-                  </Checkbox>
-                </li>
-                <li>
-                  <Checkbox value="Beauty & Health">
-                    <span className="text-white"> Beauty & Health (38) </span>
-                  </Checkbox>
-                </li>
-                <li>
-                  <Checkbox value="Bread & Bakery">
-                    <span className="text-white"> Bread & Bakery (15) </span>
-                  </Checkbox>
-                </li>
-              </ul>
-            </Checkbox.Group>
+            {categoriesLoading ? (
+              <Spin />
+            ) : (
+              <Radio.Group value={selectedCategory} onChange={handleCategoryChange}>
+                <ul className="space-y-2">
+                  <li>
+                    <Radio value="All">
+                      <span className="text-white"> All </span>
+                    </Radio>
+                  </li>
+                  {categories?.map((cat) => (
+                    <li key={cat._id}>
+                      <Radio value={cat.name}>
+                        <span className="text-white">{cat.name}</span>
+                      </Radio>
+                    </li>
+                  ))}
+                </ul>
+              </Radio.Group>
+            )}
           </div>
 
-          {/* Price Range Slider using Ant Design */}
-          <div className="mb-6">
-            <h3 className="font-semibold text-lg mb-3 text-primary ">Price</h3>
+          {/* Price Range Slider */}
+          <div className="mb-4 md:mb-6">
+            <h3 className="font-semibold text-base md:text-lg mb-2 md:mb-3 text-yellow-400">
+              Price
+            </h3>
             <Slider
               range
-              min={50} // Minimum price is 50
+              min={50}
               max={2000}
               step={1}
               value={priceRange}
@@ -359,10 +656,10 @@ export default function Shop() {
                 { backgroundColor: "yellow", borderColor: "yellow" },
                 { backgroundColor: "yellow", borderColor: "yellow" },
               ]}
-              style={{ marginBottom: 20 }}
+              style={{ marginBottom: 10 }}
             />
-            <div className="flex justify-between mt-3">
-              <span>
+            <div className="flex justify-between mt-1 md:mt-3">
+              <span className="text-sm md:text-base">
                 Price: ${priceRange[0]} — ${priceRange[1]}
               </span>
             </div>
@@ -371,17 +668,51 @@ export default function Shop() {
           {/* Reset Price Button */}
           <button
             onClick={resetPrice}
-            className="w-full mt-6 bg-primary text-white py-3 px-6 rounded-full shadow-md hover:bg-red-400 transition-all duration-200"
+            className="w-full mt-4 md:mt-6 bg-yellow-400 text-black py-2 md:py-3 px-4 md:px-6 rounded-full shadow-md hover:bg-red-400 transition-all duration-200 text-sm md:text-base"
           >
             Reset Price
           </button>
         </div>
 
         {/* Product Grid */}
-        <div className="w-3/4 flex flex-wrap gap-6 justify-center">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+        <div className="w-full md:w-3/4 flex flex-col">
+          <div className="flex flex-wrap gap-6 justify-center">
+            {isLoading ? (
+              <Spin size="large" />
+            ) : error ? (
+              <Empty description="Failed to load products." />
+            ) : filteredProducts.length === 0 ? (
+              <div className="flex flex-col items-center justify-center gap-4">
+                <Image
+                  src={NoProduct}
+                  alt="No Products"
+                  width={200}
+                  height={200}
+                  className="object-contain"
+                  priority
+                />
+                <p className="text-white text-lg">No products found.</p>
+              </div>
+            ) : (
+              filteredProducts.map((product: any) => (
+                <ProductCardWithFallback key={product._id} product={product} />
+              ))
+            )}
+          </div>
+
+          {/* Pagination Controls */}
+          {paginationInfo.totalItem > 0 && (
+            <div className="flex justify-center mt-8">
+              <Pagination
+                current={currentPage}
+                total={paginationInfo.totalItem}
+                pageSize={pageSize}
+                onChange={handlePageChange}
+                showSizeChanger={false}
+                className="ant-pagination-custom"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
