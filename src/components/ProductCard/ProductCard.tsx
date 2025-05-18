@@ -120,7 +120,7 @@ type Product = {
   price: string;
   avgRating: number;
   stockStatus: string;
-  quantit:string
+  quantity:string
 };
 
 export default function ProductCard({ product }: { product: Product }) {
