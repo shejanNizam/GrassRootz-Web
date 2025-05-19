@@ -1,9 +1,3 @@
-
-
-
-
-
-
 // import baseApi from "@/redux/api/baseApi";
 
 // export const productsApi = baseApi.injectEndpoints({
@@ -80,7 +74,13 @@ export const productsApi = baseApi.injectEndpoints({
     // Get all products with optional filters (search, categories, popular, page, limit)
     getAllProducts: builder.query<
       any,
-      { search?: string; categories?: string[]; popular?: number; page?: number; limit?: number }
+      {
+        search?: string;
+        categories?: string[];
+        popular?: number;
+        page?: number;
+        limit?: number;
+      }
     >({
       query: (filters = {}) => {
         const params = new URLSearchParams();
@@ -121,26 +121,28 @@ export const productsApi = baseApi.injectEndpoints({
     }),
 
     // Get all categories
-// Get all categories
-getCategories: builder.query<{ data: { _id: string; name: string }[] }, void>({
-  query: () => ({
-    url: "/category",
-    method: "GET",
-  }),
-  providesTags: ["category"],
-}),
+    // Get all categories
+    getCategories: builder.query<
+      { data: { _id: string; name: string }[] },
+      void
+    >({
+      query: () => ({
+        url: "/category",
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
 
     // Get product details by productId query param
-    getProductDetails: builder.query<
-      any,
-      { productId: string | ""}
-    >({
+    getProductDetails: builder.query<any, { productId: string | "" }>({
       query: ({ productId }) => ({
         url: `/product/details`,
         method: "GET",
         params: { productId },
       }),
-      providesTags: (result, error, arg) => [{ type: "product", id: arg.productId }],
+      providesTags: (result, error, arg) => [
+        { type: "product", id: arg.productId },
+      ],
     }),
   }),
 });

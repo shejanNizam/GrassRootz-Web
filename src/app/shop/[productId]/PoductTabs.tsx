@@ -90,11 +90,10 @@
 //   );
 // }
 
-
 "use client";
 
-import { Tabs, Rate, Avatar, Image } from "antd";
-import NoImage from "@/assets/NoImage.png"
+import NoImage from "@/assets/NoImage.png";
+import { Image, Rate, Tabs } from "antd";
 type User = {
   name: string;
   email: string;
@@ -139,18 +138,21 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             <strong>Category:</strong> {product?.category}
           </p>
           <p>
-  <strong>Stock Status:</strong>{" "}
-  {Number(product?.quantity) <=0 ? (
-                <span className="bg-red-600 text-red-100 rounded-full px-2 py-1 text-xs font-semibold mr-2 mb-2">
-                Out of stock</span>
-  ) : (
-    <span className="text-green-500">Available ({product?.quantity})</span>
-  )}
-</p>
+            <strong>Stock Status:</strong>{" "}
+            {Number(product?.quantity) <= 0 ? (
+              <span className="bg-red-600 text-red-100 rounded-full px-2 py-1 text-xs font-semibold mr-2 mb-2">
+                Out of stock
+              </span>
+            ) : (
+              <span className="text-green-500">
+                Available ({product?.quantity})
+              </span>
+            )}
+          </p>
 
-       {/* <h4 className="mt-4 font-semibold">Description:</h4> */}
+          {/* <h4 className="mt-4 font-semibold">Description:</h4> */}
           <div
-         className="mt-8 whitespace-pre-line border border-gray-300 rounded p-4"
+            className="mt-8 whitespace-pre-line border border-gray-300 rounded p-4"
             dangerouslySetInnerHTML={{
               __html: product?.description || "No description available.",
             }}
@@ -169,34 +171,33 @@ export default function ProductTabs({ product }: ProductTabsProps) {
         <div className="text-white bg-black p-4 rounded-lg">
           {product?.reviews.length === 0 && <p>No reviews yet.</p>}
           {product?.reviews.map((review, idx) => (
-  <div key={idx} className="border-b pb-4 mb-4 flex gap-4">
-    <Image
-      width={50}
-      height={50}
-      src={
-        review.user.image
-          ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${review.user.image}`
-          : undefined
-      }
-      alt={review.user.name}
-      fallback={NoImage.src}
-      className="rounded-full object-cover"
-    />
-    <div>
-      <h4 className="font-semibold">{review.user.name}</h4>
-      <Rate
-        disabled
-        defaultValue={Number(review.rating)}
-        style={{ color: "#fbbf24" }}
-      />
-      <p>{review.message}</p>
-      <p className="text-sm text-gray-400">
-        {new Date(review.createdAt).toLocaleDateString()}
-      </p>
-    </div>
-  </div>
-))}
-
+            <div key={idx} className="border-b pb-4 mb-4 flex gap-4">
+              <Image
+                width={50}
+                height={50}
+                src={
+                  review.user.image
+                    ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${review.user.image}`
+                    : undefined
+                }
+                alt={review.user.name}
+                fallback={NoImage.src}
+                className="rounded-full object-cover"
+              />
+              <div>
+                <h4 className="font-semibold">{review.user.name}</h4>
+                <Rate
+                  disabled
+                  defaultValue={Number(review.rating)}
+                  style={{ color: "#fbbf24" }}
+                />
+                <p>{review.message}</p>
+                <p className="text-sm text-gray-400">
+                  {new Date(review.createdAt).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       ),
     },
@@ -212,4 +213,3 @@ export default function ProductTabs({ product }: ProductTabsProps) {
     </div>
   );
 }
-

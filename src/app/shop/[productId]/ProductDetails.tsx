@@ -1,5 +1,3 @@
-
-
 // "use client";
 
 // import { useState, useEffect } from "react";
@@ -90,7 +88,7 @@
 //             <div className="flex-1">
 //   {mainImage ? (
 //     <Image
-                
+
 //                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${mainImage}`}
 //       alt={product.name}
 //       className="w-full h-full object-cover"
@@ -185,24 +183,25 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
-import { InputNumber, Rate, Select, Spin, Button, Tooltip } from "antd";
-import { Image } from "antd";
-import { useParams } from "next/navigation";
-import { useGetProductDetailsQuery } from "@/redux/features/products/productsApi";
 import NoProduct from "@/assets/shop/no_product.png";
-import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
-import ProductTabs from "./PoductTabs";
-
-; // Import ProductTabs here
+import { useGetProductDetailsQuery } from "@/redux/features/products/productsApi";
+import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Button, Image, InputNumber, Rate, Select, Spin, Tooltip } from "antd";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import ProductTabs from "./PoductTabs"; // Import ProductTabs here
 
 const { Option } = Select;
 
 export default function ProductDetails() {
   const params = useParams();
-  const productId = Array.isArray(params.productId) ? params.productId[0] : params.productId;
+  const productId = Array.isArray(params.productId)
+    ? params.productId[0]
+    : params.productId;
 
-  const { data, isLoading, error } = useGetProductDetailsQuery({ productId: productId ?? "" });
+  const { data, isLoading, error } = useGetProductDetailsQuery({
+    productId: productId ?? "",
+  });
 
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
@@ -213,13 +212,16 @@ export default function ProductDetails() {
     if (data?.data) {
       const product = data.data;
 
-      if (product.color && product.color.length > 0) setSelectedColor(product.color[0]);
+      if (product.color && product.color.length > 0)
+        setSelectedColor(product.color[0]);
       else setSelectedColor("");
 
-      if (product.size && product.size.length > 0) setSelectedSize(product.size[0]);
+      if (product.size && product.size.length > 0)
+        setSelectedSize(product.size[0]);
       else setSelectedSize("");
 
-      if (product.images && product.images.length > 0) setMainImage(product.images[0].publicFileURL);
+      if (product.images && product.images.length > 0)
+        setMainImage(product.images[0].publicFileURL);
       else setMainImage("");
     }
   }, [data]);
@@ -251,7 +253,9 @@ export default function ProductDetails() {
                 width={80}
                 height={80}
                 className={`border-2 rounded cursor-pointer object-cover ${
-                  mainImage === thumb.publicFileURL ? "border-yellow-500" : "border-transparent"
+                  mainImage === thumb.publicFileURL
+                    ? "border-yellow-500"
+                    : "border-transparent"
                 }`}
                 onClick={() => setMainImage(thumb.publicFileURL)}
               />
@@ -285,17 +289,23 @@ export default function ProductDetails() {
             <h1 className="text-3xl font-bold">{product.name}</h1>
           </div>
           <span
-  className={`px-3 py-1 rounded-full text-sm font-semibold  ${
-    Number(product?.quantity) > 0
-      ? "bg-green-600 text-green-100"
-      : "bg-red-600 text-red-100"
-  }`}
->
-  {Number(product?.quantity) > 0 ? `In Stock ` : "Out of Stock"}
-</span>
+            className={`px-3 py-1 rounded-full text-sm font-semibold  ${
+              Number(product?.quantity) > 0
+                ? "bg-green-600 text-green-100"
+                : "bg-red-600 text-red-100"
+            }`}
+          >
+            {Number(product?.quantity) > 0 ? `In Stock ` : "Out of Stock"}
+          </span>
           <div className="flex items-center gap-3 mb-6 mt-4">
-            <Rate disabled defaultValue={Number(product.avgRating) || 0} style={{ color: "#fbbf24" }} />
-            <span className="text-yellow-400 font-medium">{product.totalReviews} Review{product.totalReviews !== 1 && "s"}</span>
+            <Rate
+              disabled
+              defaultValue={Number(product.avgRating) || 0}
+              style={{ color: "#fbbf24" }}
+            />
+            <span className="text-yellow-400 font-medium">
+              {product.totalReviews} Review{product.totalReviews !== 1 && "s"}
+            </span>
           </div>
 
           <p className="text-3xl font-extrabold mb-8">${price.toFixed(2)}</p>
@@ -314,7 +324,9 @@ export default function ProductDetails() {
                     key={size}
                     onClick={() => setSelectedSize(size)}
                     className={`px-3 py-1 rounded-md border ${
-                      selectedSize === size ? "bg-yellow-400 text-black border-yellow-400" : "border-gray-600 text-white"
+                      selectedSize === size
+                        ? "bg-yellow-400 text-black border-yellow-400"
+                        : "border-gray-600 text-white"
                     } cursor-pointer`}
                   >
                     {size.toUpperCase()}
@@ -327,7 +339,9 @@ export default function ProductDetails() {
           </div>
 
           <div className="mb-6">
-            <span className="font-semibold text-gray-400">Available Colors:</span>
+            <span className="font-semibold text-gray-400">
+              Available Colors:
+            </span>
             <div className="mt-2 flex gap-2 flex-wrap">
               {colors.length > 0 ? (
                 colors.map((color: string) => (
@@ -335,7 +349,9 @@ export default function ProductDetails() {
                     key={color}
                     onClick={() => setSelectedColor(color)}
                     className={`px-3 py-1 rounded-md border ${
-                      selectedColor === color ? "bg-yellow-400 text-black border-yellow-400" : "border-gray-600 text-white"
+                      selectedColor === color
+                        ? "bg-yellow-400 text-black border-yellow-400"
+                        : "border-gray-600 text-white"
                     } cursor-pointer`}
                   >
                     {color.charAt(0).toUpperCase() + color.slice(1)}
@@ -361,7 +377,9 @@ export default function ProductDetails() {
 
             <div>
               <span className="font-semibold text-gray-400 mr-2">Total:</span>
-              <span className="text-yellow-400 font-extrabold text-2xl">${totalPrice.toLocaleString()}</span>
+              <span className="text-yellow-400 font-extrabold text-2xl">
+                ${totalPrice.toLocaleString()}
+              </span>
             </div>
           </div>
 
@@ -402,4 +420,3 @@ export default function ProductDetails() {
     </div>
   );
 }
-
