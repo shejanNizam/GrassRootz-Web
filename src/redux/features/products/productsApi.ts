@@ -1,47 +1,118 @@
+// import baseApi from "@/redux/api/baseApi";
+
+// export const productsApi = baseApi.injectEndpoints({
+//   endpoints: (builder) => ({
+//     // Get all products with optional filters (search, categories, popular)
+//     getAllProducts: builder.query<
+//       any,
+//       { search?: string; categories?: string[]; popular?: number }
+//     >({
+//       query: (filters = {}) => {
+//         const params = new URLSearchParams();
+
+//         if (filters.search && filters.search.trim() !== "") {
+//           params.append("name", filters.search.trim());
+//         }
+
+//         if (
+//           filters.categories &&
+//           filters.categories.length > 0 &&
+//           !filters.categories.includes("All")
+//         ) {
+//           filters.categories.forEach((cat) => {
+//             params.append("category", cat);
+//           });
+//         }
+
+//         if (typeof filters.popular === "number") {
+//           params.append("popular", filters.popular.toString());
+//         }
+
+//         return {
+//           url: "/product",
+//           method: "GET",
+//           params,
+//         };
+//       },
+//       providesTags: ["product"],
+//     }),
+
+//     // Get all categories
+//     getCategories: builder.query<{ _id: string; name: string }[], void>({
+//       query: () => ({
+//         url: "/category",
+//         method: "GET",
+//       }),
+//       providesTags: ["category"],
+//     }),
+
+//     // Get product details by productId query param
+//     getProductDetails: builder.query<
+//       any,
+//       { productId: string | ""}
+//     >({
+//       query: ({ productId }) => ({
+//         url: `/product/details`,
+//         method: "GET",
+//         params: { productId },
+//       }),
+//       providesTags: (result, error, arg) => [{ type: "product", id: arg.productId }],
+//     }),
+//   }),
+// });
+
+// export const {
+//   useGetAllProductsQuery,
+//   useGetCategoriesQuery,
+//   useGetProductDetailsQuery,
+// } = productsApi;
+
 import baseApi from "@/redux/api/baseApi";
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // getAllProducts: builder.query({
-    //   query: ({
-    //     page = 1,
-    //     limit = 10,
-    //     color,
-    //     name,
-    //     brandName,
-    //     stockStatus,
-    //     lowPrice,
-    //     highPrice,
-    //     latest,
-    //     popular,
-    //   }) => ({
-    //     url: "/product",
-    //     method: "GET",
-    //     params: {
-    //       page,
-    //       limit,
-    //       color,
-    //       name,
-    //       brandName,
-    //       stockStatus,
-    //       lowPrice,
-    //       highPrice,
-    //       latest,
-    //       popular,
-    //     },
-    //   }),
-    // }),
-
-    getAllProducts: builder.query({
-      query: (args: { name: string; value: string }[]) => {
+    // Get all products with optional filters (search, categories, popular, page, limit)
+    getAllProducts: builder.query<
+      any,
+      {
+        search?: string;
+        categories?: string[];
+        popular?: number;
+        page?: number;
+        limit?: number;
+      }
+    >({
+      query: (filters = {}) => {
         const params = new URLSearchParams();
-        if (args) {
-          args.forEach((item: { name: string; value: string | number }) => {
-            params.append(item.name, item.value.toString());
+
+        if (filters.search && filters.search.trim() !== "") {
+          params.append("name", filters.search.trim());
+        }
+
+        if (
+          filters.categories &&
+          filters.categories.length > 0 &&
+          !filters.categories.includes("All")
+        ) {
+          filters.categories.forEach((cat) => {
+            params.append("category", cat);
           });
         }
+
+        if (typeof filters.popular === "number") {
+          params.append("popular", filters.popular.toString());
+        }
+
+        if (filters.page) {
+          params.append("page", filters.page.toString());
+        }
+
+        if (filters.limit) {
+          params.append("limit", filters.limit.toString());
+        }
+
         return {
-          url: `/product`,
+          url: "/product",
           method: "GET",
           params,
         };
@@ -49,15 +120,35 @@ export const productsApi = baseApi.injectEndpoints({
       providesTags: ["product"],
     }),
 
-    // Example: Update user data
-    // updateUserData: builder.mutation({
-    //   query: (data) => ({
-    //     url: "/user/update",
-    //     method: "PATCH",
-    //     body: data,
-    //   }),
-    // }),
+    // Get all categories
+    // Get all categories
+    getCategories: builder.query<
+      { data: { _id: string; name: string }[] },
+      void
+    >({
+      query: () => ({
+        url: "/category",
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
+
+    // Get product details by productId query param
+    getProductDetails: builder.query<any, { productId: string | "" }>({
+      query: ({ productId }) => ({
+        url: `/product/details`,
+        method: "GET",
+        params: { productId },
+      }),
+      providesTags: (result, error, arg) => [
+        { type: "product", id: arg.productId },
+      ],
+    }),
   }),
 });
 
-export const { useGetAllProductsQuery } = productsApi;
+export const {
+  useGetAllProductsQuery,
+  useGetCategoriesQuery,
+  useGetProductDetailsQuery,
+} = productsApi;

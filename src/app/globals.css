@@ -25,3 +25,45 @@ body {
     text-wrap: balance;
   }
 }
+
+
+/* Add to your global CSS or component-specific CSS */
+.ant-pagination-custom {
+  @apply text-white;
+}
+
+.ant-pagination-custom .ant-pagination-item {
+  @apply bg-transparent border-yellow-400 text-white;
+}
+
+.ant-pagination-custom .ant-pagination-item-active {
+  @apply bg-yellow-400 text-black border-yellow-400;
+}
+
+.ant-pagination-custom .ant-pagination-item:hover {
+  @apply border-yellow-500 text-yellow-500;
+}
+
+.ant-pagination-custom .ant-pagination-prev,
+.ant-pagination-custom .ant-pagination-next {
+  @apply text-white;
+}
+
+.ant-pagination-custom .ant-pagination-prev:hover,
+.ant-pagination-custom .ant-pagination-next:hover {
+  @apply text-yellow-500;
+}
+
+.ant-pagination-custom .ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-custom .ant-pagination-next .ant-pagination-item-link {
+  @apply bg-transparent border-yellow-400 text-white;
+}
+
+.ant-pagination-custom .ant-pagination-prev:hover .ant-pagination-item-link,
+.ant-pagination-custom .ant-pagination-next:hover .ant-pagination-item-link {
+  @apply border-yellow-500 text-yellow-500;
+}
+
+.ant-pagination-custom .ant-pagination-disabled .ant-pagination-item-link {
+  @apply text-gray-500 border-gray-500 cursor-not-allowed;
+}

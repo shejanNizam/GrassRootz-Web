@@ -1,25 +1,23 @@
-import { baseApi } from "../api/baseApi";
+import baseApi from "@/redux/api/baseApi";
 
-export const userApi = baseApi.injectEndpoints({
+export const dashboardApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserData: builder.query({
       query: () => ({
-        url: "/auth/my-profile",
+        url: "/",
         method: "GET",
       }),
-      providesTags: ["user"],
     }),
 
     // Example: Update user data
     updateUserData: builder.mutation({
       query: (data) => ({
-        url: "/auth/profile-update",
+        url: "/",
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["user"],
     }),
   }),
 });
 
-export const { useGetUserDataQuery, useUpdateUserDataMutation } = userApi;
+export const {} = dashboardApi;
