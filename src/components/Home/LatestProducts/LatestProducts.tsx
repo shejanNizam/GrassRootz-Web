@@ -12,6 +12,7 @@ type LatestDataType = {
   price: string;
   avgRating: number;
   stockStatus: string;
+  quantity: string;
 };
 
 export default function LatestProducts() {

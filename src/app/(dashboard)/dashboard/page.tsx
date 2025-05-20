@@ -7,6 +7,7 @@
 // import { Button, Form, Input, message, Modal } from "antd";
 // import Image from "next/image";
 // import { useState } from "react";
+// import { FiPlus } from "react-icons/fi"; // plus icon
 // import defaultImg from "../../../assets/profile/profile_img.png";
 
 // export default function UserProfile() {
@@ -14,18 +15,19 @@
 //   const [updateProfile] = useUpdateUserDataMutation();
 
 //   const [modalVisible, setModalVisible] = useState(false);
+//   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 //   const [form] = Form.useForm();
 
-//   // Image preview and file state
 //   const [imagePreview, setImagePreview] = useState(null);
 //   const [imageFile, setImageFile] = useState(null);
 
 //   const user = data?.data || {};
-//   const baseImageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
-//   const userImage = user.image || null;
-//   // console.log(userImage);
+//   const baseImageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
-//   // Open modal and fill form values + reset image state
+//   // Compute full image URL or null
+//   const userImageUrl = user.image ? baseImageUrl + user.image : null;
+
+//   // Open modal: set form values and set image preview correctly
 //   const openModal = () => {
 //     form.setFieldsValue({
 //       name: user.name || "",
@@ -36,12 +38,12 @@
 //       states: user.states || "",
 //       zipCode: user.zipCode || "",
 //     });
-//     setImagePreview(userImage);
+//     setImagePreview(userImageUrl);
 //     setImageFile(null);
 //     setModalVisible(true);
 //   };
 
-//   // Image file selection handler
+//   // Handle image file input change: preview + file state
 //   const onImageChange = (e) => {
 //     const file = e.target.files?.[0];
 //     if (file) {
@@ -52,24 +54,20 @@
 //     }
 //   };
 
-//   // Form submit handler with multipart/form-data
+//   // Submit handler with FormData for multipart/form-data
 //   const onFinish = async (values) => {
 //     try {
 //       const formData = new FormData();
 
-//       // Append all fields except email (optional: but including email is ok too if backend accepts)
 //       Object.entries(values).forEach(([key, val]) => {
 //         formData.append(key, val);
 //       });
 
-//       // Append image file if selected
 //       if (imageFile) {
 //         formData.append("image", imageFile);
 //       }
 
-//       // Call RTK query mutation with FormData
 //       await updateProfile(formData).unwrap();
-
 //       message.success("Profile updated successfully");
 //       setModalVisible(false);
 //     } catch (error) {
@@ -78,62 +76,100 @@
 //     }
 //   };
 
+//   const showModal = () => setIsModalVisible(true);
+//   const handleCancel = () => setIsModalVisible(false);
+
 //   if (isLoading) {
 //     return <div>Loading...</div>;
 //   }
 
 //   return (
-//     <div className="min-h-screen flex flex-col gap-4 px-4 py-6">
-//       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-black text-white rounded-lg p-6">
-//         {/* Profile Card */}
-//         <div className="bg-gray-900 p-6 rounded-lg flex flex-col items-center text-center border border-gray-700">
-//           <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
-//             {userImage ? (
+//     <div className="min-h-screen px-6 py-8">
+//       {/* Static title */}
+//       <h1 className="text-3xl font-bold mb-8 text-gray-600 text-center">
+//         User Profile
+//       </h1>
+
+//       {/* Single card container */}
+//       <div className="max-w-3xl mx-auto bg-gray-900 text-white rounded-lg p-8 shadow-lg">
+//         {/* Profile top: image + basic info */}
+//         <div className="flex items-center gap-6 mb-8">
+//           <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-gray-700 relative">
+//             {userImageUrl ? (
 //               <Image
-//                 src={baseImageUrl + userImage}
+//                 src={userImageUrl}
 //                 alt={user.name || "User Image"}
-//                 width={80}
-//                 height={80}
-//                 className="object-cover"
+//                 fill
+//                 sizes="112px"
+//                 style={{ objectFit: "cover" }}
+//                 className="rounded-full"
 //               />
 //             ) : (
 //               <Image
 //                 src={defaultImg}
 //                 alt="Default Profile"
-//                 width={80}
-//                 height={80}
+//                 fill
+//                 sizes="112px"
+//                 style={{ objectFit: "cover" }}
+//                 className="rounded-full"
 //               />
 //             )}
 //           </div>
-//           <h3 className="text-lg font-semibold">{user.name || "No Name"}</h3>
-//           <p className="text-gray-400 capitalize">{user.role || "User"}</p>
+//           <div>
+//             <h2 className="text-primary text-2xl font-semibold">
+//               {user.name || "No Name"}
+//             </h2>
+//             <p className="text-primary  capitalize">{user.role || "User"}</p>
+//             <p className="text-primary mt-1 ">{user.email || "No Email"}</p>
+//           </div>
 //         </div>
 
-//         {/* Profile Info Card */}
-//         <div className="bg-gray-900 p-6 rounded-lg border border-gray-700 flex flex-col justify-between">
+//         {/* Profile details */}
+//         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 text-gray-300">
 //           <div>
-//             <h4 className="text-gray-400 text-sm mb-2">PROFILE DETAILS</h4>
-//             <h3 className="text-lg font-semibold">{user.name || "No Name"}</h3>
-//             <p className="text-gray-400">{user.address || "N/A"}</p>
-//             <p className="text-white mt-2">{user.email || "N/A"}</p>
-//             <p className="text-white">{user.phone || "N/A"}</p>
-//             <p className="text-white">{user.country || "N/A"}</p>
-//             <p className="text-white">{user.states || "N/A"}</p>
-//             <p className="text-white">{user.zipCode || "N/A"}</p>
+//             <h3 className="font-semibold text-white mb-1">Phone: </h3>
+//             <p className="text-primary">{user.phone || "N/A"}</p>
 //           </div>
-//           <Button type="primary" className="mt-4" onClick={openModal}>
+//           <div>
+//             <h3 className="font-semibold text-white mb-1">Address: </h3>
+//             <p className="text-primary">{user.address || "N/A"}</p>
+//           </div>
+//           <div>
+//             <h3 className="font-semibold text-white mb-1">Country: </h3>
+//             <p className="text-primary">{user.country || "N/A"}</p>
+//           </div>
+//           <div>
+//             <h3 className="font-semibold text-white mb-1">States: </h3>
+//             <p className="text-primary">{user.states || "N/A"}</p>
+//           </div>
+//           <div>
+//             <h3 className="font-semibold text-white mb-1">Zip Code: </h3>
+//             <p className="text-primary">{user.zipCode || "N/A"}</p>
+//           </div>
+//         </div>
+
+//         <div className="flex justify-between items-center">
+//           {/* Update button */}
+//           <Button type="primary" size="large" onClick={openModal}>
 //             Update Profile
+//           </Button>
+//           {/* <Button type="primary" size="large" onClick={openModal}>
+//             Update Profile
+//           </Button> */}
+//           <Button type="primary" size="large" onClick={showModal}>
+//             Change Password
 //           </Button>
 //         </div>
 //       </div>
 
-//       {/* Modal with Update Form */}
+//       {/* Modal with update form */}
 //       <Modal
 //         title="Update Profile"
 //         open={modalVisible}
 //         onCancel={() => setModalVisible(false)}
 //         footer={null}
 //         destroyOnClose
+//         centered
 //       >
 //         <Form
 //           form={form}
@@ -149,44 +185,65 @@
 //             zipCode: user.zipCode || "",
 //           }}
 //         >
-//           {/* Image preview and upload */}
-//           <Form.Item label="Profile Image">
-//             <div className="mb-2">
+//           {/* Image preview with + icon overlay */}
+//           <Form.Item
+//             label={
+//               <span className="text-black font-medium">Profile Image</span>
+//             }
+//           >
+//             <div className="relative w-20 h-20 rounded-full overflow-hidden border border-gray-300 cursor-pointer mx-auto">
 //               {imagePreview ? (
 //                 <Image
-//                   src={imagePreview}
+//                   src={
+//                     typeof imagePreview === "string" ? imagePreview : defaultImg
+//                   }
 //                   alt="Image Preview"
-//                   width={80}
-//                   height={80}
-//                   className="rounded-full"
+//                   fill
+//                   style={{ objectFit: "cover" }}
 //                 />
 //               ) : (
 //                 <Image
 //                   src={defaultImg}
 //                   alt="Default Profile"
-//                   width={80}
-//                   height={80}
-//                   className="rounded-full"
+//                   fill
+//                   style={{ objectFit: "cover" }}
 //                 />
 //               )}
+
+//               {/* Hidden file input */}
+//               <input
+//                 type="file"
+//                 accept="image/*"
+//                 onChange={onImageChange}
+//                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+//                 title="Change profile image"
+//               />
+
+//               {/* Plus icon overlay */}
+//               <div className="absolute bottom-0 right-0 bg-blue-600 rounded-full p-1 m-1">
+//                 <FiPlus className="text-white" size={18} />
+//               </div>
 //             </div>
-//             <input type="file" accept="image/*" onChange={onImageChange} />
 //           </Form.Item>
 
+//           {/* All labels text color black */}
 //           <Form.Item
-//             label="Name"
+//             label={<span className="text-black font-medium">Name</span>}
 //             name="name"
 //             rules={[{ required: true, message: "Please enter your name" }]}
 //           >
 //             <Input />
 //           </Form.Item>
 
-//           <Form.Item label="Email" name="email">
+//           <Form.Item
+//             label={<span className="text-black font-medium">Email</span>}
+//             name="email"
+//           >
 //             <Input readOnly className="bg-gray-200 cursor-not-allowed" />
 //           </Form.Item>
 
 //           <Form.Item
-//             label="Phone"
+//             label={<span className="text-black font-medium">Phone</span>}
 //             name="phone"
 //             rules={[
 //               { required: true, message: "Please enter your phone number" },
@@ -196,7 +253,7 @@
 //           </Form.Item>
 
 //           <Form.Item
-//             label="Address"
+//             label={<span className="text-black font-medium">Address</span>}
 //             name="address"
 //             rules={[{ required: true, message: "Please enter your address" }]}
 //           >
@@ -204,7 +261,7 @@
 //           </Form.Item>
 
 //           <Form.Item
-//             label="Country"
+//             label={<span className="text-black font-medium">Country</span>}
 //             name="country"
 //             rules={[{ required: true, message: "Please enter your country" }]}
 //           >
@@ -212,7 +269,7 @@
 //           </Form.Item>
 
 //           <Form.Item
-//             label="States"
+//             label={<span className="text-black font-medium">States</span>}
 //             name="states"
 //             rules={[{ required: true, message: "Please enter your states" }]}
 //           >
@@ -220,7 +277,7 @@
 //           </Form.Item>
 
 //           <Form.Item
-//             label="Zip Code"
+//             label={<span className="text-black font-medium">Zip Code</span>}
 //             name="zipCode"
 //             rules={[{ required: true, message: "Please enter your zip code" }]}
 //           >
@@ -228,13 +285,70 @@
 //           </Form.Item>
 
 //           <Form.Item className="text-right">
-//             <Button onClick={() => setModalVisible(false)} className="mr-3">
+//             <Button
+//               onClick={() => setModalVisible(false)}
+//               className="mr-3"
+//               size="large"
+//             >
 //               Cancel
 //             </Button>
-//             <Button type="primary" htmlType="submit">
+//             <Button type="primary" htmlType="submit" size="large">
 //               Update
 //             </Button>
 //           </Form.Item>
+//         </Form>
+//       </Modal>
+
+//       {/* Change Password Modal */}
+//       <Modal
+//         title="Change Password"
+//         open={isModalVisible}
+//         onCancel={handleCancel}
+//         footer={null}
+//         centered
+//       >
+//         <Form layout="vertical" className="p-4">
+//           <Form.Item
+//             name="oldPassword"
+//             rules={[
+//               { required: true, message: "Please enter your old password" },
+//             ]}
+//           >
+//             <Input.Password placeholder="Current Password" />
+//           </Form.Item>
+//           <Form.Item
+//             name="newPassword"
+//             rules={[
+//               { required: true, message: "Please enter your new password" },
+//             ]}
+//           >
+//             <Input.Password placeholder="New Password" />
+//           </Form.Item>
+//           <Form.Item
+//             name="confirmPassword"
+//             dependencies={["newPassword"]}
+//             rules={[
+//               { required: true, message: "Please confirm your new password" },
+//               ({ getFieldValue }) => ({
+//                 validator(_, value) {
+//                   if (!value || getFieldValue("newPassword") === value) {
+//                     return Promise.resolve();
+//                   }
+//                   return Promise.reject(new Error("Passwords do not match!"));
+//                 },
+//               }),
+//             ]}
+//           >
+//             <Input.Password placeholder="Confirm Password" />
+//           </Form.Item>
+//           <Button
+//             type="primary"
+//             htmlType="submit"
+//             size="large"
+//             className="w-full"
+//           >
+//             Change Password
+//           </Button>
 //         </Form>
 //       </Modal>
 //     </div>
@@ -249,28 +363,58 @@ import {
 } from "@/redux/features/userApi";
 import { Button, Form, Input, message, Modal } from "antd";
 import Image from "next/image";
-import { useState } from "react";
-import { FiPlus } from "react-icons/fi"; // plus icon
+import { ChangeEvent, useState } from "react";
+import { FiPlus } from "react-icons/fi";
 import defaultImg from "../../../assets/profile/profile_img.png";
 
+//  "data": {
+//       "_id": "6813073357b109497701845a",
+//       "name": "hadom",
+//       "email": "user@gmail.com",
+//       "role": "user",
+//       "phone": "124345346",
+//       "address": "adress",
+//       "image": "/images/Shejan_V.jpeg",
+//       "country": "N/A",
+//       "states": "N/A",
+//       "zipCode": "N/A"
+//   }
+
+interface User {
+  _id?: string;
+  name?: string;
+  email?: string;
+  role?: string;
+  phone?: string;
+  address?: string;
+  image?: string;
+  country?: string;
+  states?: string;
+  zipCode?: string;
+}
+
+interface UserApiResponse {
+  data?: User;
+}
+
 export default function UserProfile() {
+  // Fetch user data (typed)
   const { data, isLoading } = useGetUserDataQuery({});
+
   const [updateProfile] = useUpdateUserDataMutation();
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [form] = Form.useForm();
 
-  const [imagePreview, setImagePreview] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const user = data?.data || {};
+  const user: User = data?.data || {};
   const baseImageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || "";
 
-  // Compute full image URL or null
   const userImageUrl = user.image ? baseImageUrl + user.image : null;
 
-  // Open modal: set form values and set image preview correctly
   const openModal = () => {
     form.setFieldsValue({
       name: user.name || "",
@@ -286,19 +430,20 @@ export default function UserProfile() {
     setModalVisible(true);
   };
 
-  // Handle image file input change: preview + file state
-  const onImageChange = (e) => {
+  // Typed event for file input change
+  const onImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setImageFile(file);
       const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
       reader.readAsDataURL(file);
     }
   };
 
-  // Submit handler with FormData for multipart/form-data
-  const onFinish = async (values) => {
+  const onFinish = async (values: Record<string, any>) => {
     try {
       const formData = new FormData();
 
@@ -328,14 +473,11 @@ export default function UserProfile() {
 
   return (
     <div className="min-h-screen px-6 py-8">
-      {/* Static title */}
       <h1 className="text-3xl font-bold mb-8 text-gray-600 text-center">
         User Profile
       </h1>
 
-      {/* Single card container */}
       <div className="max-w-3xl mx-auto bg-gray-900 text-white rounded-lg p-8 shadow-lg">
-        {/* Profile top: image + basic info */}
         <div className="flex items-center gap-6 mb-8">
           <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-gray-700 relative">
             {userImageUrl ? (
@@ -346,6 +488,7 @@ export default function UserProfile() {
                 sizes="112px"
                 style={{ objectFit: "cover" }}
                 className="rounded-full"
+                priority
               />
             ) : (
               <Image
@@ -355,6 +498,7 @@ export default function UserProfile() {
                 sizes="112px"
                 style={{ objectFit: "cover" }}
                 className="rounded-full"
+                priority
               />
             )}
           </div>
@@ -362,12 +506,11 @@ export default function UserProfile() {
             <h2 className="text-primary text-2xl font-semibold">
               {user.name || "No Name"}
             </h2>
-            <p className="text-primary  capitalize">{user.role || "User"}</p>
-            <p className="text-primary mt-1 ">{user.email || "No Email"}</p>
+            <p className="text-primary capitalize">{user.role || "User"}</p>
+            <p className="text-primary mt-1">{user.email || "No Email"}</p>
           </div>
         </div>
 
-        {/* Profile details */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 text-gray-300">
           <div>
             <h3 className="font-semibold text-white mb-1">Phone: </h3>
@@ -392,20 +535,15 @@ export default function UserProfile() {
         </div>
 
         <div className="flex justify-between items-center">
-          {/* Update button */}
           <Button type="primary" size="large" onClick={openModal}>
             Update Profile
           </Button>
-          {/* <Button type="primary" size="large" onClick={openModal}>
-            Update Profile
-          </Button> */}
           <Button type="primary" size="large" onClick={showModal}>
             Change Password
           </Button>
         </div>
       </div>
 
-      {/* Modal with update form */}
       <Modal
         title="Update Profile"
         open={modalVisible}
@@ -428,7 +566,6 @@ export default function UserProfile() {
             zipCode: user.zipCode || "",
           }}
         >
-          {/* Image preview with + icon overlay */}
           <Form.Item
             label={
               <span className="text-black font-medium">Profile Image</span>
@@ -453,7 +590,6 @@ export default function UserProfile() {
                 />
               )}
 
-              {/* Hidden file input */}
               <input
                 type="file"
                 accept="image/*"
@@ -462,14 +598,12 @@ export default function UserProfile() {
                 title="Change profile image"
               />
 
-              {/* Plus icon overlay */}
               <div className="absolute bottom-0 right-0 bg-blue-600 rounded-full p-1 m-1">
                 <FiPlus className="text-white" size={18} />
               </div>
             </div>
           </Form.Item>
 
-          {/* All labels text color black */}
           <Form.Item
             label={<span className="text-black font-medium">Name</span>}
             name="name"
@@ -542,7 +676,6 @@ export default function UserProfile() {
         </Form>
       </Modal>
 
-      {/* Change Password Modal */}
       <Modal
         title="Change Password"
         open={isModalVisible}
@@ -550,7 +683,16 @@ export default function UserProfile() {
         footer={null}
         centered
       >
-        <Form layout="vertical" className="p-4">
+        <Form
+          layout="vertical"
+          className="p-4"
+          onFinish={(values) => {
+            // TODO: Implement change password logic
+            console.log("Change password values:", values);
+            // Close modal after submission
+            setIsModalVisible(false);
+          }}
+        >
           <Form.Item
             name="oldPassword"
             rules={[

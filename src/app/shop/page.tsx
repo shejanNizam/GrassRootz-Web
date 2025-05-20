@@ -498,7 +498,7 @@ function ProductCardWithFallback({ product }: { product: any }) {
         images: [{ publicFileURL: imageUrl }],
       }}
       key={product._id}
-      onError={handleImgError}
+      // onError={handleImgError}
     />
   );
 }
