@@ -1,7 +1,3 @@
-
-
-
-
 // "use client";
 
 // import ProductCard from "@/components/ProductCard/ProductCard";
@@ -234,7 +230,6 @@
 //     </div>
 //   );
 // }
-
 
 // Shop.tsx
 // "use client";
@@ -470,16 +465,18 @@
 //   );
 // }
 
-
 "use client";
 
+import NoProduct from "@/assets/shop/no_product.png";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import CustomHeading from "@/components/utils/CustomHeading";
-import { useGetAllProductsQuery, useGetCategoriesQuery } from "@/redux/features/products/productsApi";
-import { Radio, Slider, Spin, Empty, Pagination } from "antd";
-import { useState, useMemo, useCallback } from "react";
+import {
+  useGetAllProductsQuery,
+  useGetCategoriesQuery,
+} from "@/redux/features/products/productsApi";
+import { Empty, Pagination, Radio, Slider, Spin } from "antd";
 import Image from "next/image";
-import NoProduct from "@/assets/shop/no_product.png";
+import { useCallback, useMemo, useState } from "react";
 
 function ProductCardWithFallback({ product }: { product: any }) {
   const [imgError, setImgError] = useState(false);
@@ -501,7 +498,7 @@ function ProductCardWithFallback({ product }: { product: any }) {
         images: [{ publicFileURL: imageUrl }],
       }}
       key={product._id}
-      onError={handleImgError}
+      // onError={handleImgError}
     />
   );
 }
@@ -514,14 +511,19 @@ export default function Shop() {
   const [pageSize] = useState(9); // Fixed at 9 products per page
 
   // Pass filters to the API query including pagination
-  const { data: productData, error, isLoading } = useGetAllProductsQuery({
+  const {
+    data: productData,
+    error,
+    isLoading,
+  } = useGetAllProductsQuery({
     search: searchQuery,
     categories: selectedCategory === "All" ? [] : [selectedCategory],
     page: currentPage,
     limit: pageSize,
   });
-  console.log(productData,"---------><")
-  const { data: categoryData, isLoading: categoriesLoading } = useGetCategoriesQuery();
+  console.log(productData, "---------><");
+  const { data: categoryData, isLoading: categoriesLoading } =
+    useGetCategoriesQuery();
 
   // Extract categories from API response or fallback empty array
   const categories = categoryData?.data ?? [];
@@ -565,7 +567,7 @@ export default function Shop() {
       return matchesPrice;
     });
 
-   // console.log("Filtered Products Count:", priceFiltered.length); // Debug: Log filtered count
+    // console.log("Filtered Products Count:", priceFiltered.length); // Debug: Log filtered count
 
     // Paginate the filtered results to ensure 9 per page
     const startIndex = (currentPage - 1) * pageSize;
@@ -573,8 +575,7 @@ export default function Shop() {
     return priceFiltered.slice(startIndex, endIndex);
   }, [productData, priceRange, currentPage, pageSize]);
 
-
-console.log(filteredProducts,"filteredProducts")
+  console.log(filteredProducts, "filteredProducts");
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -619,7 +620,10 @@ console.log(filteredProducts,"filteredProducts")
             {categoriesLoading ? (
               <Spin />
             ) : (
-              <Radio.Group value={selectedCategory} onChange={handleCategoryChange}>
+              <Radio.Group
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+              >
                 <ul className="space-y-2">
                   <li>
                     <Radio value="All">

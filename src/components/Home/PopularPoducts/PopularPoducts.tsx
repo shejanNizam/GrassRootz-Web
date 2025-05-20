@@ -12,6 +12,7 @@ type PopularDataType = {
   price: string;
   avgRating: number;
   stockStatus: string;
+  quantity: string;
 };
 
 export default function PopularProducts() {
@@ -32,7 +33,9 @@ export default function PopularProducts() {
       <CustomHeading>Popular Products</CustomHeading>
       <div className="flex flex-wrap gap-6 justify-center">
         {popularData.length === 0 ? (
-          <div className="text-lg font-semibold">No popular products found!</div>
+          <div className="text-lg font-semibold">
+            No popular products found!
+          </div>
         ) : (
           popularData.map((product: PopularDataType) => (
             <ProductCard key={product._id} product={product} />
