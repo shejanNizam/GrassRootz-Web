@@ -1,11 +1,3 @@
-// export default function TabView() {
-//   return (
-//     <>
-//       <h3 className="text-center my-12">TabView</h3>
-//     </>
-//   );
-// }
-
 import { Tabs } from "antd";
 import ProductList from "./ProductList";
 
@@ -16,17 +8,15 @@ export default function TabbedView() {
     <div>
       <Tabs defaultActiveKey="1">
         <TabPane
-          tab={<span className="font-bold text-xl text-white">Category</span>}
+          tab={<span className="font-bold text-xl text-white">Processing</span>}
           key="1"
         >
-          {/* <AvailableSession type="available" /> */}
           <ProductList type="processing" />
         </TabPane>
         <TabPane
-          tab={<span className="font-bold text-xl text-white">Profession</span>}
+          tab={<span className="font-bold text-xl text-white">Delivered</span>}
           key="2"
         >
-          {/* <AvailableSession type="expired" /> */}
           <ProductList type="delivered" />
         </TabPane>
       </Tabs>
