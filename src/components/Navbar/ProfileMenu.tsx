@@ -15,6 +15,11 @@ export default function ProfileMenu({
           </Link>
         </Menu.Item>
         <Menu.Item key="2">
+          <Link className="font-bold text-primary" href="/order-history">
+            Order History
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="3">
           <div className="font-bold text-red-600" onClick={handleLogout}>
             Logout
           </div>
