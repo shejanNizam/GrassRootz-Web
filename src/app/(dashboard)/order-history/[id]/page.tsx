@@ -8,6 +8,7 @@
 
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import TabView from "./order/TabView";
 
@@ -21,9 +22,9 @@ export default function OrderDetails() {
     <div className="bg-black text-white p-6 rounded-lg border border-gray-700 mx-auto mt-8">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Order Details</h2>
-        <a href="/order-history" className="text-yellow-400 hover:underline">
+        <Link href="/order-history" className="text-yellow-400 hover:underline">
           Back to List
-        </a>
+        </Link>
       </div>
 
       <p className="text-gray-400 mb-4">
@@ -47,7 +48,7 @@ export default function OrderDetails() {
             <p className="text-yellow-400 text-sm">dainne.ressell@gmail.com</p>
           </div>
           <div>
-            <p className="uppercase text-gray-400 text-xs mb-1">Phone</p>
+            <p className="uppercase text-gray-400 text-xs mb-1">Phone No</p>
             <p className="text-yellow-400 text-sm">(671) 555-0110</p>
           </div>
         </div>
