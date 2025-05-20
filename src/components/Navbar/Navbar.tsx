@@ -138,7 +138,12 @@ export default function Navbar() {
               {user?.email ? (
                 <>
                   <Dropdown
-                    overlay={<ProfileMenu handleLogout={handleLogout} />}
+                    overlay={
+                      <ProfileMenu
+                        handleLogout={handleLogout}
+                        closeMenu={closeMenu}
+                      />
+                    }
                     trigger={["click"]}
                     placement="bottomRight"
                   >
@@ -285,7 +290,12 @@ export default function Navbar() {
               {user?.email ? (
                 <>
                   <Dropdown
-                    overlay={<ProfileMenu handleLogout={handleLogout} />}
+                    overlay={
+                      <ProfileMenu
+                        handleLogout={handleLogout}
+                        closeMenu={closeMenu}
+                      />
+                    }
                     trigger={["click"]}
                     placement="bottomRight"
                   >
