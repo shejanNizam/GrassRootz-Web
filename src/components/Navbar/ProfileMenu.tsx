@@ -16,12 +16,12 @@ export default function ProfileMenu({
 
   return (
     <Menu>
-      <Menu.Item key="1" onClick={() => closeMenu?.()}>
+      <Menu.Item key="1" onClick={() => closeMenu?.call(null)}>
         <Link className="font-bold text-primary" href="/dashboard">
           My Profile
         </Link>
       </Menu.Item>
-      <Menu.Item key="2" onClick={() => closeMenu?.()}>
+      <Menu.Item key="2" onClick={() => closeMenu?.call(null)}>
         <Link className="font-bold text-primary" href="/order-history">
           Order History
         </Link>
