@@ -7,7 +7,7 @@ export default function Details() {
     <>
       <SecondaryBanner heading="Product Details" />
       <ProductDetails />
-      <RelatedProducts />
+      {/* <RelatedProducts /> */}
     </>
   );
 }
