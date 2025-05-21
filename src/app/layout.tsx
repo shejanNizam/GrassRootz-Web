@@ -1,12 +1,13 @@
+import Door from "@/components/Door/page";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
+import { CartWishlistProvider } from "@/context/CartWishlistContext";
 import ThemeProvider from "@/lib/ThemeProvider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
-import Door from "@/components/Door/page";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,13 +38,15 @@ export default function RootLayout({
         <StoreProvider>
           <div className="relative">
             <Door />
-            <Navbar />
+            <CartWishlistProvider>
+              <Navbar />
 
-            <AntdRegistry>
-              <ThemeProvider>{children}</ThemeProvider>
-            </AntdRegistry>
+              <AntdRegistry>
+                <ThemeProvider>{children}</ThemeProvider>
+              </AntdRegistry>
 
-            <Footer />
+              <Footer />
+            </CartWishlistProvider>
           </div>
         </StoreProvider>
       </body>
