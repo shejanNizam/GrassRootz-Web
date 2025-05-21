@@ -3,10 +3,14 @@
 import { Button, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import Image from "next/image";
+import demoProductImg from "../../../../../assets/shop/shop_product_img.png";
+
+import type { StaticImageData } from "next/image";
+import Link from "next/link";
 
 interface Product {
   id: string;
-  image: string;
+  image: string | StaticImageData;
   name: string;
   price: string;
   quantity: number;
@@ -16,7 +20,7 @@ interface Product {
 const products: Product[] = [
   {
     id: "1",
-    image: "/images/red-capsicum.png",
+    image: demoProductImg,
     name: "Red Capsicum",
     price: "$14.00",
     quantity: 5,
@@ -24,7 +28,7 @@ const products: Product[] = [
   },
   {
     id: "2",
-    image: "/images/green-capsicum.png",
+    image: demoProductImg,
     name: "Green Capsicum",
     price: "$14.00",
     quantity: 2,
@@ -32,7 +36,7 @@ const products: Product[] = [
   },
   {
     id: "3",
-    image: "/images/green-chili.png",
+    image: demoProductImg,
     name: "Green Chili",
     price: "$26.70",
     quantity: 10,
@@ -95,7 +99,7 @@ export default function ProductList({ type }: { type: string }) {
             color: "black",
           }}
         >
-          Review
+          <Link href={`/review`}>Review</Link>
         </Button>
       ),
     });

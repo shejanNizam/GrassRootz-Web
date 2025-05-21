@@ -121,7 +121,6 @@ export const productsApi = baseApi.injectEndpoints({
     }),
 
     // Get all categories
-    // Get all categories
     getCategories: builder.query<
       { data: { _id: string; name: string }[] },
       void
