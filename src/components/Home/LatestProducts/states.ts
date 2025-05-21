@@ -18,7 +18,7 @@ export const reducer = (
   }
 ) => {
   switch (action.type) {
-    case "HeartClick":
+    case "heartClick":
       return {
         ...state,
         isHeartClick: !state.isHeartClick,

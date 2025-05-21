@@ -1,109 +1,35 @@
 "use client";
 
 import SecondaryBanner from "@/components/Home/Banner/SecondaryBanner";
+import { useCartWishlist } from "@/context/CartWishlistContext";
 import {
   CloseCircleOutlined,
   MinusOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 import { Button, Table } from "antd";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import img from "../../assets/shop/shop_product_img.png";
-
-// Sample Product Data
-const initialCartItems = [
-  {
-    key: "1",
-    product: "Green Capsicum",
-    price: 14.0,
-    quantity: 5,
-    image: img,
-  },
-  {
-    key: "2",
-    product: "Red Capsicum",
-    price: 14.0,
-    quantity: 1,
-    image: img,
-  },
-  {
-    key: "11",
-    product: "Green Capsicum",
-    price: 14.0,
-    quantity: 5,
-    image: img,
-  },
-  {
-    key: "12",
-    product: "Red Capsicum",
-    price: 14.0,
-    quantity: 1,
-    image: img,
-  },
-  {
-    key: "21",
-    product: "Green Capsicum",
-    price: 14.0,
-    quantity: 5,
-    image: img,
-  },
-  {
-    key: "22",
-    product: "Red Capsicum",
-    price: 14.0,
-    quantity: 1,
-    image: img,
-  },
-];
 
 export default function CartList() {
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const { cart, updateCartQuantity, removeFromCart } = useCartWishlist();
 
-  // Function to handle quantity changes
-  const updateQuantity = (key: string, type: "increase" | "decrease") => {
-    setCartItems((prevCart) =>
-      prevCart.map((item) =>
-        item.key === key
-          ? {
-              ...item,
-              quantity:
-                type === "increase"
-                  ? item.quantity + 1
-                  : Math.max(1, item.quantity - 1),
-            }
-          : item
-      )
-    );
-  };
-
-  // Function to remove product from cart
-  const removeProduct = (key: string) => {
-    setCartItems((prevCart) => prevCart.filter((item) => item.key !== key));
-  };
-
-  // Calculate total cart price
-  const cartTotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
-  // Table columns for Ant Design Table
   const columns = [
     {
       title: "PRODUCT",
-      dataIndex: "product",
+      dataIndex: "name",
       key: "product",
-      render: (text: string, record: { image: StaticImageData }) => (
+      render: (text: string, record: any) => (
         <div className="flex items-center space-x-4">
-          <Image
-            src={record.image}
-            alt={text}
-            width={50}
-            height={50}
-            className="rounded-lg"
-          />
+          {record.image && (
+            <Image
+              src={record.image}
+              alt={text}
+              width={50}
+              height={50}
+              className="rounded-lg"
+            />
+          )}
           <span className="text-white">{text}</span>
         </div>
       ),
@@ -120,20 +46,22 @@ export default function CartList() {
       title: "QUANTITY",
       dataIndex: "quantity",
       key: "quantity",
-      render: (quantity: number, record: { key: string }) => (
+      render: (quantity: number, record: any) => (
         <div className="flex items-center space-x-2 bg-gray-800 px-4 py-2 rounded-full">
           <Button
             shape="circle"
             size="small"
             icon={<MinusOutlined />}
-            onClick={() => updateQuantity(record.key, "decrease")}
+            onClick={() => updateCartQuantity(record.id, quantity - 1)}
+            aria-label={`Decrease quantity of ${record.name}`}
           />
           <span className="text-white">{quantity}</span>
           <Button
             shape="circle"
             size="small"
             icon={<PlusOutlined />}
-            onClick={() => updateQuantity(record.key, "increase")}
+            onClick={() => updateCartQuantity(record.id, quantity + 1)}
+            aria-label={`Increase quantity of ${record.name}`}
           />
         </div>
       ),
@@ -141,7 +69,7 @@ export default function CartList() {
     {
       title: "SUBTOTAL",
       key: "subtotal",
-      render: (_: unknown, record: { price: number; quantity: number }) => (
+      render: (_: unknown, record: any) => (
         <span className="text-white">
           ${(record.price * record.quantity).toFixed(2)}
         </span>
@@ -150,17 +78,22 @@ export default function CartList() {
     {
       title: "Action",
       key: "remove",
-      render: (_: unknown, record: { key: string }) => (
+      render: (_: unknown, record: any) => (
         <Button
           type="text"
           danger
           icon={<CloseCircleOutlined />}
-          // icon={<DeleteOutlined />}
-          onClick={() => removeProduct(record.key)}
+          onClick={() => removeFromCart(record.id)}
+          aria-label={`Remove ${record.name} from cart`}
         />
       ),
     },
   ];
+
+  const cartTotal = cart.reduce(
+    (total, item) => total + item.price * (item.quantity ?? 1),
+    0
+  );
 
   return (
     <>
@@ -172,14 +105,15 @@ export default function CartList() {
             <div className="overflow-x-auto">
               <Table
                 columns={columns}
-                dataSource={cartItems}
+                dataSource={cart}
+                rowKey="id"
                 pagination={{ pageSize: 3 }}
                 className="bg-gray-900 text-white rounded-lg"
               />
             </div>
             <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-4 sm:space-y-0">
               <Link href={`/shop`}>
-                <span className="bg-white hover:bg-primary text-black font-semibold px-6 py-4 rounded-full">
+                <span className="bg-white hover:bg-primary text-black font-semibold px-6 py-4 rounded-full cursor-pointer">
                   Return to Shop
                 </span>
               </Link>
@@ -204,7 +138,7 @@ export default function CartList() {
             </div>
             <br /> <br />
             <Link href={`/checkout`}>
-              <span className="w-full flex justify-center bg-white hover:bg-primary text-black font-semibold px-6 py-4 mt-4 rounded-full">
+              <span className="w-full flex justify-center bg-white hover:bg-primary text-black font-semibold px-6 py-4 mt-4 rounded-full cursor-pointer">
                 Proceed to Checkout
               </span>
             </Link>
