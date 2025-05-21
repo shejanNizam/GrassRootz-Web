@@ -1,17 +1,20 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout } from "@/redux/slices/authSlice";
 import { Dropdown } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaBars, FaHeart, FaShoppingCart, FaTimes } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
 import Swal from "sweetalert2";
+
 import main_logo from "../../assets/main_logo.png";
 import profile_image from "../../assets/profile/profile_img.png";
+
+import { useCartWishlist } from "@/context/CartWishlistContext";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout } from "@/redux/slices/authSlice";
+import { usePathname, useRouter } from "next/navigation";
 import { SuccessSwal } from "../utils/allSwalFire";
 import ProfileMenu from "./ProfileMenu";
 
@@ -19,16 +22,14 @@ export default function Navbar() {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
 
-  // const { auth } = useAppSelector((state) => state?.auth);
+  const { cart, wishlist } = useCartWishlist();
+
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
-  // Mock data for heart and cart counts
-  const [heartCount, setHeartCount] = useState(3);
-  const [cartCount, setCartCount] = useState(5);
-
-  //console.log(setHeartCount, setCartCount);
+  const heartCount = wishlist.length;
+  const cartCount = cart.reduce((acc, item) => acc + (item.quantity ?? 1), 0);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -41,7 +42,6 @@ export default function Navbar() {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Shop", href: "/shop" },
-    // { name: "Store locator", href: "/store-locator" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -116,7 +116,7 @@ export default function Navbar() {
                 >
                   <FaHeart size={20} />
                   {heartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full px-1.5 py-0.5">
+                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5">
                       {heartCount}
                     </span>
                   )}
@@ -127,14 +127,14 @@ export default function Navbar() {
                 >
                   <FaShoppingCart size={20} />
                   {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full px-1.5 py-0.5">
+                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5">
                       {cartCount}
                     </span>
                   )}
                 </Link>
               </div>
 
-              {/* Action Buttons */}
+              {/* User Profile or Login */}
               {user?.email ? (
                 <>
                   <Dropdown
@@ -183,18 +183,18 @@ export default function Navbar() {
                 >
                   <FaHeart size={20} />
                   {heartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full px-1.5 py-0.5">
+                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5">
                       {heartCount}
                     </span>
                   )}
                 </Link>
                 <Link
-                  href="/cart"
+                  href="/cart-list"
                   className="relative text-white hover:text-primary transition duration-200"
                 >
                   <FaShoppingCart size={20} />
                   {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full px-1.5 py-0.5">
+                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5">
                       {cartCount}
                     </span>
                   )}
@@ -244,11 +244,7 @@ export default function Navbar() {
           >
             {/* Logo and Close Button */}
             <div className="flex items-center justify-between p-4 border-b border-white">
-              <Link
-                href="/"
-                className="text-xl font-bold text-gray-800"
-                onClick={closeMenu}
-              >
+              <Link href="/" onClick={closeMenu}>
                 <Image
                   className="w-16 h-12"
                   width={1000}
