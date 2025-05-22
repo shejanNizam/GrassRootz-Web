@@ -2,9 +2,14 @@
 
 import { Breakpoint, Table } from "antd";
 import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function OrderHistory() {
   const router = useRouter();
+
+  const handleBack = () => {
+    router.back();
+  };
 
   const columns = [
     {
@@ -162,7 +167,10 @@ export default function OrderHistory() {
   ];
   return (
     <div className="bg-black text-white p-4 sm:p-6 rounded-lg border border-gray-700 mx-2 sm:mx-0">
-      <h3 className="text-xl text-primary font-bold mb-4">Order History</h3>
+      <h3 className="text-xl text-primary font-bold mb-4 flex justify-start items-center gap-2">
+        <FaArrowLeft onClick={handleBack} className="cursor-pointer" />
+        Order History
+      </h3>
       <div className="overflow-x-auto">
         <Table
           columns={columns}

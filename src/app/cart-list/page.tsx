@@ -108,7 +108,7 @@ export default function CartList() {
                 dataSource={cart}
                 rowKey="id"
                 pagination={{ pageSize: 3 }}
-                className="bg-gray-900 text-white rounded-lg"
+                className="bg-primary px-1 py-2 text-white rounded-lg"
               />
             </div>
             <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-4 sm:space-y-0">

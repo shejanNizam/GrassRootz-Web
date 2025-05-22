@@ -115,7 +115,7 @@ export default function ProductList({ type }: { type: string }) {
         dataSource={products}
         rowKey="id"
         pagination={false}
-        className="bg-black"
+        className="bg-primary px-1 py-2 text-white rounded-lg"
         bordered={false}
         style={{ borderColor: "#D9A94F" }}
         scroll={{ x: true }}

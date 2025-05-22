@@ -79,7 +79,7 @@ export default function WishList() {
             dataSource={wishlist}
             rowKey="id"
             pagination={{ pageSize: 5 }}
-            className="bg-gray-900 text-white rounded-lg"
+            className="bg-primary px-1 py-2 text-white rounded-lg"
             scroll={{ x: 600 }}
           />
         </div>
