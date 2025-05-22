@@ -23,6 +23,9 @@ export default function Login() {
         password: values.password,
       }).unwrap();
       localStorage.setItem("user_token", response?.data?.accesstoken);
+      document.cookie = `authToken=${
+        response?.data?.accesstoken
+      }; path=/; max-age=${60 * 60 * 24 * 7}`;
 
       dispatch(
         setCredentials({

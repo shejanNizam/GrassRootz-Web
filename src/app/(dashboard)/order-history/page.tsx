@@ -1,6 +1,6 @@
 "use client";
 
-import { Table } from "antd";
+import { Breakpoint, Table } from "antd";
 import { useRouter } from "next/navigation";
 
 export default function OrderHistory() {
@@ -13,6 +13,7 @@ export default function OrderHistory() {
       key: "orderId",
       _id: 24,
       render: (text: string) => <span className="text-white">{text}</span>,
+      responsive: ["sm" as Breakpoint], // Show on small screens and up
     },
     {
       title: "DATE",
@@ -29,6 +30,7 @@ export default function OrderHistory() {
       render: (text: string) => (
         <span className="text-white font-semibold">{text}</span>
       ),
+      responsive: ["sm" as Breakpoint], // Show on medium screens and up
     },
     {
       title: "STATUS",
@@ -42,17 +44,13 @@ export default function OrderHistory() {
           {text}
         </span>
       ),
+      responsive: ["sm" as Breakpoint], // Show on small screens and up
     },
     {
       title: "Action",
       dataIndex: "details",
       key: "details",
       _id: 24,
-      // render: () => (
-      //   <a href="#" className="text-yellow-400 hover:underline">
-      //     View Details
-      //   </a>
-      // ),
       render: (_: any, record: any) => (
         <span
           onClick={() => router.push(`/order-history/${record._id}`)}
@@ -162,22 +160,27 @@ export default function OrderHistory() {
       status: "Completed",
     },
   ];
-
   return (
-    <div className="bg-black text-white p-6 rounded-lg border border-gray-700">
+    <div className="bg-black text-white p-4 sm:p-6 rounded-lg border border-gray-700 mx-2 sm:mx-0">
       <h3 className="text-lg font-semibold mb-4">Order History</h3>
       <div className="overflow-x-auto">
         <Table
           columns={columns}
           dataSource={data}
-          pagination={{ pageSize: 8, position: ["bottomCenter"] }} // Shows 6 orders per page
+          pagination={{
+            pageSize: 8,
+            position: ["bottomCenter"],
+            responsive: true,
+            showSizeChanger: false,
+          }}
           className="bg-gray-900 rounded-lg"
           rowClassName={(record) =>
             record.status === "Processing"
               ? "bg-gray-700 text-white"
               : "bg-black text-white"
           }
-          scroll={{ x: 600 }} // Ensures responsiveness
+          scroll={{ x: true }} // Enable horizontal scrolling on small devices
+          size="middle" // Better for mobile
         />
       </div>
     </div>
