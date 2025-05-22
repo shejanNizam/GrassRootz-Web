@@ -162,7 +162,7 @@ export default function OrderHistory() {
   ];
   return (
     <div className="bg-black text-white p-4 sm:p-6 rounded-lg border border-gray-700 mx-2 sm:mx-0">
-      <h3 className="text-lg font-semibold mb-4">Order History</h3>
+      <h3 className="text-xl text-primary font-bold mb-4">Order History</h3>
       <div className="overflow-x-auto">
         <Table
           columns={columns}
@@ -173,7 +173,7 @@ export default function OrderHistory() {
             responsive: true,
             showSizeChanger: false,
           }}
-          className="bg-gray-900 rounded-lg"
+          className="bg-primary px-1 py-2 rounded-lg"
           rowClassName={(record) =>
             record.status === "Processing"
               ? "bg-gray-700 text-white"
