@@ -17,6 +17,7 @@ import { logout } from "@/redux/slices/authSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { SuccessSwal } from "../utils/allSwalFire";
 import ProfileMenu from "./ProfileMenu";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -66,6 +67,8 @@ export default function Navbar() {
           dispatch(logout());
           localStorage.removeItem("user_token");
           localStorage.removeItem("doorOpened");
+          // using remove cookie from here
+          Cookies.remove("authToken");
           router.refresh();
           router.push("/login");
         });

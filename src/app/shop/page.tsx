@@ -44,7 +44,7 @@ export default function Shop() {
 
   const {
     data: productData,
-    error,
+    isError,
     isLoading,
   } = useGetAllProductsQuery({
     search: searchQuery,
@@ -196,8 +196,14 @@ export default function Shop() {
           <div className="flex flex-wrap gap-6 justify-center">
             {isLoading ? (
               <Spin size="large" />
-            ) : error ? (
-              <Empty description="Failed to load products." />
+            ) : isError ? (
+              <Empty
+                description={
+                  <span className="text-white text-2xl font-semibold">
+                    Failed to load products.
+                  </span>
+                }
+              />
             ) : filteredProducts.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-4">
                 <Image
