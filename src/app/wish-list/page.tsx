@@ -3,11 +3,30 @@
 import SecondaryBanner from "@/components/Home/Banner/SecondaryBanner";
 import { useCartWishlist } from "@/context/CartWishlistContext";
 import { DeleteOutlined } from "@ant-design/icons";
-import { Button, Table } from "antd";
+import { Button, Table, Tooltip } from "antd";
 import Image from "next/image";
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function WishList() {
-  const { wishlist, removeFromWishlist, addToCart } = useCartWishlist();
+  const { addToCart, wishlist, removeFromCart, isInCart, removeFromWishlist } =
+    useCartWishlist();
+  // console.log(wishlist);
+
+  const handleToggleCart = (product: (typeof wishlist)[0]) => {
+    // console.log(product);
+    if (isInCart(product.id)) {
+      removeFromCart(product.id);
+    } else {
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        stockStatus: product.stockStatus,
+        quantity: 1,
+      });
+    }
+  };
 
   const columns = [
     {
@@ -36,36 +55,43 @@ export default function WishList() {
       key: "price",
       render: (price: number) => <span className="text-white">${price}</span>,
     },
+
     {
       title: "ACTION",
       key: "action",
-      render: (_: unknown, record: any) => (
-        <div className="flex items-center space-x-2">
-          <Button
-            type="primary"
-            size="small"
-            onClick={() =>
-              addToCart({
-                id: record.id,
-                name: record.name,
-                price: record.price,
-                image: record.image,
-                quantity: 1,
-              })
-            }
-            aria-label={`Add ${record.name} to cart`}
-          >
-            Add to Cart
-          </Button>
-          <Button
-            type="text"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => removeFromWishlist(record.id)}
-            aria-label={`Remove ${record.name} from wishlist`}
-          />
-        </div>
-      ),
+      render: (_: unknown, record: any) => {
+        const inCart = isInCart(record.id);
+        const inStock = record.stockStatus === "in-stock";
+
+        return (
+          <div className="flex items-center space-x-2">
+            <Tooltip title={inCart ? "Remove from cart" : "Add to cart"}>
+              <button
+                className={`${
+                  inStock
+                    ? inCart
+                      ? "bg-primary text-white"
+                      : "bg-gray-300 text-gray-600"
+                    : "bg-gray-400 cursor-not-allowed"
+                } p-2 rounded-full transition-colors duration-200`}
+                onClick={() => inStock && handleToggleCart(record)}
+                disabled={!inStock}
+                aria-label={inCart ? "Remove from cart" : "Add to cart"}
+              >
+                <FaShoppingCart size={16} />
+              </button>
+            </Tooltip>
+
+            <Button
+              type="text"
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => removeFromWishlist(record.id)}
+              aria-label={`Remove ${record.name} from wishlist`}
+            />
+          </div>
+        );
+      },
     },
   ];
 

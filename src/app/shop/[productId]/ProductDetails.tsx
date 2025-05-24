@@ -1,21 +1,37 @@
 "use client";
 
 import NoProduct from "@/assets/shop/no_product.png";
+import { useCartWishlist } from "@/context/CartWishlistContext";
 import { useGetProductDetailsQuery } from "@/redux/features/products/productsApi";
-import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button, Image, InputNumber, Rate, Select, Spin, Tooltip } from "antd";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaArrowLeft, FaHeart, FaShoppingCart } from "react-icons/fa";
+import image_latest_product from "../../../assets/home/latest_products/latest_product_img.png";
 import RelatedProducts from "../RelatedProducts";
-import ProductTabs from "./PoductTabs"; // Import ProductTabs here
+import ProductTabs from "./PoductTabs";
+
+const baseIamgeUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
 
 const { Option } = Select;
 
 export default function ProductDetails() {
+  const router = useRouter();
   const params = useParams();
   const productId = Array.isArray(params.productId)
     ? params.productId[0]
     : params.productId;
+
+  const {
+    addToCart,
+    removeFromCart,
+    isInCart,
+    addToWishlist,
+    removeFromWishlist,
+    isInWishlist,
+  } = useCartWishlist();
+
+  const [imgError, setImgError] = useState(false);
 
   const { data, isLoading, error } = useGetProductDetailsQuery({
     productId: productId ?? "",
@@ -44,7 +60,13 @@ export default function ProductDetails() {
     }
   }, [data]);
 
-  if (isLoading) return <Spin size="large" className="m-10" />;
+  if (isLoading)
+    return (
+      <Spin
+        size="large"
+        className=" flex justify-center items-center min-h-screen"
+      />
+    );
   if (error) return <div>Error loading product details.</div>;
   if (!data?.data) return <div>Product not found.</div>;
 
@@ -57,9 +79,57 @@ export default function ProductDetails() {
 
   const inStock = product.stockStatus === "in-stock";
 
+  const imageSrc = imgError
+    ? NoProduct
+    : product?.images?.length > 0
+    ? (baseIamgeUrl ?? "") + product.images[0].publicFileURL
+    : image_latest_product;
+
+  const inCart = isInCart(product._id);
+  const inWishlist = isInWishlist(product._id);
+
+  const handleCartClick = () => {
+    if (product.stockStatus !== "in-stock") return;
+
+    if (inCart) {
+      removeFromCart(product._id);
+    } else {
+      addToCart({
+        id: product._id,
+        name: product.name,
+        price: parseFloat(product.price),
+        stockStatus: product.stockStatus,
+        // image: imageSrc instanceof StaticImageData ? "" : imageSrc,
+        image: typeof imageSrc === "string" ? imageSrc : "",
+      });
+    }
+  };
+
+  const handleHeartClick = () => {
+    if (inWishlist) {
+      removeFromWishlist(product._id);
+    } else {
+      addToWishlist({
+        id: product._id,
+        name: product.name,
+        price: parseFloat(product.price),
+        stockStatus: product.stockStatus,
+        // image: imageSrc instanceof StaticImageData ? "" : imageSrc,
+        image: typeof imageSrc === "string" ? imageSrc : "",
+      });
+    }
+  };
+
   return (
     <>
       <div className="bg-black text-white py-20">
+        <div className="md:ml-96 ml-4 my-4  ">
+          <FaArrowLeft
+            onClick={() => router.back()}
+            className="text-primary hover:bg-gray-700 rounded-full cursor-pointer"
+            size={24}
+          />
+        </div>
         <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* LEFT: thumbnails + main image */}
           <div className="flex gap-6">
@@ -210,27 +280,34 @@ export default function ProductDetails() {
               <Button type="primary" size="large" className="flex-1 font-bold">
                 Order Now
               </Button>
-              <Button
-                type="default"
-                size="large"
-                className="flex-1 font-bold"
-                onClick={() => {
-                  // Add your add to cart logic here
-                }}
-                icon={<ShoppingCartOutlined />}
+              <Tooltip title={inCart ? "Remove from cart" : "Add to cart"}>
+                <button
+                  className={`${
+                    product.stockStatus === "in-stock"
+                      ? inCart
+                        ? "bg-primary text-white"
+                        : "bg-gray-300 text-gray-600"
+                      : "bg-gray-400 cursor-not-allowed"
+                  } text-white p-2 rounded-full transition-colors duration-200`}
+                  onClick={handleCartClick}
+                  disabled={product.stockStatus !== "in-stock"}
+                >
+                  <FaShoppingCart size={16} />
+                </button>
+              </Tooltip>
+              <Tooltip
+                title={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
               >
-                Add to Cart
-              </Button>
-              <Tooltip title="Add to favorites">
-                <Button
-                  type="default"
-                  size="large"
-                  shape="circle"
-                  icon={<HeartOutlined />}
-                  onClick={() => {
-                    // Add your favorite logic here
-                  }}
-                />
+                <button
+                  onClick={handleHeartClick}
+                  className={`p-2 rounded-full ${
+                    inWishlist
+                      ? "bg-red-600 text-white"
+                      : "bg-gray-300 text-gray-600"
+                  }`}
+                >
+                  <FaHeart size={16} />
+                </button>
               </Tooltip>
             </div>
           </div>
@@ -243,7 +320,9 @@ export default function ProductDetails() {
       </div>
 
       {/* related products */}
-      <RelatedProducts product={product} />
+      <div className=" mb-12 ">
+        <RelatedProducts product={product} />
+      </div>
     </>
   );
 }

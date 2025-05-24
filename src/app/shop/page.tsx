@@ -53,8 +53,6 @@ export default function Shop() {
     limit: pageSize,
   });
 
-  console.log("--------------------->>", productData?.data);
-
   const { data: categoryData, isLoading: categoriesLoading } =
     useGetCategoriesQuery();
 
@@ -76,7 +74,7 @@ export default function Shop() {
   };
 
   const resetPrice = () => {
-    setPriceRange([0, 1500]);
+    setPriceRange([0, 2000000]);
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
