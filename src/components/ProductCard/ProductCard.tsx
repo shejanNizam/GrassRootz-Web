@@ -51,6 +51,7 @@ export default function ProductCard({ product }: { product: Product }) {
         id: product._id,
         name: product.name,
         price: parseFloat(product.price),
+        stockStatus: product.stockStatus,
         // image: imageSrc instanceof StaticImageData ? "" : imageSrc,
         image: typeof imageSrc === "string" ? imageSrc : "",
       });
@@ -65,6 +66,7 @@ export default function ProductCard({ product }: { product: Product }) {
         id: product._id,
         name: product.name,
         price: parseFloat(product.price),
+        stockStatus: product.stockStatus,
         // image: imageSrc instanceof StaticImageData ? "" : imageSrc,
         image: typeof imageSrc === "string" ? imageSrc : "",
       });

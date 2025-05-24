@@ -65,7 +65,7 @@ export default function RelatedProducts({ product }: ProductTabsProps) {
 
   return (
     <>
-      <h3 className="text-2xl text-center text-primary font-bold mb-4">
+      <h3 className="text-2xl text-center text-primary font-bold mb-6">
         {" "}
         Related Product{" "}
       </h3>
