@@ -13,6 +13,7 @@ export type ProductMinimal = {
   name: string;
   price: number;
   image?: string;
+  stockStatus: string;
   quantity?: number;
 };
 
