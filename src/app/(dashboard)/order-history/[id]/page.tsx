@@ -39,7 +39,8 @@ export default function OrderDetails() {
               {user?.name}
             </p>
             <p className="text-gray-400 text-xs sm:text-sm">
-              {`${user?.zipCode} ${user?.states} ${user?.address}, ${user?.country}`}
+              `${user?.zipCode} ${user?.states} ${user?.address}, $
+              {user?.country}`
               {/* 4140 Parker Rd. Allentown, New Mexico 31134 */}
             </p>
           </div>

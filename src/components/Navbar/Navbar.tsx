@@ -103,7 +103,7 @@ export default function Navbar() {
                     className={`px-3 py-2 rounded-md text-sm font-medium ${
                       isActive(item.href)
                         ? "text-primary underline font-bold"
-                        : "text-white hover:text-primary"
+                        : "text-white font-semibold text-lg hover:text-primary"
                     }`}
                   >
                     {item.name}
@@ -275,7 +275,7 @@ export default function Navbar() {
                   className={`flex items-center px-6 py-3 mt-2 ${
                     isActive(item.href)
                       ? "text-primary underline font-semibold"
-                      : "text-white hover:text-primary"
+                      : "text-white font-semibold text-lg hover:text-primary"
                   }`}
                 >
                   {item.name}

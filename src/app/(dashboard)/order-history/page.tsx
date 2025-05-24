@@ -87,25 +87,21 @@ export default function OrderHistory() {
           <FaArrowLeft onClick={handleBack} className="cursor-pointer" />
           Order History
         </h3>
-        {/* Wrapping div to enable horizontal scrolling */}
-        <div className="overflow-x-auto">
-          <Table
-            columns={columns}
-            dataSource={data}
-            pagination={{
-              pageSize: 8,
-              position: ["bottomCenter"],
-              showSizeChanger: false,
-            }}
-            className="bg-primary px-1 py-2 rounded-lg min-w-[700px]"
-            rowClassName={(record) =>
-              record.status.toLowerCase() === "processing"
-                ? "bg-gray-700 text-white"
-                : "bg-black text-white"
-            }
-            scroll={{ x: "max-content" }}
-            size="middle"
-          />
+
+        <div className="flex items-center justify-center p-4">
+          <div className="w-full mx-auto bg-gray-900 rounded-lg p-4 overflow-x-auto">
+            <Table
+              columns={columns}
+              dataSource={data}
+              rowKey="id"
+              pagination={{
+                pageSize: 5,
+                position: ["bottomCenter"],
+              }}
+              className="bg-primary px-1 py-2 text-white rounded-lg"
+              scroll={{ x: 600 }}
+            />
+          </div>
         </div>
       </div>
     </div>

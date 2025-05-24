@@ -107,7 +107,11 @@ export default function CartList() {
                 columns={columns}
                 dataSource={cart}
                 rowKey="id"
-                pagination={{ pageSize: 3 }}
+                pagination={{
+                  pageSize: 3,
+                  position: ["bottomCenter"],
+                }}
+                scroll={{ x: 600 }}
                 className="bg-primary px-1 py-2 text-white rounded-lg"
               />
             </div>
