@@ -14,10 +14,10 @@ import profile_image from "../../assets/profile/profile_img.png";
 import { useCartWishlist } from "@/context/CartWishlistContext";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/slices/authSlice";
+import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import { SuccessSwal } from "../utils/allSwalFire";
 import ProfileMenu from "./ProfileMenu";
-import Cookies from "js-cookie";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -84,7 +84,13 @@ export default function Navbar() {
             {/* Logo Section */}
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" onClick={closeMenu}>
-                <Image width={96} height={80} src={main_logo} alt="Main Logo" />
+                <Image
+                  className="w-24 h-20"
+                  width={1000}
+                  height={1000}
+                  src={main_logo}
+                  alt="Main Logo"
+                />
               </Link>
             </div>
 
@@ -253,7 +259,7 @@ export default function Navbar() {
                   width={1000}
                   height={1000}
                   src={main_logo}
-                  alt="Main Logo"
+                  alt="main_logo"
                 />
               </Link>
               <button

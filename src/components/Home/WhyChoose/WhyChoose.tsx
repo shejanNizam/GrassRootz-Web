@@ -107,7 +107,7 @@ export default function WhyChoose() {
 
   return (
     <section className="py-12">
-      <div className="container mx-auto shadow-sm py-20">
+      <div className="md:container mx-auto shadow-sm py-20">
         <div className=" text-center my-12">
           <CustomHeading>Why Choose Us</CustomHeading>
         </div>
