@@ -4,6 +4,7 @@ import NoProduct from "@/assets/shop/no_product.png";
 import { useCartWishlist } from "@/context/CartWishlistContext";
 import { useGetProductDetailsQuery } from "@/redux/features/products/productsApi";
 import { Button, Image, InputNumber, Rate, Select, Spin, Tooltip } from "antd";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaHeart, FaShoppingCart } from "react-icons/fa";
@@ -276,9 +277,15 @@ export default function ProductDetails() {
             </div>
 
             <div className="flex gap-4">
-              <Button type="primary" size="large" className="flex-1 font-bold">
-                Order Now
-              </Button>
+              <Link href={`/checkout`}>
+                <Button
+                  type="primary"
+                  size="large"
+                  className="flex-1 font-bold"
+                >
+                  Order Now
+                </Button>
+              </Link>
               <Tooltip title={inCart ? "Remove from cart" : "Add to cart"}>
                 <button
                   className={`${
