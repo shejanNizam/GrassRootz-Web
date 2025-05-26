@@ -3,7 +3,7 @@ import bannerImage from "../../../assets/home/banner/banner_bg_img.png";
 
 export default function Banner() {
   return (
-    <div className="relative bg-cover bg-center h-[60vh] flex justify-center items-center z-30">
+    <div className="relative bg-cover bg-center h-[40vh] md:h-[60vh] flex justify-center items-center z-30">
       <div className="absolute inset-0">
         <Image
           src={bannerImage}
