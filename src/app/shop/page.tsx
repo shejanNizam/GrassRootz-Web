@@ -36,7 +36,7 @@ function ProductCardWithFallback({ product }: { product: any }) {
 }
 
 export default function Shop() {
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,7 +74,7 @@ export default function Shop() {
   };
 
   const resetPrice = () => {
-    setPriceRange([0, 2000000]);
+    setPriceRange([0, 10000]);
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,7 +102,7 @@ export default function Shop() {
       <div className="text-center pt-8 md:pt-32">
         <CustomHeading> Shop now </CustomHeading>
         <div className="mx-auto max-w-sm md:max-w-xl mt-20">
-          <div className="relative w-80 md:w-full">
+          <div className="relative w-80 md:w-full mx-auto">
             <input
               placeholder="Search products"
               value={searchQuery}
@@ -163,7 +163,7 @@ export default function Shop() {
             <Slider
               range
               min={0}
-              max={2000000}
+              max={10000}
               step={1}
               value={priceRange}
               onChange={handlePriceChange}
