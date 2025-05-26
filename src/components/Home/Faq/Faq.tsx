@@ -17,20 +17,19 @@ export default function Faq() {
         "Grassrootz Culture is a community-driven platform that promotes culture and creative expression.",
     },
     {
-      question: "What kind of products or services do you offer?",
+      question: "What kind of products do you offer?",
       answer:
         "We offer a range of cultural products such as art, apparel, and creative services.",
     },
     {
-      question: "How can I purchase items from Grassrootz Culture?",
+      question: "How can I purchase items from Grassrootz?",
       answer:
         "You can purchase items directly from our website by browsing our product listings and checking out through our secure payment system.",
     },
     {
-      question:
-        "How can I get involved or feature my work on Grassrootz Culture?",
+      question: "How can I get involved my work on Grassrootz?",
       answer:
-        "To get involved or feature your work, you can submit your creations through our online submission form or get in touch with our community support team.",
+        "To get involved your work, you can submit your creations through our online submission form or get in touch with our community support team.",
     },
     {
       question: "What is your return policy?",
