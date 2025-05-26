@@ -23,7 +23,7 @@ export default function LatestProducts() {
 
   if (isLoading) {
     return (
-      <div className="text-center min-h-screen">
+      <div className="flex justify-center items-center h-screen">
         <Spin size="large" className="mt-20" />
       </div>
     );

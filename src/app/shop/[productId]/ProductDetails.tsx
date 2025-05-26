@@ -62,10 +62,9 @@ export default function ProductDetails() {
 
   if (isLoading)
     return (
-      <Spin
-        size="large"
-        className=" flex justify-center items-center min-h-screen"
-      />
+      <div className="flex justify-center items-center min-h-screen">
+        <Spin size="large" />
+      </div>
     );
   if (error) return <div>Error loading product details.</div>;
   if (!data?.data) return <div>Product not found.</div>;

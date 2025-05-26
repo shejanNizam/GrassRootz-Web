@@ -53,7 +53,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary px-4 md:px-4">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-secondary px-4">
       <div className="bg-gray-950 border border-primary shadow-2xl rounded-2xl w-full max-w-xl p-4 md:p-12 relative">
         <button
           onClick={handleBack}

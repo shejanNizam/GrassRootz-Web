@@ -193,7 +193,9 @@ export default function Shop() {
         <div className="w-full md:w-3/4 flex flex-col">
           <div className="flex flex-wrap gap-6 justify-center">
             {isLoading ? (
-              <Spin size="large" />
+              <div className="w-full flex justify-center items-center h-64">
+                <Spin size="large" />
+              </div>
             ) : isError ? (
               <Empty
                 description={
