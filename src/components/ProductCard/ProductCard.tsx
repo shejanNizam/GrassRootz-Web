@@ -77,7 +77,7 @@ export default function ProductCard({ product }: { product: Product }) {
     <div
       key={product._id}
       className="w-80 h-80 rounded-lg overflow-hidden bg-black border border-primary shadow-md hover:shadow-2xl transition-transform duration-300 relative"
-      style={{ minHeight: "288px" }}
+      style={{ minHeight: "300px" }}
     >
       <div className="absolute top-2 right-2 flex gap-3 z-10">
         <button
