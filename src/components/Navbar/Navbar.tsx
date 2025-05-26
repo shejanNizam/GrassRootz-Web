@@ -85,11 +85,11 @@ export default function Navbar() {
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" onClick={closeMenu}>
                 <Image
-                  className="w-16 h-12 md:w-20 md:h-16"
+                  className="w-20 h-16 md:w-24 md:h-20"
                   width={1000}
                   height={1000}
                   src={main_logo}
-                  alt="Main Logo"
+                  alt="main_logo"
                 />
               </Link>
             </div>
@@ -252,10 +252,10 @@ export default function Navbar() {
             } transition-transform duration-300 ease-in-out`}
           >
             {/* Logo and Close Button */}
-            <div className="flex items-center justify-between p-4 border-b border-white">
+            <div className="flex items-center justify-between p-2 border-b border-white">
               <Link href="/" onClick={closeMenu}>
                 <Image
-                  className="w-16 h-12"
+                  className="w-20 h-16"
                   width={1000}
                   height={1000}
                   src={main_logo}
