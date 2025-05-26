@@ -5,7 +5,7 @@ import about_img from "../../../assets/home/about/about_img.png";
 
 export default function About() {
   return (
-    <div className="container grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center px-12">
+    <div className="container grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center md:px-12">
       <div className=" space-y-12 lg:pl-4">
         <h1 className="text-3xl md:text-4xl lg:text-5xl text-primary font-bold">
           {" "}
