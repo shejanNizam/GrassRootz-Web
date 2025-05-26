@@ -15,10 +15,10 @@ export default function Banner() {
         />
       </div>
       <div className="text-center text-white p-4 mt-20 z-10">
-        <h1 className="text-4xl md:text-6xl font-semibold">
+        <h1 className="text-3xl md:text-6xl font-semibold">
           Your Daily Essentials,
         </h1>
-        <h1 className="text-4xl md:text-6xl font-semibold">
+        <h1 className="text-3xl md:text-6xl font-semibold">
           Just a Click Away!
         </h1>
       </div>
