@@ -51,7 +51,9 @@ export default function Faq() {
               className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-800 rounded-md"
               onClick={() => toggleQuestion(index)}
             >
-              <span className="text-lg">{faq.question}</span>
+              <span className="text-xs md:text-xl font-semibold text-primary">
+                {faq.question}
+              </span>
               <span className="text-xl">
                 {activeIndex === index ? "-" : "+"}
               </span>

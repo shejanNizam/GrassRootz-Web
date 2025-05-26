@@ -11,7 +11,7 @@ export default function About() {
           {" "}
           About Us{" "}
         </h1>
-        <p>
+        <p className="text-white">
           Discover the convenience of shopping with [Your Super Shop Name]! We
           offer a wide variety of high-quality products, from fresh groceries to
           household essentials, all at unbeatable prices. Our mission is to
@@ -19,7 +19,7 @@ export default function About() {
           trust and quality service. Bid on projects in any pricing format,
           whether it be a flat rate, by the hour, or by the task, it is up to
           you.
-          <Link href="/" className="text-primary">
+          <Link href="/about-us" className="text-primary">
              See More....
           </Link>
         </p>
