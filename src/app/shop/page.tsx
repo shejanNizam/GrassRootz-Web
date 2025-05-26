@@ -163,7 +163,7 @@ export default function Shop() {
             <Slider
               range
               min={0}
-              max={2000}
+              max={2000000}
               step={1}
               value={priceRange}
               onChange={handlePriceChange}
