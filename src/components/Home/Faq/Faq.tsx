@@ -4,7 +4,7 @@ import CustomHeading from "@/components/utils/CustomHeading";
 import { useState } from "react";
 
 export default function Faq() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
   const toggleQuestion = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -40,14 +40,14 @@ export default function Faq() {
 
   return (
     <div className="bg-black text-white md:p-8 rounded-lg max-w-auto md:px-12 mx-auto">
-      <h3 className="text-center mb-8">
+      <h3 className="text-center mt-12 mb-4">
         <CustomHeading> FAQ </CustomHeading>
       </h3>
       <div className="space-y-4">
         {faqs.map((faq, index) => (
           <div key={index} className="border-b border-gray-700">
             <div
-              className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-800 rounded-md"
+              className="flex justify-between items-center p-2 cursor-pointer hover:bg-gray-800 rounded-md"
               onClick={() => toggleQuestion(index)}
             >
               <span className="text-xs md:text-xl font-semibold text-primary">
@@ -57,9 +57,15 @@ export default function Faq() {
                 {activeIndex === index ? "-" : "+"}
               </span>
             </div>
-            {activeIndex === index && (
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                activeIndex === index
+                  ? "max-h-96 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
               <div className="p-4 text-sm">{faq.answer}</div>
-            )}
+            </div>
           </div>
         ))}
       </div>

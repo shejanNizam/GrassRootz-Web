@@ -29,7 +29,7 @@ export default function About() {
           </Link>
         </div>
       </div>
-      <div>
+      <div className="hidden md:block">
         <Image src={about_img} alt="about_img" width={1000} height={1000} />
       </div>
     </div>
