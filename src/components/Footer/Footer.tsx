@@ -21,16 +21,10 @@ const Footer = () => (
           {/* Logo & text & Social icon here */}
           <div className="w-full md:w-2/5 flex flex-col gap-4 items-center md:items-start">
             <Link href="/">
-              {/* <Image
-                className="w-20 h-20"
+              <Image
+                className="w-20 h-16 md:w-24 md:h-20"
                 width={1000}
                 height={1000}
-                src={main_logo_img}
-                alt="main_logo"
-              /> */}
-              <Image
-                width={96}
-                height={80}
                 src={main_logo_img}
                 alt="main_logo"
               />

@@ -26,7 +26,7 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
           className={`flex-1 bg-gray-100 transition-all duration-200`}
         >
           {/* Content */}
-          <main className="px-12 py-40 bg-black">{children}</main>
+          <main className="px-8 py-20 md:py-40 bg-black">{children}</main>
         </div>
       </div>
     </>

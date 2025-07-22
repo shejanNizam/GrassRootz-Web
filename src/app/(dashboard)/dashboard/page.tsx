@@ -4,7 +4,7 @@ import {
   useGetUserDataQuery,
   useUpdateUserDataMutation,
 } from "@/redux/features/userApi";
-import { Button, Form, Input, message, Modal } from "antd";
+import { Button, Form, Input, message, Modal, Spin } from "antd";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { FiPlus } from "react-icons/fi";
@@ -98,16 +98,20 @@ export default function UserProfile() {
   const handleCancel = () => setIsModalVisible(false);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
   }
 
   return (
-    <div className="w-full mx-auto py-4">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-8 text-primary text-center">
+    <div className="w-full mx-auto min-h-screen">
+      <h1 className="text-2xl font-bold mb-8 text-primary text-center">
         User Profile
       </h1>
 
-      <div className="max-w-5xl mx-auto bg-gray-900 text-white rounded-lg p-4 shadow-lg">
+      <div className="max-w-5xl mx-auto bg-gray-900 rounded-lg p-4 shadow-lg">
         <div className="flex  items-center gap-6 mb-8">
           <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-gray-700 relative flex-shrink-0">
             {userImageUrl ? (

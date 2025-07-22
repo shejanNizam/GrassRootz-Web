@@ -5,7 +5,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import door_img_left from "../../assets/door/door_img_left.png";
+import door_img_left_mobile from "../../assets/door/door_img_left_mobile.png";
 import door_img_right from "../../assets/door/door_img_right.png";
+import door_img_right_mobile from "../../assets/door/door_img_right_mobile.png";
 import logo from "../../assets/main_logo.png";
 
 export default function Door() {
@@ -59,10 +61,18 @@ export default function Door() {
           className="absolute left-0 top-0 h-full w-1/2"
         >
           <Image
+            src={door_img_left_mobile}
+            alt="Left Door"
+            layout="fill"
+            objectFit="cover"
+            className="block md:hidden"
+          />
+          <Image
             src={door_img_left}
             alt="Left Door"
             layout="fill"
             objectFit="cover"
+            className="hidden md:block"
           />
         </motion.div>
 
@@ -74,10 +84,18 @@ export default function Door() {
           className="absolute right-0 top-0 h-full w-1/2"
         >
           <Image
+            src={door_img_right_mobile}
+            alt="Right Door"
+            layout="fill"
+            objectFit="cover"
+            className="block md:hidden"
+          />
+          <Image
             src={door_img_right}
             alt="Right Door"
             layout="fill"
             objectFit="cover"
+            className="hidden md:block"
           />
         </motion.div>
 

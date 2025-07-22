@@ -23,7 +23,7 @@ export default function LatestProducts() {
 
   if (isLoading) {
     return (
-      <div className="text-center min-h-screen">
+      <div className="flex justify-center items-center h-screen">
         <Spin size="large" className="mt-20" />
       </div>
     );
@@ -34,7 +34,9 @@ export default function LatestProducts() {
       <CustomHeading>Latest Products</CustomHeading>
       <div className="flex flex-wrap gap-6 justify-center">
         {limitedLatestData.length === 0 ? (
-          <div className="text-lg font-semibold">No latest products found!</div>
+          <div className="text-lg font-semibold text-white">
+            No latest products found!
+          </div>
         ) : (
           limitedLatestData.map((product: LatestDataType) => (
             <ProductCard key={product._id} product={product} />

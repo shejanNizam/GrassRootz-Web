@@ -33,7 +33,6 @@ export default function WishList() {
       title: "PRODUCT",
       dataIndex: "name",
       key: "product",
-      responsive: ["md" as const],
       render: (text: string, record: any) => (
         <div className="flex items-center space-x-4">
           {record.image && (
@@ -104,7 +103,10 @@ export default function WishList() {
             columns={columns}
             dataSource={wishlist}
             rowKey="id"
-            pagination={{ pageSize: 5 }}
+            pagination={{
+              pageSize: 5,
+              position: ["bottomCenter"],
+            }}
             className="bg-primary px-1 py-2 text-white rounded-lg"
             scroll={{ x: 600 }}
           />
