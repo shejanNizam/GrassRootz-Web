@@ -71,7 +71,9 @@ export default function RelatedProducts({ product }: ProductTabsProps) {
       </h3>
       <div className="flex flex-wrap gap-6 justify-center">
         {isLoading ? (
-          <Spin size="large" />
+          <div className="w-full flex justify-center items-center">
+            <Spin size="large" />
+          </div>
         ) : isError ? (
           <Empty description="Failed to load products." />
         ) : data?.data?.length === 0 ? (

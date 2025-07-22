@@ -14,10 +14,10 @@ import profile_image from "../../assets/profile/profile_img.png";
 import { useCartWishlist } from "@/context/CartWishlistContext";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/slices/authSlice";
+import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import { SuccessSwal } from "../utils/allSwalFire";
 import ProfileMenu from "./ProfileMenu";
-import Cookies from "js-cookie";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -78,13 +78,19 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-black shadow-2xl fixed w-full py-4 z-50">
+      <nav className="bg-black shadow-2xl fixed w-full py-2 z-50">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="flex justify-between">
             {/* Logo Section */}
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" onClick={closeMenu}>
-                <Image width={96} height={80} src={main_logo} alt="Main Logo" />
+                <Image
+                  className="w-20 h-16 md:w-24 md:h-20"
+                  width={1000}
+                  height={1000}
+                  src={main_logo}
+                  alt="main_logo"
+                />
               </Link>
             </div>
 
@@ -103,7 +109,7 @@ export default function Navbar() {
                     className={`px-3 py-2 rounded-md text-sm font-medium ${
                       isActive(item.href)
                         ? "text-primary underline font-bold"
-                        : "text-white hover:text-primary"
+                        : "text-white font-semibold text-lg hover:text-primary"
                     }`}
                   >
                     {item.name}
@@ -246,14 +252,14 @@ export default function Navbar() {
             } transition-transform duration-300 ease-in-out`}
           >
             {/* Logo and Close Button */}
-            <div className="flex items-center justify-between p-4 border-b border-white">
+            <div className="flex items-center justify-between p-2 border-b border-white">
               <Link href="/" onClick={closeMenu}>
                 <Image
-                  className="w-16 h-12"
+                  className="w-20 h-16"
                   width={1000}
                   height={1000}
                   src={main_logo}
-                  alt="Main Logo"
+                  alt="main_logo"
                 />
               </Link>
               <button
@@ -275,7 +281,7 @@ export default function Navbar() {
                   className={`flex items-center px-6 py-3 mt-2 ${
                     isActive(item.href)
                       ? "text-primary underline font-semibold"
-                      : "text-white hover:text-primary"
+                      : "text-white font-semibold text-lg hover:text-primary"
                   }`}
                 >
                   {item.name}
