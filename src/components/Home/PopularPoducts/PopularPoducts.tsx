@@ -32,9 +32,9 @@ export default function PopularProducts() {
     <div className="md:p-4">
       <CustomHeading>Popular Products</CustomHeading>
       <div className="flex flex-wrap gap-6 justify-center">
-        {popularData.length === 0 ? (
+        {popularData?.length === 0 ? (
           <div className="text-lg font-semibold text-white">
-            No popular products found!
+            No popular products found!!
           </div>
         ) : (
           popularData.map((product: PopularDataType) => (

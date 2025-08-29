@@ -19,7 +19,7 @@ export default function LatestProducts() {
   const { data, isLoading } = useGetAllProductsQuery({});
 
   const latestData: LatestDataType[] = data?.data || [];
-  const limitedLatestData = latestData.slice(0, 8);
+  const limitedLatestData = latestData?.slice(0, 8);
 
   if (isLoading) {
     return (
@@ -35,10 +35,10 @@ export default function LatestProducts() {
       <div className="flex flex-wrap gap-6 justify-center">
         {limitedLatestData.length === 0 ? (
           <div className="text-lg font-semibold text-white">
-            No latest products found!
+            No latest products found!!
           </div>
         ) : (
-          limitedLatestData.map((product: LatestDataType) => (
+          limitedLatestData?.map((product: LatestDataType) => (
             <ProductCard key={product._id} product={product} />
           ))
         )}
