@@ -95,6 +95,11 @@ const Footer = () => (
               </h3>
               <ul className="text-center md:text-left">
                 <li className="mb-1">
+                  <Link href="/about-us" className="text-sm hover:text-primary">
+                    About us
+                  </Link>
+                </li>
+                <li className="mb-1">
                   <Link
                     href="/privacy-policy"
                     className="text-sm hover:text-primary"
