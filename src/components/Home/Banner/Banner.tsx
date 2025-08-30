@@ -1,31 +1,3 @@
-// import Image from "next/image";
-// import bannerImage from "../../../assets/home/banner/banner_bg_img.png";
-
-// export default function Banner() {
-//   return (
-//     <div className="relative bg-cover bg-center h-[40vh] md:h-[60vh] flex justify-center items-center z-30">
-//       <div className="absolute inset-0">
-//         <Image
-//           src={bannerImage}
-//           alt="banner_image"
-//           layout="fill"
-//           objectFit="cover"
-//           quality={100}
-//           priority
-//         />
-//       </div>
-//       <div className="text-center text-white p-4 mt-20 z-10">
-//         <h1 className="text-3xl md:text-6xl font-semibold">
-//           Your Daily Essentials,
-//         </h1>
-//         <h1 className="text-3xl md:text-6xl font-semibold">
-//           Just a Click Away!
-//         </h1>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 import { useGetBannerDataQuery } from "@/redux/features/banner/bannerApi";
 import Image from "next/image";
@@ -47,7 +19,7 @@ const Banner = () => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % data.length);
-    }, 3000); // Change slide every 5 seconds
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying, data.length]);
@@ -59,16 +31,6 @@ const Banner = () => {
     // Resume auto-play after 10 seconds of inactivity
     setTimeout(() => setIsAutoPlaying(true), 10000);
   };
-
-  // const goToPrevious = () => {
-  //   const newIndex = currentSlide === 0 ? data.length - 1 : currentSlide - 1;
-  //   goToSlide(newIndex);
-  // };
-
-  // const goToNext = () => {
-  //   const newIndex = (currentSlide + 1) % data.length;
-  //   goToSlide(newIndex);
-  // };
 
   // If no data, show default content
   if (!data || data.length === 0) {
