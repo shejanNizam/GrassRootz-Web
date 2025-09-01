@@ -36,7 +36,7 @@ const Banner = () => {
   if (!data || data.length === 0) {
     return (
       <div className="relative bg-gray-800 bg-cover bg-center h-[40vh] md:h-[60vh] flex justify-center items-center z-30">
-        <div className="text-center text-white p-4 mt-20 z-10">
+        <div className="text-center text-primary p-4 mt-20 z-10">
           <h1 className="text-3xl md:text-6xl font-semibold">
             Your Daily Essentials,
           </h1>
@@ -67,7 +67,7 @@ const Banner = () => {
       </div>
 
       {/* Content */}
-      <div className="text-center text-white p-4 mt-20 z-10 transition-all duration-1000 w-[70%]">
+      <div className="text-center text-primary p-4 mt-20 z-10 transition-all duration-1000 w-[70%]">
         <h1 className="text-3xl md:text-6xl font-semibold mb-4 animate-fade-in">
           {currentItem.name}
         </h1>
