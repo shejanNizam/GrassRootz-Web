@@ -8,7 +8,6 @@ import image2 from "../../../assets/home/whyChoose/image2.png";
 import image3 from "../../../assets/home/whyChoose/image3.png";
 import image4 from "../../../assets/home/whyChoose/image4.png";
 import image5 from "../../../assets/home/whyChoose/image5.png";
-import image6 from "../../../assets/home/whyChoose/image6.png";
 
 import CustomHeading from "@/components/utils/CustomHeading";
 import {
@@ -16,57 +15,49 @@ import {
   FaCheckCircle,
   FaDollarSign,
   FaLock,
-  FaServicestack,
   FaThumbsUp,
 } from "react-icons/fa";
 
 const optionsData = [
   {
     _id: "1",
-    title: "Verified Professionals",
+    title: "Deep Kansas City Roots",
     description:
-      "All our service providers are background-checked, certified, and trusted to deliver top-quality services.",
+      "We live and breathe KC culture. Every harvest, label, and customer interaction pays homage to the streets that shaped us.",
     image: image1,
     icon: FaCheckCircle,
   },
   {
     _id: "2",
-    title: "Easy & Quick Booking",
+    title: "Decades of Experience",
     description:
-      "Book your required service in just a few clicks—no hassle, no delays.",
+      "From the shadows of Prohibition to today’s regulated market, our founders’ decades-long journey ensures you get products crafted by true pioneers.",
     image: image2,
     icon: FaCalendarCheck,
   },
   {
     _id: "3",
-    title: "Transparent Pricing",
+    title: "Premium THCA Sourcing",
     description:
-      "Get clear, upfront pricing for services with no hidden fees or surprises.",
+      "We handpick only the highest-quality, lab-tested THCA flower—guaranteed clean, potent, and bursting with flavor.",
     image: image3,
     icon: FaDollarSign,
   },
   {
     _id: "4",
-    title: "Quality Assurance",
+    title: "Unbeatable Value",
     description:
-      "We ensure the highest standards of service with reviews and ratings from real customers.",
+      "Top-shelf smoke without the top-shelf price tag. We leverage our legacy relationships to pass savings directly to you.",
     image: image4,
     icon: FaThumbsUp,
   },
   {
     _id: "5",
-    title: "Secure Payments",
-    description: "Enjoy safe and secure payment options for all your bookings.",
+    title: "Experience the difference",
+    description:
+      "Once you try GrassRootz Culture, you’ll understand what great smoke really means",
     image: image5,
     icon: FaLock,
-  },
-  {
-    _id: "6",
-    title: "Wide Range of Services",
-    description:
-      "From floor finishing to plumbing, cleaning, and more—find the right professional for every job.",
-    image: image6,
-    icon: FaServicestack,
   },
 ];
 
@@ -123,7 +114,7 @@ export default function WhyChoose() {
                 role="tablist"
                 aria-orientation="vertical"
               >
-                {optionsData.map((option, index) => {
+                {optionsData?.map((option, index) => {
                   const isActive = index === selectedIndex;
                   const Icon = option.icon;
                   return (

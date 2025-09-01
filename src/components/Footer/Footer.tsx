@@ -36,7 +36,11 @@ const Footer = () => (
             </p>
 
             <div className="flex gap-4">
-              <Link href="https://facebook.com" className="hover:text-primary">
+              <Link
+                target="_blank"
+                href="https://facebook.com"
+                className="hover:text-primary"
+              >
                 <FaFacebook size={32} />
               </Link>
               <Link
