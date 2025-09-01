@@ -11,9 +11,8 @@ const Banner = () => {
 
   const { data: bannerData } = useGetBannerDataQuery({});
   const data = bannerData?.data || [];
-  console.log(data);
+  // console.log(data);
 
-  // Auto-slide functionality
   useEffect(() => {
     if (!isAutoPlaying || data.length <= 1) return;
 
@@ -24,15 +23,12 @@ const Banner = () => {
     return () => clearInterval(interval);
   }, [isAutoPlaying, data.length]);
 
-  // Handle manual navigation
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
     setIsAutoPlaying(false);
-    // Resume auto-play after 10 seconds of inactivity
     setTimeout(() => setIsAutoPlaying(true), 10000);
   };
 
-  // If no data, show default content
   if (!data || data.length === 0) {
     return (
       <div className="relative bg-gray-800 bg-cover bg-center h-[40vh] md:h-[60vh] flex justify-center items-center z-30">
@@ -49,14 +45,15 @@ const Banner = () => {
   }
 
   const currentItem = data[currentSlide];
+  // console.log(currentItem);
 
   return (
     <div className="relative bg-cover bg-center h-[40vh] md:h-[60vh] flex justify-center items-center z-30 overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 transition-opacity duration-1000">
         <Image
-          src={baseImageUrl + currentItem.image}
-          alt={currentItem.name}
+          src={baseImageUrl + currentItem?.image}
+          alt={currentItem?.name}
           layout="fill"
           objectFit="cover"
           quality={100}
@@ -69,7 +66,7 @@ const Banner = () => {
       {/* Content */}
       <div className="text-center text-primary p-4 mt-20 z-10 transition-all duration-1000 w-[70%]">
         <h1 className="text-3xl md:text-6xl font-semibold mb-4 animate-fade-in">
-          {currentItem.name}
+          {currentItem?.name}
         </h1>
       </div>
 
@@ -79,7 +76,7 @@ const Banner = () => {
           {data?.map((index: number) => (
             <button
               key={index}
-              // onClick={() => goToSlide(index)}
+              onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentSlide
                   ? "bg-white"
