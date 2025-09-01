@@ -103,6 +103,14 @@ export default function WhyChoose() {
           <CustomHeading>Why Choose Us</CustomHeading>
         </div>
 
+        <h3 className="text-center text-xs md:text-xl mb-12 px-4 md:px-20 lg:px-40">
+          GrassRootz Culture isn’t just another cannabis brand—it’s the
+          heartbeat of Kansas City. Our founders cut their teeth on the streets
+          during the Prohibition era and have grown with the industry all the
+          way through legalization. That legacy means unparalleled expertise,
+          authenticity, and a commitment to our community.
+        </h3>
+
         {/* Tablist */}
         <div className="grid grid-cols-1 md:grid-cols-2 justify-around items-center gap-8 md:gap-0 lg:px-32">
           {/* Left Sidebar */}
