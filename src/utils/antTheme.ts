@@ -10,7 +10,15 @@ export const mainTheme = {
       colorBgContainer: "#00321F",
       colorText: "#ffffff",
       colorBorder: "#000000",
+
       // Add other Table tokens as per documentation
+    },
+    Pagination: {
+      colorPrimary: "#A1230A",
+      colorPrimaryHover: "#A1230A",
+      colorBgTextHover: "#A1230A",
+      colorBgTextActive: "#A1230A",
+      colorText: "#A1230A",
     },
     Menu: {
       colorBgContainer: "#ffffff",
