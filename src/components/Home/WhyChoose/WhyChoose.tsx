@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 
-import image1 from "../../../assets/home/whyChoose/image1.png";
 import image2 from "../../../assets/home/whyChoose/image2.png";
 import image3 from "../../../assets/home/whyChoose/image3.png";
 import image4 from "../../../assets/home/whyChoose/image4.png";
 import image5 from "../../../assets/home/whyChoose/image5.png";
+import imageGrass from "../../../assets/home/whyChoose/why_choose.png";
 
 import CustomHeading from "@/components/utils/CustomHeading";
 import {
@@ -24,7 +24,7 @@ const optionsData = [
     title: "Deep Kansas City Roots",
     description:
       "We live and breathe KC culture. Every harvest, label, and customer interaction pays homage to the streets that shaped us.",
-    image: image1,
+    image: imageGrass,
     icon: FaCheckCircle,
   },
   {
@@ -176,6 +176,8 @@ export default function WhyChoose() {
                   >
                     <div className="relative w-full">
                       <Image
+                        width={400}
+                        height={300}
                         src={option.image}
                         alt={option.title}
                         objectFit="cover"
@@ -183,7 +185,7 @@ export default function WhyChoose() {
                         priority
                       />
                     </div>
-                    <p className="text-primary text-lg mt-4">
+                    <p className="text-primary text-lg mt-4 xl:w-[70%] ">
                       {option.description}
                     </p>
                   </div>

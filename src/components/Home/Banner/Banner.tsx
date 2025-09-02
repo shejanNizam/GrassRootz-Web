@@ -52,7 +52,7 @@ const Banner = () => {
       {/* Background Image */}
       <div className="absolute inset-0 transition-opacity duration-1000">
         <Image
-          src={baseImageUrl + currentItem?.image}
+          src={baseImageUrl + "/" + currentItem?.image}
           alt={currentItem?.name}
           layout="fill"
           objectFit="cover"
@@ -73,7 +73,7 @@ const Banner = () => {
       {/* Slide Indicators */}
       {data.length > 1 && (
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-          {data?.map((index: number) => (
+          {data?.map((_, index: number) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
