@@ -144,11 +144,11 @@ const Footer = () => (
                 {/* Email with mailto Link */}
                 <div className="">
                   <a
-                    href="mailto:info@mycompany.com"
+                    href="mailto:Info@grassrootzculture.com"
                     className="flex items-center mb-2 justify-center md:justify-start text-sm hover:text-primary transition"
                   >
                     <FaEnvelope className="mr-2" />
-                    Info@grassrootzculture.con
+                    Info@grassrootzculture.com
                   </a>
                 </div>
 
