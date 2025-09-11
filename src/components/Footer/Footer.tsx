@@ -131,13 +131,13 @@ const Footer = () => (
                 {/* Address with Google Maps Link */}
                 <div className="">
                   <a
-                    href="https://www.google.com/maps/search/?api=1&query=1234+Street+Name,City,State"
+                    href="https://www.google.com/maps/search/?api=1&query=1625+Genessee+St,+Kansas+City,+MO+64102"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center mb-2 justify-center md:justify-start text-sm hover:text-primary transition"
                   >
                     <FaMapMarkerAlt className="mr-2" />
-                    1234 Street Name, City, State
+                    1625 Genessee St , Kansas City MO 64102
                   </a>
                 </div>
 
@@ -148,7 +148,7 @@ const Footer = () => (
                     className="flex items-center mb-2 justify-center md:justify-start text-sm hover:text-primary transition"
                   >
                     <FaEnvelope className="mr-2" />
-                    info@mycompany.com
+                    Info@grassrootzculture.con
                   </a>
                 </div>
 
@@ -159,7 +159,7 @@ const Footer = () => (
                     className="flex items-center justify-center md:justify-start text-sm hover:text-primary transition"
                   >
                     <FaPhoneAlt className="mr-2" />
-                    (123) 456-7890
+                    9134162809
                   </a>
                 </div>
               </ul>
